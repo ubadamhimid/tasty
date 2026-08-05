@@ -1,0 +1,76 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-teal: #5E9895;
+    --color-sage: #9DBEBB;
+    --color-terracotta: #E29578;
+    --color-charcoal: #2B3A39;
+    --color-bg-warm: #FFFDF9;
+  }
+
+  body {
+    background-color: #FFFDF9;
+    background-image: 
+      radial-gradient(rgba(94, 152, 149, 0.03) 1px, transparent 1px),
+      radial-gradient(rgba(226, 149, 120, 0.02) 1px, transparent 1px);
+    background-size: 32px 32px;
+    background-position: 0 0, 16px 16px;
+    color: #2B3A39;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  h1, h2, h3, .font-serif-heading {
+    font-family: 'Playfair Display', serif;
+  }
+}
+
+/* Custom Utilities for 3D & Organic Aesthetic */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+}
+
+/* Custom organic glassmorphism */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(94, 152, 149, 0.15);
+}
+
+.glass-panel-warm {
+  background: rgba(250, 247, 242, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(226, 149, 120, 0.18);
+}
+
+/* Leaf Pattern Watermark Overlay */
+.leaf-pattern-overlay {
+  background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 C35 15 45 20 55 20 C45 30 40 40 40 55 C30 45 20 40 5 40 C15 30 20 20 30 5 Z' fill='%235E9895' fill-opacity='0.02'/%3E%3C/svg%3E");
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #FAF7F2;
+}
+::-webkit-scrollbar-thumb {
+  background: #9DBEBB;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #5E9895;
+}
