@@ -1,4 +1,0 @@
-User-agent: *
-Allow: /
-
-Sitemap: https://tasty-hilversum.nl/sitemap.xml

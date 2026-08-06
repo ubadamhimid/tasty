@@ -1,4 +1,0 @@
-ccxt
-python-dotenv
-pandas
-google-genai
