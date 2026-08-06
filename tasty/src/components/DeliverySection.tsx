@@ -349,6 +349,19 @@ export const Footer: React.FC = () => {
                   035 204 2001
                 </a>
               </div>
+
+              {/* Direct Google Review Button */}
+              <div className="pt-2 border-t border-tasty-sage/20">
+                <a
+                  href="https://g.page/r/CUkMh7UTSm9TEBM/review"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full py-2 px-3 rounded-xl bg-tasty-terracotta-light text-tasty-terracotta border border-tasty-terracotta/30 text-xs font-bold flex items-center justify-center gap-2 hover:bg-tasty-terracotta hover:text-white transition-all"
+                >
+                  <Icon icon="logos:google-icon" className="text-sm" />
+                  <span>Leave Us a 5-Star Review ★</span>
+                </a>
+              </div>
             </div>
           </div>
 

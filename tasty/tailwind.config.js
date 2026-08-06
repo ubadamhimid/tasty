@@ -26,6 +26,7 @@ export default {
       fontFamily: {
         serif: ['"Playfair Display"', 'Georgia', 'serif'],
         sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+        handwriting: ['"Caveat"', 'cursive'],
       },
       boxShadow: {
         'tasty-soft': '0 12px 32px -4px rgba(94, 152, 149, 0.08), 0 4px 12px -2px rgba(94, 152, 149, 0.04)',

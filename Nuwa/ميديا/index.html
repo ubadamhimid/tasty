@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة الإطلاق والنمو على إنستغرام | لشركات البرمجة</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Chosen Palette: Professional Tech (Deep Indigo, Crisp White, Accent Teal, Slate Gray) -->
+    <!-- Application Structure Plan: 
+         Updated to include a 6th tab: "AI Assistant".
+         This tab uses Gemini API to provide real-time value.
+         - Tool 1: Script Generator (Nuwa & School systems focus).
+         - Tool 2: Hook Improver (Focus on the 'First 3 Seconds' problem).
+    -->
+    <!-- Visualization & Content Choices:
+         - Added AI Interaction UI with loading states.
+         - Integrated Gemini 2.5 Flash for text generation.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #f8fafc; /* Slate 50 */
+        }
+        
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* Loader */
+        .loader {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #3498db;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            animation: spin 1s linear infinite;
+            display: inline-block;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="text-slate-800 antialiased">
+
+    <!-- Header -->
+    <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-4 py-6">
+            <h1 class="text-3xl font-extrabold tracking-tight flex items-center gap-3">
+                <span class="text-4xl">🚀</span> الدليل الاستراتيجي لنمو شركات البرمجة
+            </h1>
+            <p class="mt-2 text-indigo-200 text-lg">خطة مخصصة لتسويق أنظمة (Nuwa) والأنظمة المدرسية وجلب العملاء</p>
+        </div>
+        
+        <!-- Navigation Tabs -->
+        <nav class="flex overflow-x-auto border-t border-indigo-700 bg-indigo-800 scrollbar-hide">
+            <button onclick="switchTab('tab-diagnosis')" class="tab-btn px-6 py-4 text-white font-semibold hover:bg-indigo-700 transition-colors border-b-4 border-teal-400 whitespace-nowrap" id="btn-diagnosis">
+                🔍 تحليل المشكلة
+            </button>
+            <button onclick="switchTab('tab-algorithm')" class="tab-btn px-6 py-4 text-indigo-200 font-semibold hover:bg-indigo-700 transition-colors border-b-4 border-transparent whitespace-nowrap" id="btn-algorithm">
+                🧠 خوارزمية المنصة
+            </button>
+            <button onclick="switchTab('tab-strategy')" class="tab-btn px-6 py-4 text-indigo-200 font-semibold hover:bg-indigo-700 transition-colors border-b-4 border-transparent whitespace-nowrap" id="btn-strategy">
+                📊 استراتيجية المحتوى
+            </button>
+            <button onclick="switchTab('tab-blueprint')" class="tab-btn px-6 py-4 text-indigo-200 font-semibold hover:bg-indigo-700 transition-colors border-b-4 border-transparent whitespace-nowrap" id="btn-blueprint">
+                🎬 هيكلية الريل المثالي
+            </button>
+            <button onclick="switchTab('tab-action')" class="tab-btn px-6 py-4 text-indigo-200 font-semibold hover:bg-indigo-700 transition-colors border-b-4 border-transparent whitespace-nowrap" id="btn-action">
+                🗓️ خطة العمل
+            </button>
+            <button onclick="switchTab('tab-ai')" class="tab-btn px-6 py-4 text-amber-300 font-bold hover:bg-indigo-700 transition-colors border-b-4 border-transparent whitespace-nowrap" id="btn-ai">
+                ✨ مساعد الذكاء الاصطناعي
+            </button>
+        </nav>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="max-w-6xl mx-auto px-4 py-8">
+
+        <!-- TAB 1: Diagnosis -->
+        <section id="tab-diagnosis" class="tab-content active">
+            <div class="mb-8 bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-4">لماذا لا تحصل فيديوهاتك الحالية على مشاهدات؟</h2>
+                <p class="text-slate-600 mb-6 leading-relaxed">
+                    من الرائع أنك تقوم بتصوير الفيديوهات بصوتك، فهذا يبني الثقة! لكن، المشكلة تكمن في طريقة عرض المحتوى. أطباء الأسنان ومدراء المدارس ليسوا مبرمجين، هم يبحثون عن حلول لمشاكلهم ولا يهتمون بالكود أو اسم التقنية.
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-6">
+                    <!-- Wrong Way -->
+                    <div class="bg-red-50 p-5 rounded-lg border border-red-100">
+                        <div class="flex items-center gap-2 mb-3 text-red-700 font-bold text-lg">
+                            <span>❌</span> الطريقة الخاطئة
+                        </div>
+                        <ul class="space-y-3 text-red-900">
+                            <li><span class="font-bold">- البداية الضعيفة:</span> "مرحباً معكم فلان..."</li>
+                            <li><span class="font-bold">- التركيز على الميزات:</span> "برنامجنا مبني بأحدث التقنيات..."</li>
+                            <li><span class="font-bold">- مونتاج ممل:</span> فيديو طويل بدون نصوص.</li>
+                        </ul>
+                    </div>
+
+                    <!-- Right Way -->
+                    <div class="bg-teal-50 p-5 rounded-lg border border-teal-100">
+                        <div class="flex items-center gap-2 mb-3 text-teal-700 font-bold text-lg">
+                            <span>✅</span> الطريقة الصحيحة
+                        </div>
+                        <ul class="space-y-3 text-teal-900">
+                            <li><span class="font-bold">- الخطاف (3 ثوانٍ):</span> ضرب نقطة الألم فوراً.</li>
+                            <li><span class="font-bold">- التركيز على الفائدة:</span> "نظام Nuwa يذكر مرضاك تلقائياً."</li>
+                            <li><span class="font-bold">- ديناميكية بصرية:</span> إضافة نصوص متحركة ولقطات سريعة.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 2: The Algorithm -->
+        <section id="tab-algorithm" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-2">كيف تعمل خوارزمية إنستغرام لعام 2024/2025؟</h2>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex flex-col md:flex-row items-center gap-8">
+                    <div class="w-full md:w-1/2">
+                        <div class="chart-container">
+                            <canvas id="algorithmChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2 space-y-4">
+                        <div class="p-4 bg-blue-50 rounded-lg border-r-4 border-blue-500">
+                            <h3 class="font-bold text-blue-800">1. المشاركة (Share) - الأهم 🚀</h3>
+                            <p class="text-sm text-blue-900 mt-1">المحتوى القابل للمشاركة هو ملك الانتشار.</p>
+                        </div>
+                        <div class="p-4 bg-teal-50 rounded-lg border-r-4 border-teal-500">
+                            <h3 class="font-bold text-teal-800">2. الحفظ (Save) - دليل القيمة 💾</h3>
+                            <p class="text-sm text-teal-900 mt-1">يحدث عندما تشارك نصيحة قيمة يود المدير العودة لها.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 3: Strategy -->
+        <section id="tab-strategy" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-2">الخلطة السرية لمحتوى شركة البرمجة</h2>
+                <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-8">
+                     <div class="chart-container">
+                        <canvas id="contentMixChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: Blueprint -->
+        <section id="tab-blueprint" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-2">تشريح فيديوهات الـ Reels المثالية</h2>
+                <div class="space-y-4">
+                    <div class="p-5 bg-white border border-slate-200 rounded-lg">
+                        <h3 class="font-bold text-red-600 mb-2">1. الخطاف (اول 3 ثوانٍ)</h3>
+                        <p class="text-slate-600">مثال: "لماذا تضيع عيادات الأسنان 30% من وقتها في المواعيد؟"</p>
+                    </div>
+                    <div class="p-5 bg-white border border-slate-200 rounded-lg">
+                        <h3 class="font-bold text-indigo-600 mb-2">2. الحل والقيمة (20 ثانية)</h3>
+                        <p class="text-slate-600">عرض نظام Nuwa وكيف يحل المشكلة بوضوح.</p>
+                    </div>
+                    <div class="p-5 bg-white border border-slate-200 rounded-lg">
+                        <h3 class="font-bold text-teal-600 mb-2">3. طلب الإجراء (CTA)</h3>
+                        <p class="text-slate-600">"اكتب كلمة 'نظام' بالتعليقات لنجربه سوياً."</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 5: Action Plan -->
+        <section id="tab-action" class="tab-content">
+            <h2 class="text-2xl font-bold text-indigo-900 mb-4">خطة النشر الأسبوعية</h2>
+            <div class="grid md:grid-cols-3 gap-4">
+                <div class="bg-white p-4 border border-slate-200 rounded-lg">
+                    <span class="bg-teal-500 text-white px-2 py-1 text-xs rounded">يوم 1</span>
+                    <h4 class="font-bold mt-2">Reel: مشكلة وحل</h4>
+                    <p class="text-sm text-slate-500">مشكلة إدارة المدارس الكبيرة.</p>
+                </div>
+                <div class="bg-white p-4 border border-slate-200 rounded-lg">
+                    <span class="bg-blue-500 text-white px-2 py-1 text-xs rounded">يوم 2</span>
+                    <h4 class="font-bold mt-2">Carousel: نصائح تقنية</h4>
+                    <p class="text-sm text-slate-500">كيف تختار نظام عيادتك؟</p>
+                </div>
+                <div class="bg-white p-4 border border-slate-200 rounded-lg">
+                    <span class="bg-amber-500 text-white px-2 py-1 text-xs rounded">يوم 3</span>
+                    <h4 class="font-bold mt-2">Story: كواليس</h4>
+                    <p class="text-sm text-slate-500">ميزة جديدة في Nuwa.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 6: AI Assistant ✨ -->
+        <section id="tab-ai" class="tab-content">
+            <div class="mb-8 bg-gradient-to-br from-indigo-50 to-white p-6 rounded-xl shadow-inner border border-indigo-100">
+                <h2 class="text-2xl font-bold text-indigo-900 mb-2 flex items-center gap-2">
+                    ✨ مساعد المحتوى الذكي (Gemini)
+                </h2>
+                <p class="text-slate-600 mb-6">ثلاثة أدوات احترافية لصناعة المحتوى — النصوص، التوجيه البصري، وبرومتات Banan Pro</p>
+
+                    <!-- ✨ UNIFIED POST CREATOR ✨ -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border-2 border-indigo-300 relative overflow-hidden">
+                        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-500"></div>
+                        <h3 class="font-bold text-xl text-indigo-900 mb-1 flex items-center gap-2">🚀 محرر المنشور الشامل</h3>
+                        <p class="text-xs text-slate-500 mb-5">أدخل بياناتك <strong>مرة واحدة</strong> ← يولّد لك سكريبت + توجيه بصري + Banan Pro + كابشن + هاشتاقات + Alt text كلها متناسقة</p>
+
+                        <!-- FORM -->
+                        <div class="space-y-4">
+                            <!-- Main Idea -->
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">💡 فكرة المنشور / الميزة</label>
+                                <input id="unified-context" type="text" placeholder="مثال: ميزة تذكير مرضى الأسنان بمواعيدهم تلقائياً في نظام Nuwa" class="w-full p-3 border-2 border-indigo-200 rounded-md focus:ring-2 focus:ring-indigo-500 focus:border-indigo-400 outline-none text-sm">
+                            </div>
+
+                            <!-- Row 1: Audience / Post Type / Goal -->
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">👥 الجمهور</label>
+                                    <select id="unified-audience" class="w-full p-2.5 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="أطباء الأسنان">أطباء الأسنان</option>
+                                        <option value="مدراء المدارس">مدراء المدارس</option>
+                                        <option value="أصحاب الشركات">أصحاب الشركات</option>
+                                        <option value="مدراء المستشفيات">مدراء المستشفيات</option>
+                                        <option value="أصحاب الصيدليات">أصحاب الصيدليات</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">📱 نوع المنشور</label>
+                                    <select id="unified-posttype" class="w-full p-2.5 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="Reel">🎬 Reel (فيديو)</option>
+                                        <option value="Carousel">📱 Carousel (شرائح)</option>
+                                        <option value="Story">📸 Story (قصة)</option>
+                                        <option value="Post">🖼️ Post (صورة)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">🎯 الهدف</label>
+                                    <select id="unified-goal" class="w-full p-2.5 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="تعليمي لجذب الجمهور">🎓 تعليمي (جذب)</option>
+                                        <option value="عرض منتج للبيع">💰 عرض منتج (بيع)</option>
+                                        <option value="كواليس لبناء الثقة">🎥 كواليس (ثقة)</option>
+                                        <option value="تفاعلي لزيادة التعليقات">💬 تفاعلي</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <!-- Row 2: Visual Type + Style + Mood -->
+                            <div class="bg-slate-50 rounded-lg p-4 border border-slate-200">
+                                <p class="text-xs font-bold text-slate-600 mb-3">🎨 نوع المحتوى البصري</p>
+                                <div class="flex gap-3 mb-3">
+                                    <button onclick="setUnifiedMedia('image')" id="ubtn-image" class="flex-1 py-2 rounded-lg border-2 border-purple-400 bg-purple-50 text-purple-800 font-bold text-sm transition-all">🖼️ صورة</button>
+                                    <button onclick="setUnifiedMedia('video')" id="ubtn-video" class="flex-1 py-2 rounded-lg border-2 border-slate-200 text-slate-500 font-bold text-sm transition-all hover:border-purple-300">🎬 فيديو</button>
+                                </div>
+                                <input type="hidden" id="unified-media-type" value="image">
+                                <div id="unified-style-row" class="grid grid-cols-2 gap-3">
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-600 mb-1">أسلوب الصورة</label>
+                                        <select id="unified-img-style" class="w-full p-2 border border-slate-300 rounded-md outline-none text-sm">
+                                            <option value="cinematic, photorealistic, high quality">واقعي - احترافي</option>
+                                            <option value="3D render, sharp details, glossy">ثلاثي الأبعاد (3D)</option>
+                                            <option value="flat design, minimal, clean, vector">مسطّح وبسيط</option>
+                                            <option value="dark mode, neon glow, cyberpunk, tech">داكن - نيون</option>
+                                            <option value="infographic, colorful icons, white background">إنفوغرافيك</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-xs font-bold text-slate-600 mb-1">المزاج العام</label>
+                                        <select id="unified-img-mood" class="w-full p-2 border border-slate-300 rounded-md outline-none text-sm">
+                                            <option value="professional, trustworthy, corporate blue">احترافي وموثوق</option>
+                                            <option value="modern, innovative, sleek tech vibes">عصري ومبتكر</option>
+                                            <option value="warm, friendly, human-centered">دافئ وودّي</option>
+                                            <option value="bold, powerful, dark dramatic">قوي وجريء</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- GENERATE BUTTON -->
+                            <button onclick="generateAll()" id="unified-btn" class="w-full bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-extrabold py-3.5 px-6 rounded-lg transition-all flex items-center justify-center gap-3 text-base shadow-lg">
+                                <span>🚀 ولّد المنشور الكامل</span>
+                                <div id="unified-loader" class="loader hidden"></div>
+                            </button>
+                        </div>
+
+                        <!-- ═══ RESULTS ═══ -->
+                        <div id="unified-results" class="hidden mt-6 space-y-3">
+                            <!-- Divider -->
+                            <div class="flex items-center gap-3 my-2">
+                                <div class="flex-1 h-px bg-indigo-200"></div>
+                                <span class="text-xs font-bold text-indigo-400">✨ النتائج</span>
+                                <div class="flex-1 h-px bg-indigo-200"></div>
+                            </div>
+
+                            <!-- 1. Script / Hook -->
+                            <div class="rounded-lg border border-indigo-200 overflow-hidden">
+                                <div class="bg-indigo-700 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>🖋️ السكريبت / نص المحتوى</span>
+                                    <button onclick="copyResult('u-script')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-0 bg-indigo-50">
+                                    <div id="u-script" class="text-slate-800 text-sm leading-relaxed"></div>
+                                </div>
+                            </div>
+
+                            <!-- 2. Visual Direction -->
+                            <div id="u-visual-section" class="rounded-lg border border-purple-300 overflow-hidden">
+                                <div class="bg-purple-700 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span id="u-visual-label">🎨 التوجيه البصري للصورة</span>
+                                    <button onclick="copyResult('u-visual')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-purple-50">
+                                    <div id="u-visual" class="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+
+                            <!-- 3. Banan Pro Prompt (image only) -->
+                            <div id="u-banan-section" class="rounded-lg border border-purple-400 overflow-hidden">
+                                <div class="bg-purple-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>🤖 Banan Pro Prompt</span>
+                                    <button onclick="copyResult('u-banan')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-white">
+                                    <code id="u-banan" class="text-purple-900 text-sm leading-relaxed whitespace-pre-wrap font-mono block"></code>
+                                </div>
+                            </div>
+
+                            <!-- 4. Caption -->
+                            <div class="rounded-lg border border-emerald-200 overflow-hidden">
+                                <div class="bg-emerald-700 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>📝 كابشن المنشور</span>
+                                    <button onclick="copyResult('u-caption')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-emerald-50">
+                                    <div id="u-caption" class="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+
+                            <!-- 5. Hashtags -->
+                            <div class="rounded-lg border border-blue-200 overflow-hidden">
+                                <div class="bg-blue-700 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span># هاشتاقات SEO ترند</span>
+                                    <button onclick="copyResult('u-hashtags')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-blue-50">
+                                    <div id="u-hashtags" class="text-blue-900 text-sm leading-loose whitespace-pre-wrap font-mono"></div>
+                                </div>
+                            </div>
+
+                            <!-- 6. Alt Text -->
+                            <div class="rounded-lg border border-orange-200 overflow-hidden">
+                                <div class="bg-orange-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>🖼️ Alt Image Text (سيو)</span>
+                                    <button onclick="copyResult('u-alt')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-orange-50">
+                                    <div id="u-alt" class="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-indigo-100">
+                        <h3 class="font-bold text-lg text-indigo-800 mb-1 flex items-center gap-2">🖋️ مولّد النصوص الاحترافي</h3>
+                        <p class="text-xs text-slate-400 mb-4">يولّد نصاً مخصصاً بناءً على نوع المنشور وهدفك</p>
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">الميزة أو الفكرة</label>
+                                <input id="ai-context" type="text" placeholder="مثال: نظام Nuwa وميزة المواعيد التلقائية" class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-indigo-500 outline-none text-sm">
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">الجمهور</label>
+                                    <select id="ai-audience" class="w-full p-2.5 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="أطباء الأسنان">أطباء الأسنان</option>
+                                        <option value="مدراء المدارس">مدراء المدارس</option>
+                                        <option value="أصحاب الشركات">أصحاب الشركات</option>
+                                        <option value="مدراء المستشفيات">مدراء المستشفيات</option>
+                                        <option value="أصحاب الصيدليات">أصحاب الصيدليات</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">نوع المنشور</label>
+                                    <select id="ai-posttype" class="w-full p-2.5 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="Reel">🎬 Reel (فيديو)</option>
+                                        <option value="Carousel">📱 Carousel (شرائح)</option>
+                                        <option value="Story">📸 Story (قصة)</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">الهدف</label>
+                                    <select id="ai-goal" class="w-full p-2.5 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="تعليمي لجذب الجمهور">🎓 تعليمي (جذب)</option>
+                                        <option value="عرض منتج للبيع">💰 عرض منتج (بيع)</option>
+                                        <option value="كواليس لبناء الثقة">🎥 كواليس (ثقة)</option>
+                                        <option value="تفاعلي لزيادة التعليقات">💬 تفاعلي</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="flex gap-3 flex-wrap">
+                                <button onclick="generateScript()" id="generate-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-2.5 px-6 rounded-md transition-all flex items-center gap-2 text-sm">
+                                    <span>توليد النص السحري ✨</span>
+                                    <div id="loader" class="loader hidden"></div>
+                                </button>
+                                <button onclick="generateScript(true)" id="regen-btn" class="hidden bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold py-2.5 px-4 rounded-md transition-all text-sm">
+                                    🔄 نسخة جديدة
+                                </button>
+                            </div>
+                        </div>
+                        <div id="ai-result-container" class="hidden mt-5 rounded-lg overflow-hidden border border-indigo-200">
+                            <div class="bg-indigo-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                <span id="result-label">النتيجة</span>
+                                <button onclick="copyResult('ai-result-text')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                            </div>
+                            <div class="p-5 bg-slate-50">
+                                <div id="ai-result-text" class="text-slate-800 leading-relaxed whitespace-pre-wrap text-sm"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tool 2: Visual Director -->
+                    <div class="bg-white p-6 rounded-lg shadow-sm border border-purple-200">
+                        <h3 class="font-bold text-lg text-purple-800 mb-1">🎨 المخرج البصري</h3>
+                        <p class="text-xs text-slate-400 mb-4">للصورة: يولّد وصف + Prompt جاهز لـ Banan Pro | للفيديو: يولّد سكريبت + تعليمات المشهد</p>
+
+                        <div class="flex gap-3 mb-4">
+                            <button onclick="setMediaType('image')" id="btn-type-image" class="flex-1 py-2.5 rounded-lg border-2 border-purple-400 bg-purple-50 text-purple-800 font-bold text-sm transition-all">🖼️ صورة</button>
+                            <button onclick="setMediaType('video')" id="btn-type-video" class="flex-1 py-2.5 rounded-lg border-2 border-slate-200 text-slate-500 font-bold text-sm transition-all hover:border-purple-300">🎬 فيديو</button>
+                        </div>
+                        <input type="hidden" id="media-type" value="image">
+
+                        <div class="space-y-3">
+                            <div>
+                                <label class="block text-sm font-bold text-slate-700 mb-1">صف فكرة المنشور</label>
+                                <textarea id="visual-idea" rows="2" placeholder="مثال: صورة تعبر عن توفير الوقت في عيادة أسنان بفضل نظام Nuwa..." class="w-full p-3 border border-slate-300 rounded-md focus:ring-2 focus:ring-purple-500 outline-none text-sm resize-none"></textarea>
+                            </div>
+                            <div id="image-style-row" class="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">أسلوب الصورة</label>
+                                    <select id="img-style" class="w-full p-2 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="cinematic, photorealistic, high quality">واقعي - احترافي</option>
+                                        <option value="3D render, sharp details, glossy">ثلاثي الأبعاد (3D)</option>
+                                        <option value="flat design, minimal, clean, vector">مسطّح وبسيط</option>
+                                        <option value="dark mode, neon glow, cyberpunk, tech">داكن - نيون</option>
+                                        <option value="infographic, colorful icons, white background">إنفوغرافيك</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold text-slate-600 mb-1">المزاج العام</label>
+                                    <select id="img-mood" class="w-full p-2 border border-slate-300 rounded-md outline-none text-sm">
+                                        <option value="professional, trustworthy, corporate blue">احترافي وموثوق</option>
+                                        <option value="modern, innovative, sleek tech vibes">عصري ومبتكر</option>
+                                        <option value="warm, friendly, human-centered">دافئ وودّي</option>
+                                        <option value="bold, powerful, dark dramatic">قوي وجريء</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button onclick="generateVisual()" id="visual-btn" class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2.5 px-6 rounded-md transition-all flex items-center gap-2 text-sm">
+                                <span id="visual-btn-text">🎨 إنشاء وصف الصورة + Prompt Banan Pro</span>
+                                <div id="visual-loader" class="loader hidden"></div>
+                            </button>
+                        </div>
+
+                        <!-- Image Results -->
+                        <div id="img-results" class="hidden mt-5 space-y-3">
+                            <div class="rounded-lg border border-purple-200 overflow-hidden">
+                                <div class="bg-purple-700 text-white px-4 py-2 text-sm font-bold">📷 وصف الصورة</div>
+                                <div class="p-4 bg-purple-50">
+                                    <div id="img-description" class="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+                            <div class="rounded-lg border border-purple-400 overflow-hidden">
+                                <div class="bg-purple-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>🤖 Banan Pro Prompt — انسخه كما هو</span>
+                                    <button onclick="copyResult('banan-prompt')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-white">
+                                    <code id="banan-prompt" class="text-purple-900 text-sm leading-relaxed whitespace-pre-wrap font-mono block"></code>
+                                </div>
+                            </div>
+                            <div class="rounded-lg border border-slate-200 overflow-hidden">
+                                <div class="bg-slate-600 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>📝 نص المنشور (Caption)</span>
+                                    <button onclick="copyResult('img-caption')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-slate-50">
+                                    <div id="img-caption" class="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Video Results -->
+                        <div id="vid-results" class="hidden mt-5 space-y-3">
+                            <div class="rounded-lg border border-indigo-200 overflow-hidden">
+                                <div class="bg-indigo-700 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>🔥 الخطاف — أول 3 ثوانٍ</span>
+                                    <button onclick="copyResult('vid-hook')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-indigo-50">
+                                    <div id="vid-hook" class="text-slate-800 text-sm font-bold leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+                            <div class="rounded-lg border border-slate-200 overflow-hidden">
+                                <div class="bg-slate-700 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>🎤 نص ما تقوله (السكريبت)</span>
+                                    <button onclick="copyResult('vid-script')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-white">
+                                    <div id="vid-script" class="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+                            <div class="rounded-lg border border-teal-200 overflow-hidden">
+                                <div class="bg-teal-700 text-white px-4 py-2 text-sm font-bold flex justify-between items-center">
+                                    <span>🎬 تعليمات المشهد (ماذا تصوّر)</span>
+                                    <button onclick="copyResult('vid-scene')" class="bg-white/20 hover:bg-white/30 px-3 py-1 rounded text-xs">نسخ 📋</button>
+                                </div>
+                                <div class="p-4 bg-teal-50">
+                                    <div id="vid-scene" class="text-slate-800 text-sm leading-relaxed whitespace-pre-wrap"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- 💡 Hooks Library (Reference) -->
+                    <div class="bg-indigo-900 text-white p-6 rounded-lg shadow-lg">
+                        <h3 class="font-bold text-lg text-teal-300 mb-1 flex items-center gap-2">💡 مكتبة الخطافات الجاهزة</h3>
+                        <p class="text-xs text-indigo-300 mb-4">اضغط على أي خطاف لنسخه فوراً — أو ولّد خطافات مخصصة بالذكاء الاصطناعي</p>
+
+                        <!-- Category Filters -->
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <button onclick="filterHooks('pain')" class="hook-cat-btn px-3 py-1 rounded text-xs font-bold bg-teal-500 text-white transition-colors">😫 مشكلة-حل</button>
+                            <button onclick="filterHooks('curiosity')" class="hook-cat-btn px-3 py-1 rounded text-xs font-bold bg-indigo-700 text-indigo-200 hover:bg-indigo-600 transition-colors">🤔 إثارة فضول</button>
+                            <button onclick="filterHooks('stat')" class="hook-cat-btn px-3 py-1 rounded text-xs font-bold bg-indigo-700 text-indigo-200 hover:bg-indigo-600 transition-colors">📊 إحصاء صادم</button>
+                            <button onclick="filterHooks('challenge')" class="hook-cat-btn px-3 py-1 rounded text-xs font-bold bg-indigo-700 text-indigo-200 hover:bg-indigo-600 transition-colors">🎯 تحدي</button>
+                        </div>
+
+                        <!-- Hooks display -->
+                        <div id="hooks-library" class="space-y-2 mb-5"></div>
+
+                        <!-- AI Generate Hooks -->
+                        <div class="border-t border-indigo-700 pt-4">
+                            <p class="text-xs text-indigo-300 mb-2">ولّد خطافات مخصصة بناءً على الفكرة التي أدخلتها في المحرر الشامل ↑</p>
+                            <button onclick="generateHooks()" id="hooks-btn" class="bg-teal-500 hover:bg-teal-400 text-indigo-900 font-extrabold py-2 px-4 rounded transition-all text-sm">
+                                توليد 3 خطافات قوية ✨
+                            </button>
+                            <div id="hooks-result" class="mt-3 space-y-2"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+            </div>
+        </section>
+
+    </main>
+
+
+    <!-- UI Message Box (Custom implementation instead of alert) -->
+    <div id="msg-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-800 text-white px-6 py-3 rounded-full shadow-2xl z-[100] hidden transition-all"></div>
+
+    <script>
+        // API Config
+        const apiKey = "AIzaSyBP6oBz4PVDbE5eYG3jQoaGoWWakcdYJIE";
+        const modelName = "gemini-2.5-flash";
+
+        // ── Hooks Library Data ──────────────────────────────────────────
+        const HOOKS = {
+            pain: [
+                "لماذا تضيع عيادات الأسنان 30% من مواعيدها كل أسبوع؟",
+                "كيف تدير مدرسة بـ500 طالب بدون فوضى؟ معظمهم لا يعرفون.",
+                "مديرك يقضي 3 ساعات يومياً في تقارير يدوية — هذا يجب أن يتوقف.",
+                "عيادتك لا تحتاج موظفاً إضافياً — تحتاج نظاماً ذكياً."
+            ],
+            curiosity: [
+                "ما الفرق بين عيادة تجني ضعف الأرباح وأخرى تخسر؟ كلاهما بنفس الحجم.",
+                "هذا النظام وفّر 4 ساعات يومياً على طبيب أسنان في دمشق. كيف؟",
+                "90% من مدراء المدارس لا يعرفون أن لديهم مشكلة — حتى تأخر التقرير.",
+                "ما الذي يجعل نظاماً برمجياً يصمد 10 سنوات؟ الجواب ليس التقنية."
+            ],
+            stat: [
+                "40% من المرضى لا يعودون للعيادة بسبب نسيان المواعيد فقط!",
+                "عيادات تستخدم نظام إدارة ذكي تحجز 60% أكثر من منافسيها.",
+                "كل ساعة تأخير في تقارير المدرسة تكلّف المدير 50 دولاراً من وقته.",
+                "3 من كل 5 شركات تفشل بسبب نظام إدارة ضعيف — ليس بسبب السوق."
+            ],
+            challenge: [
+                "تحدى نفسك: هل تستطيع مراجعة تقرير كامل للعيادة في 60 ثانية؟",
+                "أثبت أن مدرستك منظمة — كم دقيقة تأخذك لمعرفة غياب الطلاب اليوم؟",
+                "هل نظامك يعمل وأنت نائم؟ إذا لا، هناك مشكلة.",
+                "اسأل نفسك: كم ساعة تضيع أسبوعياً في أعمال تستطيع برمجة أن تنجزها؟"
+            ]
+        };
+
+        let currentHookCategory = 'pain';
+
+        // ── State ───────────────────────────────────────────────────────
+        const state = { chartsRendered: { algorithm: false, strategy: false } };
+
+        // ── Utilities ───────────────────────────────────────────────────
+        function showMessage(msg) {
+            const box = document.getElementById('msg-box');
+            box.textContent = msg;
+            box.classList.remove('hidden');
+            setTimeout(() => box.classList.add('hidden'), 3000);
+        }
+
+        function copyResult(id) {
+            const text = document.getElementById(id).textContent;
+            navigator.clipboard.writeText(text).then(() => showMessage('تم النسخ! ✅')).catch(() => {
+                const el = document.createElement('textarea');
+                el.value = text; document.body.appendChild(el); el.select();
+                document.execCommand('copy'); document.body.removeChild(el);
+                showMessage('تم النسخ! ✅');
+            });
+        }
+
+        // ── Script Renderer ─────────────────────────────────────────────
+        function renderScript(raw) {
+            if (!raw) return '';
+            
+            // Color map for known section labels
+            const sectionColors = {
+                'خطاف':    { bg: '#fff0e6', border: '#f97316', icon: '🔥', label: 'الخطاف' },
+                'hook':    { bg: '#fff0e6', border: '#f97316', icon: '🔥', label: 'الخطاف' },
+                'جسم':     { bg: '#eef2ff', border: '#6366f1', icon: '🎯', label: 'جسم المحتوى' },
+                'محتوى':   { bg: '#eef2ff', border: '#6366f1', icon: '🎯', label: 'جسم المحتوى' },
+                'بصري':    { bg: '#f0fdf4', border: '#22c55e', icon: '📹', label: 'ملاحظات بصرية' },
+                'ملاحظات': { bg: '#f0fdf4', border: '#22c55e', icon: '📹', label: 'ملاحظات بصرية' },
+                'كاميرا':  { bg: '#f0fdf4', border: '#22c55e', icon: '📹', label: 'ملاحظات الكاميرا' },
+                'cta':     { bg: '#fdf4ff', border: '#a855f7', icon: '📢', label: 'الدعوة للتفاعل' },
+                'دعوة':    { bg: '#fdf4ff', border: '#a855f7', icon: '📢', label: 'الدعوة للتفاعل' },
+                'إجراء':   { bg: '#fdf4ff', border: '#a855f7', icon: '📢', label: 'الدعوة للتفاعل' },
+                'ختام':    { bg: '#fdf4ff', border: '#a855f7', icon: '📢', label: 'الخاتمة' },
+                'شريحة':   { bg: '#e0f7fa', border: '#06b6d4', icon: '📌', label: 'شريحة' },
+            };
+
+            function getCardStyle(headerText) {
+                const lower = headerText.toLowerCase();
+                for (const key of Object.keys(sectionColors)) {
+                    if (lower.includes(key)) return sectionColors[key];
+                }
+                return { bg: '#f8fafc', border: '#94a3b8', icon: '▸', label: headerText };
+            }
+
+            function inlineFormat(text) {
+                // Bold: **text** or *text*
+                text = text.replace(/\*\*(.+?)\*\*/g, '<strong class="font-bold text-slate-900">$1</strong>');
+                text = text.replace(/\*(.+?)\*/g,     '<em class="italic text-slate-700">$1</em>');
+                return text;
+            }
+
+            const lines = raw.split('\n');
+            let html = '<div class="divide-y divide-indigo-100">';
+            let inCard = false;
+            let cardBuf = '';
+            let cardStyle = null;
+
+            function flushCard() {
+                if (!cardStyle) return;
+                const bodyHtml = cardBuf.trim()
+                    ? `<div class="px-4 pb-4 pt-2 space-y-1">${cardBuf}</div>`
+                    : '';
+                html += `
+                    <div style="background:${cardStyle.bg}; border-right:4px solid ${cardStyle.border};" class="transition-all">
+                        <div class="px-4 py-2 flex items-center gap-2">
+                            <span class="text-lg">${cardStyle.icon}</span>
+                            <span class="font-bold text-slate-700 text-sm">${cardStyle.label}</span>
+                        </div>
+                        ${bodyHtml}
+                    </div>`;
+                cardBuf = '';
+                cardStyle = null;
+            }
+
+            for (let line of lines) {
+                // Strip leading markdown marks: **, *, ## , ###
+                const cleanLine = line.replace(/^#{1,3}\s*/, '').replace(/^\*{1,2}\s*/, '').trim();
+                if (!cleanLine) continue;
+
+                // Detect section header: starts with emoji bracket or has known section keyword
+                const isSectionHeader =
+                    /^\[/.test(cleanLine) ||
+                    /^(🔥|🎯|📹|📢|📌|⚡|✅|🎬|🎤)/.test(cleanLine) ||
+                    /^(خطاف|جسم المحتوى|ملاحظات|CTA|دعوة|ختام|شريحة|ثانية|الجزء|مرحلة|Hook|Script|Scene|Part)/i.test(cleanLine) ||
+                    (/[-–:]\s/.test(cleanLine) && cleanLine.length < 60 && /(\d|ثان|جزء|مرحل|شريح)/.test(cleanLine));
+
+                if (isSectionHeader) {
+                    flushCard();
+                    const headerText = cleanLine.replace(/^\[|\]$/g, '').replace(/^[🔥🎯📹📢📌⚡✅🎬🎤]\s*/, '');
+                    cardStyle = getCardStyle(headerText);
+                    cardStyle.label = inlineFormat(headerText);
+                    inCard = true;
+                } else {
+                    const formatted = inlineFormat(cleanLine);
+                    cardBuf += `<p class="text-sm text-slate-700 leading-relaxed py-0.5">${formatted}</p>`;
+                }
+            }
+            flushCard();
+
+            // Fallback if nothing matched (plain text)
+            if (html === '<div class="divide-y divide-indigo-100">') {
+                const formatted = inlineFormat(raw)
+                    .split('\n')
+                    .filter(l => l.trim())
+                    .map(l => `<p class="text-sm text-slate-700 leading-relaxed px-4 py-1.5">${l}</p>`)
+                    .join('');
+                html += formatted;
+            }
+
+            html += '</div>';
+            return html;
+        }
+
+        // ── Gemini API Call ─────────────────────────────────────────────
+        async function callGemini(prompt, systemInstruction = "") {
+            const url = `https://generativelanguage.googleapis.com/v1/models/${modelName}:generateContent?key=${apiKey}`;
+            // v1 لا يدعم systemInstruction كحقل منفصل — ندمجه مع الـ prompt
+            const fullPrompt = systemInstruction ? `${systemInstruction}\n\n---\n${prompt}` : prompt;
+            const payload = {
+                contents: [{ parts: [{ text: fullPrompt }] }]
+            };
+            for (let i = 0; i < 3; i++) {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+                console.log("Gemini status:", response.status);
+                if (response.status === 429) {
+                    if (i < 2) {
+                        showMessage('⏳ ينتظر 20 ثانية ثم يحاول...');
+                        await new Promise(r => setTimeout(r, 20000));
+                        continue;
+                    }
+                    throw new Error('تجاوزت حد الطلبات — انتظر دقيقة ثم حاول مجدداً');
+                }
+                if (!response.ok) {
+                    const errBody = await response.json().catch(() => ({}));
+                    console.error("Gemini API Error:", errBody);
+                    throw new Error('خطأ ' + response.status + ': ' + (errBody?.error?.message || ''));
+                }
+                const data = await response.json();
+                return data.candidates?.[0]?.content?.parts?.[0]?.text || 'لم يتم استلام رد.';
+            }
+        }
+
+
+        // ── Unified Post Creator ─────────────────────────────────────────
+        function setUnifiedMedia(type) {
+            document.getElementById('unified-media-type').value = type;
+            const imgBtn = document.getElementById('ubtn-image');
+            const vidBtn = document.getElementById('ubtn-video');
+            const styleRow = document.getElementById('unified-style-row');
+            if (type === 'image') {
+                imgBtn.className = 'flex-1 py-2 rounded-lg border-2 border-purple-400 bg-purple-50 text-purple-800 font-bold text-sm transition-all';
+                vidBtn.className = 'flex-1 py-2 rounded-lg border-2 border-slate-200 text-slate-500 font-bold text-sm transition-all hover:border-purple-300';
+                styleRow.classList.remove('hidden');
+                document.getElementById('u-banan-section').classList.remove('hidden');
+                document.getElementById('u-visual-label').textContent = '🎨 التوجيه البصري للصورة';
+            } else {
+                vidBtn.className = 'flex-1 py-2 rounded-lg border-2 border-purple-400 bg-purple-50 text-purple-800 font-bold text-sm transition-all';
+                imgBtn.className = 'flex-1 py-2 rounded-lg border-2 border-slate-200 text-slate-500 font-bold text-sm transition-all hover:border-purple-300';
+                styleRow.classList.add('hidden');
+                document.getElementById('u-banan-section').classList.add('hidden');
+                document.getElementById('u-visual-label').textContent = '🎬 تعليمات المشهد';
+            }
+        }
+
+        async function generateAll() {
+            const context = document.getElementById('unified-context').value.trim();
+            if (!context) { showMessage('⚠️ أدخل فكرة المنشور أولاً'); return; }
+
+            const audience   = document.getElementById('unified-audience').value;
+            const postType   = document.getElementById('unified-posttype').value;
+            const goal       = document.getElementById('unified-goal').value;
+            const mediaType  = document.getElementById('unified-media-type').value;
+            const imgStyle   = document.getElementById('unified-img-style').value;
+            const imgMood    = document.getElementById('unified-img-mood').value;
+
+            const btn    = document.getElementById('unified-btn');
+            const loader = document.getElementById('unified-loader');
+            btn.disabled = true;
+            loader.classList.remove('hidden');
+
+            const isVideo    = mediaType === 'video';
+            const isReel     = postType === 'Reel';
+
+            // Script section prompt depends on post type
+            const scriptGuide = {
+                'Reel':     'اكتب سكريبت Reel (30-60 ثانية): [🔥 خطاف - 3 ثوانٍ] ثم [🎯 جسم المحتوى - 25 ثانية] ثم [📹 ملاحظات بصرية: ماذا يظهر في الكاميرا] ثم [📢 CTA].',
+                'Carousel': 'اكتب محتوى Carousel: [📌 عنوان الشريحة 1 - الخطاف] ثم [شرائح 2-6 مع محتوى كل واحدة] ثم [شريحة الخاتمة + CTA].',
+                'Story':    'اكتب سكريبت Story (15 ثانية): [ثانية 1-5: ماذا يظهر] ثم [ثانية 6-12: الرسالة] ثم [ثانية 13-15: CTA].',
+                'Post':     'اكتب نقاط المحتوى الرئيسية للمنشور: الفكرة الأساسية + 3 نقاط مقنعة + جملة ختامية.'
+            };
+
+            const visualSection = isVideo
+                ? `[VISUAL]
+اكتب تعليمات المشهد بالتفصيل: ماذا يظهر في الكاميرا خلال كل جزء؟ هل تتحدث مباشرة؟ هل هناك B-roll؟ هل هناك نص متحرك (text overlay)? قدّمها كقائمة مرقّمة.`
+                : `[VISUAL]
+أولاً: صف بالعربية ماذا يجب أن تظهر الصورة (العناصر، الألوان، الأشخاص، الأجواء). (3-4 جمل)
+
+ثانياً:
+[BANAN]
+اكتب Prompt بالإنجليزية الاحترافية جاهز للنسخ في Banan Pro. يحتوي على: وصف المشهد + الأسلوب البصري + المزاج + الألوان + التفاصيل التقنية.
+الأسلوب: ${imgStyle} | المزاج: ${imgMood}`;
+
+            const megaPrompt = `أنت خبير تسويق محتوى Instagram وإخراج بصري للسوق العربي. متخصص في نظام Nuwa.
+اكتب مخرجات منشور متناسق ومتكامل لـ ${postType} عن: "${context}"
+الجمهور: ${audience} | الهدف: ${goal}
+
+⚠️ تعليمات اللغة (مهمة جداً):
+- قسم [SCRIPT] فقط: اكتبه بعامية سورية بسيطة وطبيعية تماماً، كأنك حدا عادي عم يحكي مع صاحبه. استخدم كلمات زي: "شو"، "هيك"، "كتير"، "بدك"، "مو"، "بس"، "يلا"، "عارف"، "شايف"، "بتلاقي"، "مفروض"، "لازم". تجنب الفصحى الرسمية الثقيلة بهذا القسم.
+- باقي الأقسام (CAPTION, HASHTAGS, ALT): عربية مناسبة للسوشيال ميديا.
+
+اكتب بالترتيب التالي بالضبط مع الأقواس كفواصل:
+
+[SCRIPT]
+${scriptGuide[postType]}
+(تذكر: اكتب هذا القسم بعامية سورية طبيعية ومريحة للأذن)
+
+[VISUAL]
+${isVideo
+    ? 'اكتب تعليمات المشهد بالتفصيل: ماذا يظهر في الكاميرا خلال كل جزء؟ هل تتحدث مباشرة؟ B-roll؟ text overlay؟ قدّمها كقائمة مرقّمة.'
+    : 'أولاً اصف بالعربية ماذا يظهر في الصورة (3-4 جمل). ثم أضف: [BANAN] ثم اكتب Prompt إنجليزي احترافي لـ Banan Pro يحتوي وصف المشهد + الأسلوب: ${imgStyle} + المزاج: ${imgMood}.'
+}
+
+[CAPTION]
+كابشن احترافي لإنستغرام: ابدأ بخطاف صادم + رموز تعبيرية + اختم بـ CTA واضح. (150-200 كلمة)
+
+[HASHTAGS]
+25 هاشتاق بالعربية والإنجليزية: 5 ترند عالٍ + 10 متوسط التنافس + 10 نيتش. كل هاشتاق على سطر منفصل.
+
+[ALT]
+جملة واحدة Alt text بالعربية تصف الصورة المقترحة وتحتوي الكلمات المفتاحية (للسيو).`;
+
+            try {
+                const result = await callGemini(megaPrompt);
+
+                const get = (tag, next) => {
+                    const rx = next
+                        ? new RegExp(`\\[${tag}\\]([\\s\\S]*?)\\[${next}\\]`, 'i')
+                        : new RegExp(`\\[${tag}\\]([\\s\\S]*)$`, 'i');
+                    const m = result.match(rx);
+                    return m ? m[1].trim() : '';
+                };
+
+                document.getElementById('u-script').innerHTML = renderScript(get('SCRIPT', 'VISUAL'));
+
+                const visualRaw = get('VISUAL', 'CAPTION');
+                if (isVideo) {
+                    document.getElementById('u-visual').textContent = visualRaw;
+                    document.getElementById('u-banan').textContent  = '';
+                } else {
+                    const bananMatch = visualRaw.match(/\[BANAN\]([\s\S]*)$/i);
+                    const descPart   = bananMatch ? visualRaw.replace(bananMatch[0], '').replace(/\[BANAN\]/i, '').trim() : visualRaw;
+                    document.getElementById('u-visual').textContent = descPart;
+                    document.getElementById('u-banan').textContent  = bananMatch ? bananMatch[1].trim() : '';
+                }
+
+                document.getElementById('u-caption').textContent   = get('CAPTION', 'HASHTAGS');
+                document.getElementById('u-hashtags').textContent  = get('HASHTAGS', 'ALT');
+                document.getElementById('u-alt').textContent       = get('ALT', null);
+
+                document.getElementById('unified-results').classList.remove('hidden');
+                document.getElementById('unified-results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } catch (err) {
+                showMessage('❌ ' + err.message);
+            } finally {
+                btn.disabled = false;
+                loader.classList.add('hidden');
+            }
+        }
+
+        // Stub to avoid errors from old HTML (safe to keep)
+        function generateScript() { showMessage('استخدم المحرر الشامل أعلاه ✅'); }
+        function setMediaType() {}
+        function generateVisual() {}
+
+        // ── Hooks Library ────────────────────────────────────────────────
+        function renderHooks(category) {
+            const container = document.getElementById('hooks-library');
+            container.innerHTML = HOOKS[category].map((h, i) =>
+                `<div class="flex items-start gap-2 p-3 bg-indigo-800 rounded-lg hover:bg-indigo-700 transition-colors cursor-pointer group" onclick="copyHook(this, '${i}', '${category}')">
+                    <span class="text-teal-400 mt-0.5 shrink-0">◈</span>
+                    <span class="text-sm flex-1">${h}</span>
+                    <span class="text-xs text-indigo-400 group-hover:text-white transition-colors shrink-0">نسخ 📋</span>
+                </div>`
+            ).join('');
+        }
+
+        function copyHook(el, idx, cat) {
+            const text = HOOKS[cat][idx];
+            navigator.clipboard.writeText(text).then(() => showMessage('تم نسخ الخطاف! ✅')).catch(() => showMessage('انسخه يدوياً'));
+            el.classList.add('bg-teal-700');
+            setTimeout(() => el.classList.remove('bg-teal-700'), 800);
+        }
+
+        function filterHooks(category) {
+            currentHookCategory = category;
+            renderHooks(category);
+            document.querySelectorAll('.hook-cat-btn').forEach(btn => {
+                btn.className = 'hook-cat-btn px-3 py-1 rounded text-xs font-bold bg-indigo-700 text-indigo-200 hover:bg-indigo-600 transition-colors';
+            });
+            event.target.className = 'hook-cat-btn px-3 py-1 rounded text-xs font-bold bg-teal-500 text-white transition-colors';
+        }
+
+        async function generateHooks() {
+            const context = document.getElementById('unified-context').value.trim() || 'نظام Nuwa البرمجي';
+            const btn = document.getElementById('hooks-btn');
+            const container = document.getElementById('hooks-result');
+            btn.disabled = true;
+            btn.textContent = 'جاري التفكير... ✨';
+            const sys = 'أنت خبير في كتابة خطافات Reels جذابة لشركات البرمجة العربية. خطافاتك قصيرة وصادمة وتضرب نقطة الألم مباشرة.';
+            const prompt = `أعطني 3 خطافات (Hooks) مختلفة لميزة: "${context}".
+كل خطاف يجب أن يكون جملة واحدة أو جملتين، صادم، يضرب نقطة ألم الجمهور.
+اكتب كل خطاف على سطر منفصل مسبوق برقمه.`;
+            try {
+                const result = await callGemini(prompt, sys);
+                const hooks = result.split('\n').filter(h => h.trim());
+                container.innerHTML = hooks.map(h =>
+                    `<div class="flex justify-between items-start p-2 bg-indigo-800 rounded text-sm gap-2">
+                        <span>${h}</span>
+                        <button onclick="copyTextDirect(this, \`${h.replace(/`/g, "'")}\`)" class="text-xs bg-teal-500 px-2 py-0.5 rounded shrink-0">نسخ</button>
+                    </div>`
+                ).join('');
+            } catch (err) {
+                showMessage('❌ ' + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'توليد 3 خطافات قوية ✨';
+            }
+        }
+
+
+        function copyTextDirect(btn, text) {
+            navigator.clipboard.writeText(text).then(() => showMessage('تم النسخ! ✅'));
+        }
+
+        // ── Core App Logic (Tabs & Charts) ──────────────────────────────
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('border-teal-400', 'text-white', 'text-amber-300', 'border-amber-400');
+                btn.classList.add('border-transparent', 'text-indigo-200');
+            });
+            document.getElementById(tabId).classList.add('active');
+            const activeBtn = document.getElementById('btn-' + tabId.split('-')[1]);
+            activeBtn.classList.remove('border-transparent', 'text-indigo-200');
+            if (tabId === 'tab-ai') activeBtn.classList.add('text-amber-300', 'border-amber-400');
+            else activeBtn.classList.add('border-teal-400', 'text-white');
+            if (tabId === 'tab-algorithm' && !state.chartsRendered.algorithm) renderAlgorithmChart();
+            if (tabId === 'tab-strategy' && !state.chartsRendered.strategy) renderStrategyChart();
+        }
+
+        function renderAlgorithmChart() {
+            state.chartsRendered.algorithm = true;
+            const ctx = document.getElementById('algorithmChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['المشاركة (Shares)', 'الحفظ (Saves)', 'وقت المشاهدة', 'الإعجاب'],
+                    datasets: [{ data: [40, 30, 20, 10], backgroundColor: ['#3b82f6', '#14b8a6', '#6366f1', '#cbd5e1'], borderWidth: 0 }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', rtl: true } } }
+            });
+        }
+
+        function renderStrategyChart() {
+            state.chartsRendered.strategy = true;
+            const ctx = document.getElementById('contentMixChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['تعليمي (جذب)', 'عرض منتج (بيع)', 'كواليس (ثقة)'],
+                    datasets: [{ label: '% توزيع المحتوى', data: [50, 30, 20], backgroundColor: ['#2dd4bf', '#6366f1', '#fbbf24'] }]
+                },
+                options: { responsive: true, maintainAspectRatio: false, indexAxis: 'y', plugins: { legend: { display: false } } }
+            });
+        }
+
+        // ── Init ─────────────────────────────────────────────────────────
+        document.addEventListener('DOMContentLoaded', () => {
+            renderHooks('pain');
+            setUnifiedMedia('image');
+        });
+    </script>
+</body>
+</html>

@@ -8,6 +8,7 @@ import { BowlCustomizer } from './components/BowlCustomizer';
 import { OurStory } from './components/OurStory';
 import { DeliverySection, Footer } from './components/DeliverySection';
 import { DishModal } from './components/DishModal';
+import { GoogleReviewModal } from './components/GoogleReviewModal';
 import { MenuItem } from './types';
 
 export const App: React.FC = () => {
@@ -63,6 +64,9 @@ export const App: React.FC = () => {
         item={selectedItem}
         onClose={() => setSelectedItem(null)}
       />
+
+      {/* Google Review Pop-up Prompt */}
+      <GoogleReviewModal />
 
     </div>
   );

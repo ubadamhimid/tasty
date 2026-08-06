@@ -1,0 +1,128 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&family=Cairo:wght@300;400;600;700;800&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Cormorant+Garamond:wght@300;400;600;700&display=swap');
+
+@theme {
+  /* Ultra Luxury Color Palette - Refined */
+  --color-beige-50: #FCFCFA;
+  --color-beige-100: #F7F7F2;
+  --color-beige-200: #EFEFE6;
+  --color-beige-300: #E6E6D8;
+  --color-beige-400: #D8D8C4;
+  --color-beige-500: #C4C4A8;
+  --color-beige-600: #A8A88A;
+  --color-beige-800: #6B6B54;
+  --color-beige-900: #424231;
+
+  --color-gold-50: #FDFAE6;
+  --color-gold-100: #FAF2CC;
+  --color-gold-200: #F4E299;
+  --color-gold-300: #EDD166;
+  --color-gold-400: #E6C233;
+  --color-gold-500: #D4AF37;
+  /* Primary Luxury Gold */
+  --color-gold-600: #AA8C2C;
+  --color-gold-700: #806921;
+  --color-gold-900: #2B230B;
+
+  --color-dark-900: #121212;
+  --color-dark-800: #1C1C1C;
+  --color-dark-500: #424242;
+
+  /* Typography */
+  --font-arabic: "Tajawal", "Cairo", sans-serif;
+  --font-serif: "Playfair Display", "Cormorant Garamond", serif;
+
+  /* Spacing & Layout */
+  --spacing-container: 1280px;
+
+  /* Luxury Shadows */
+  --shadow-glass: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+  --shadow-gold-glow: 0 0 40px rgba(212, 175, 55, 0.2);
+  --shadow-float: 0 20px 40px -5px rgba(0, 0, 0, 0.05);
+
+  /* Animations */
+  --animate-fade-up: fadeUp 1s ease-out forwards;
+  --animate-scale-reveal: scaleReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+
+  @keyframes fadeUp {
+    from {
+      opacity: 0;
+      transform: translateY(40px);
+    }
+
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes scaleReveal {
+    from {
+      opacity: 0;
+      transform: scale(1.1);
+    }
+
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+}
+
+/* Global Base Styles */
+:root {
+  direction: rtl;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-arabic);
+  background-color: var(--color-beige-50);
+  color: var(--color-dark-800);
+  overflow-x: hidden;
+}
+
+/* Luxury Utilities */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.text-gold-gradient {
+  background: linear-gradient(135deg, #CFAB36 0%, #F4E299 50%, #B8962F 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.bg-gold-gradient {
+  background: linear-gradient(135deg, #D4AF37 0%, #F4E299 100%);
+}
+
+.glass-panel {
+  background: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
+
+.btn-luxury {
+  @apply relative overflow-hidden bg-gold-500 text-white px-8 py-3 rounded-full font-bold shadow-lg transition-all duration-300 hover:shadow-gold-glow hover:-translate-y-1 cursor-pointer;
+  background: linear-gradient(135deg, #D4AF37 0%, #AA8C2C 100%);
+}
+
+.btn-luxury-outline {
+  @apply relative overflow-hidden bg-transparent text-gold-700 px-8 py-3 rounded-full font-bold border-2 border-gold-500 transition-all duration-300 hover:bg-gold-50 hover:shadow-lg cursor-pointer;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-beige-100);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-gold-400);
+  border-radius: 4px;
+}
