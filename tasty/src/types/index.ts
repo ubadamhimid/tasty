@@ -1,4 +1,4 @@
-export type CategoryType = 'all' | 'kapsalon' | 'manaqish' | 'bowls' | 'durum' | 'dips';
+export type CategoryType = 'all' | 'kapsalon' | 'manaqish' | 'bowls' | 'durum' | 'dips' | string;
 
 export interface MenuItem {
   id: string;

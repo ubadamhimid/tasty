@@ -95,17 +95,17 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
           {/* Bottom Action Row */}
           <div className="relative z-10 flex items-center justify-between pt-8 mt-auto">
             <div className="text-2xl font-bold text-tasty-charcoal">
-              €14.<span className="text-sm font-semibold">50</span>
+              €14.<span className="text-sm font-semibold">00</span>
             </div>
 
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onSelectItem({
-                id: 'kapsalon-mix',
-                name: 'Schotel Shawarma Kip & Fries',
+                id: 'schotel-arabish-kip-shoarma',
+                name: 'Arabish Kip Shoarma',
                 category: 'kapsalon',
-                price: 14.50,
+                price: 14.00,
                 description: 'Generous platter of tender chicken shawarma with golden fries, garlic toum, pickles, and crisp coleslaw.',
                 rating: 5.0,
                 reviewCount: 412,
@@ -151,28 +151,28 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
 
           <div className="relative z-10 space-y-2 my-4">
             <h3 className="text-2xl font-serif font-bold text-tasty-charcoal group-hover:text-tasty-teal transition-colors">
-              Manaqish Za’atar & Kaas
+              Manaqish Kaas
             </h3>
             <p className="text-tasty-charcoal-muted text-xs sm:text-sm leading-relaxed max-w-xs">
-              Half wild za’atar with olive oil & half melted cheese on oven-fresh flatbread.
+              Ovenbaked flatbread with melted cheese & Levantine olive oil.
             </p>
           </div>
 
           <div className="relative z-10 flex items-center justify-between pt-4 border-t border-tasty-sage/20">
-            <div className="text-xl font-bold text-tasty-charcoal">€6.90</div>
+            <div className="text-xl font-bold text-tasty-charcoal">€3.00</div>
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onSelectItem({
-                id: 'manaqish-zaatar',
-                name: 'Manaqish Za’atar & Kaas',
+                id: 'manaqish-kaas',
+                name: 'Manaqish Kaas',
                 category: 'manaqish',
-                price: 6.90,
-                description: 'Traditional oven-baked flatbread, half wild Levantine za’atar with olive oil and half melted cheese.',
-                rating: 4.9,
+                price: 3.00,
+                description: 'Ovenbaked flatbread with melted cheese.',
+                rating: 4.8,
                 reviewCount: 290,
                 image: '/images/manaqish.webp',
-                ingredients: ['Za\'atar', 'Melted Cheese', 'Olive Oil']
+                ingredients: ['Melted Cheese', 'Olive Oil', 'Fresh Dough']
               })}
               className="px-4 py-2 rounded-full bg-tasty-teal text-white text-xs font-bold shadow-sm hover:bg-tasty-teal-dark transition-colors flex items-center gap-1.5"
             >
@@ -212,28 +212,28 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
 
           <div className="relative z-10 space-y-2 my-4">
             <h3 className="text-2xl font-serif font-bold text-tasty-charcoal group-hover:text-tasty-terracotta transition-colors">
-              Crispy Chicken Rice Bowl
+              Tasty Crispy Chicken Rice
             </h3>
             <p className="text-tasty-charcoal-muted text-xs sm:text-sm leading-relaxed max-w-xs">
-              Golden crispy chicken cutlets over yellow turmeric basmati rice with house sauce.
+              Augurken, saus en rijst met knapperige kip.
             </p>
           </div>
 
           <div className="relative z-10 flex items-center justify-between pt-4 border-t border-tasty-sage/20">
-            <div className="text-xl font-bold text-tasty-charcoal">€13.90</div>
+            <div className="text-xl font-bold text-tasty-charcoal">€12.00</div>
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onSelectItem({
-                id: 'bowl-crispy-chicken',
-                name: 'Tasty Crispy Chicken Rice Bowl',
+                id: 'bowl-crispy-chicken-rice',
+                name: 'Tasty Crispy Chicken Rice',
                 category: 'bowls',
-                price: 13.90,
-                description: 'Golden crispy chicken cutlets over yellow turmeric basmati rice with house sauce.',
+                price: 12.00,
+                description: 'Augurken, saus en rijst',
                 rating: 4.9,
                 reviewCount: 520,
                 image: '/images/crispy-chicken-bowl.webp',
-                ingredients: ['Crispy Chicken', 'Turmeric Rice', 'House Sauce']
+                ingredients: ['Crispy Chicken', 'Yellow Rice', 'Pickles', 'House Sauce']
               })}
               className="px-4 py-2 rounded-full bg-tasty-terracotta text-white text-xs font-bold shadow-sm hover:bg-tasty-terracotta-dark transition-colors flex items-center gap-1.5"
             >
@@ -243,7 +243,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
           </div>
         </motion.div>
 
-        {/* Card 4: Falafel & Hummus Feast Bowl (7 Columns) */}
+        {/* Card 4: Tasty Combination Platter / Falafel & Hummus (7 Columns) */}
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -255,7 +255,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
           <div className="absolute right-0 bottom-0 w-1/2 h-full opacity-90 group-hover:scale-110 transition-transform duration-500 pointer-events-none flex items-center justify-end">
             <img 
               src="/images/falafel-hummus-bowl.webp" 
-              alt="Falafel & Hummus Feast Bowl" 
+              alt="Tasty Combination Platter" 
               loading="lazy"
               className="max-h-[110%] w-auto object-contain filter drop-shadow-xl"
             />
@@ -273,28 +273,28 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
 
           <div className="relative z-10 max-w-sm space-y-2 my-4">
             <h3 className="text-2xl font-serif font-bold text-tasty-charcoal group-hover:text-tasty-teal transition-colors">
-              Falafel & Hummus Feast Bowl
+              Tasty Combination Platter
             </h3>
             <p className="text-tasty-charcoal-muted text-sm leading-relaxed">
-              Crispy herb falafel donuts served over creamy hummus with sumac, pickled turnips, chopped salad, and fresh pita bread.
+              Hummus en handgemaakte Falafel met vers brood en olijfolie.
             </p>
           </div>
 
           <div className="relative z-10 flex items-center justify-between pt-6 mt-auto border-t border-tasty-sage/20">
-            <div className="text-2xl font-bold text-tasty-charcoal">€12.90</div>
+            <div className="text-2xl font-bold text-tasty-charcoal">€8.00</div>
             <motion.button 
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => onSelectItem({
-                id: 'bowl-falafel-hummus',
-                name: 'Falafel & Hummus Feast Bowl',
-                category: 'bowls',
-                price: 12.90,
-                description: 'Crispy herb falafel donuts served over creamy hummus with sumac, pickled turnips, chopped salad, and fresh pita bread.',
-                rating: 4.9,
-                reviewCount: 340,
+                id: 'dip-tasty-combo',
+                name: 'Tasty Combination Platter',
+                category: 'dips',
+                price: 8.00,
+                description: 'Hummus en handgemaakte Falafel',
+                rating: 5.0,
+                reviewCount: 412,
                 image: '/images/falafel-hummus-bowl.webp',
-                ingredients: ['Herb Falafel', 'Creamy Hummus', 'Pickled Turnips', 'Stone-Baked Pita']
+                ingredients: ['Hummus', 'Handmade Falafel', 'Olive Oil', 'Fresh Bread']
               })}
               className="px-5 py-2.5 rounded-full bg-tasty-teal text-white text-xs font-bold shadow-md hover:bg-tasty-teal-dark transition-colors flex items-center gap-2"
             >

@@ -12,26 +12,26 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
   const featuredDishes = [
     {
       id: 'wrap',
-      title: 'Signature Chicken Shawarma Wrap',
-      subtitle: 'Toasted durum with 24h marinated chicken, homemade garlic toum & crisp wild pickles',
-      price: '€9.50',
+      title: 'Kip Shoarma Durum Wrap',
+      subtitle: 'Toasted durum with marinated chicken, homemade garlic toum & crisp pickles',
+      price: '€8.00',
       craftNote: 'Hand-rolled • Fire-roasted • House Garlic Toum',
       image: '/images/shawarma-wrap.webp',
     },
     {
       id: 'bowl',
-      title: 'Grilled Chicken Skewers Bowl',
-      subtitle: 'Fire-grilled skewers served over fragrant turmeric basmati rice with sumac side salad',
-      price: '€14.90',
-      craftNote: 'Charcoal Grilled • Turmeric Rice • Fresh Sumac',
+      title: 'Tasty Shish Taouk Rice Bowl',
+      subtitle: 'Fire-grilled skewers served over yellow spiced basmati rice with pickles and sauce',
+      price: '€12.00',
+      craftNote: 'Charcoal Grilled • Spiced Rice • Syrian Garlic',
       image: '/images/chicken-skewers-bowl.webp',
     },
     {
       id: 'manaqish',
-      title: 'Manaqish Za’atar & Kaas',
-      subtitle: 'Stone-baked artisan flatbread brushed with extra virgin olive oil, wild za’atar & melted cheese',
-      price: '€6.90',
-      craftNote: 'Stone Oven Baked • Wild Za’atar • EVOO',
+      title: 'Manaqish Kaas',
+      subtitle: 'Stone-baked artisan flatbread brushed with extra virgin olive oil & melted cheese',
+      price: '€3.00',
+      craftNote: 'Stone Oven Baked • Fresh Cheese • EVOO',
       image: '/images/manaqish.webp',
     }
   ];

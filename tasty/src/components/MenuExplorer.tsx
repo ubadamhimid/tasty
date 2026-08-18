@@ -121,16 +121,15 @@ export const MenuExplorer: React.FC<MenuExplorerProps> = ({ onSelectItem }) => {
       </div>
 
       {/* Menu Cards Grid */}
-      <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left">
-        <AnimatePresence>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 text-left">
+        <AnimatePresence mode="popLayout">
           {filteredItems.map((item) => (
             <motion.div
-              layout
               key={item.id}
-              initial={{ opacity: 0, scale: 0.9 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.9 }}
-              transition={{ duration: 0.3 }}
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2 }}
               whileHover={{ y: -6 }}
               className="bg-white rounded-3xl overflow-hidden border border-tasty-sage/20 shadow-tasty-soft hover:shadow-tasty-hover flex flex-col justify-between group cursor-pointer"
               onClick={() => onSelectItem(item)}
@@ -140,6 +139,8 @@ export const MenuExplorer: React.FC<MenuExplorerProps> = ({ onSelectItem }) => {
                 <img 
                   src={item.image} 
                   alt={item.name} 
+                  loading="lazy"
+                  decoding="async"
                   className="max-h-full max-w-full object-contain filter drop-shadow-xl group-hover:scale-105 transition-transform duration-500"
                 />
 
@@ -205,7 +206,7 @@ export const MenuExplorer: React.FC<MenuExplorerProps> = ({ onSelectItem }) => {
             </motion.div>
           ))}
         </AnimatePresence>
-      </motion.div>
+      </div>
 
       {/* Empty Search Result */}
       {filteredItems.length === 0 && (
