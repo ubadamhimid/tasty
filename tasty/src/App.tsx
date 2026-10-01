@@ -1,74 +1,48 @@
-import React, { useState } from 'react';
-import { Navbar } from './components/Navbar';
-import { Hero } from './components/Hero';
-import { SidewaysMarquee } from './components/SidewaysMarquee';
-import { BentoGrid } from './components/BentoGrid';
-import { MenuExplorer } from './components/MenuExplorer';
-import { BowlCustomizer } from './components/BowlCustomizer';
-import { OurStory } from './components/OurStory';
-import { DeliverySection, Footer } from './components/DeliverySection';
-import { DishModal } from './components/DishModal';
-import { GoogleReviewModal } from './components/GoogleReviewModal';
-import { MenuItem } from './types';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider, ProtectedRoute } from './admin/context/AuthContext';
+import { CustomerLandingPage } from './components/CustomerLandingPage';
+import { AdminLoginPage } from './admin/pages/AdminLoginPage';
+import { AdminLayout } from './admin/components/AdminLayout';
+import { AdminDashboardHome } from './admin/pages/AdminDashboardHome';
+import { PurchasingPage } from './admin/pages/PurchasingPage';
+import { DailySalesPage } from './admin/pages/DailySalesPage';
+import { DebtsPage } from './admin/pages/DebtsPage';
+import { SettingsPage } from './admin/pages/SettingsPage';
 
 export const App: React.FC = () => {
-  const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
-
-  const scrollToCustomizer = () => {
-    const el = document.getElementById('customizer');
-    if (el) {
-      el.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#FFFDF9] text-[#2B3A39] relative overflow-hidden">
-      
-      {/* Floating Navbar */}
-      <Navbar 
-        onOpenCustomizer={scrollToCustomizer}
-      />
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          {/* Public Customer Restaurant Site */}
+          <Route path="/" element={<CustomerLandingPage />} />
 
-      <main>
-        {/* Hero Section */}
-        <Hero onOpenCustomizer={scrollToCustomizer} />
+          {/* Admin Login */}
+          <Route path="/admin/login" element={<AdminLoginPage />} />
 
-        {/* Sideways Text Marquee */}
-        <SidewaysMarquee />
+          {/* Protected Admin Dashboard */}
+          <Route
+            path="/admin"
+            element={
+              <ProtectedRoute>
+                <AdminLayout />
+              </ProtectedRoute>
+            }
+          >
+            <Route index element={<AdminDashboardHome />} />
+            <Route path="orders" element={<PurchasingPage />} />
+            <Route path="sales" element={<DailySalesPage />} />
+            <Route path="debts" element={<DebtsPage />} />
+            <Route path="settings" element={<SettingsPage />} />
+            <Route path="*" element={<Navigate to="/admin" replace />} />
+          </Route>
 
-        {/* Best Sellers Bento Grid */}
-        <BentoGrid 
-          onSelectItem={setSelectedItem}
-        />
-
-        {/* Interactive Category Menu Explorer */}
-        <MenuExplorer 
-          onSelectItem={setSelectedItem}
-        />
-
-        {/* Interactive Custom Bowl Builder */}
-        <BowlCustomizer />
-
-        {/* Our Story & Craftsmanship */}
-        <OurStory />
-
-        {/* Location & Store Contact */}
-        <DeliverySection />
-      </main>
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Item Detail Pop-up Modal */}
-      <DishModal 
-        item={selectedItem}
-        onClose={() => setSelectedItem(null)}
-      />
-
-      {/* Google Review Pop-up Prompt */}
-      <GoogleReviewModal />
-
-    </div>
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
   );
 };
 

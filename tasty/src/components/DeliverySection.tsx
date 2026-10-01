@@ -369,8 +369,16 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-tasty-charcoal-muted">
-          <div className="flex items-center gap-2">
+          <div className="flex flex-wrap items-center gap-3">
             <span>© {new Date().getFullYear()} TASTY Levantine Flavours Hilversum. All rights reserved.</span>
+            <span>•</span>
+            <a 
+              href="/admin" 
+              className="text-gray-400 hover:text-tasty-teal transition-colors inline-flex items-center gap-1 font-medium"
+              title="لوحة تحكم إدارة المطعم"
+            >
+              <span>Admin Portal</span>
+            </a>
           </div>
 
           {/* Back to Top Scroll Button */}
