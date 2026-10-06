@@ -227,12 +227,15 @@ export const DebtsPage: React.FC = () => {
               مطلوب سداده
             </span>
           </div>
-          <div className="text-2xl sm:text-3xl font-serif font-black text-red-600 mt-1">
-            €{stats.payable.remaining.toLocaleString('nl-NL')}
+          <div className="flex items-baseline gap-1 mt-1" dir="ltr">
+            <span className="text-base sm:text-lg font-bold text-red-400 font-sans">€</span>
+            <span className="text-2xl sm:text-3xl font-black font-sans tracking-tight text-red-600 tabular-nums">
+              {stats.payable.remaining.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
           </div>
           <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-600">
-            <span>تم سداده: €{stats.payable.paid}</span>
-            <span className="font-bold text-gray-400">إجمالي: €{stats.payable.total}</span>
+            <span>تم سداده: €{stats.payable.paid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span className="font-bold text-gray-400">إجمالي: €{stats.payable.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
         </div>
 
@@ -246,24 +249,30 @@ export const DebtsPage: React.FC = () => {
               مطلوب تحصيله
             </span>
           </div>
-          <div className="text-2xl sm:text-3xl font-serif font-black text-blue-600 mt-1">
-            €{stats.receivable.remaining.toLocaleString('nl-NL')}
+          <div className="flex items-baseline gap-1 mt-1" dir="ltr">
+            <span className="text-base sm:text-lg font-bold text-blue-400 font-sans">€</span>
+            <span className="text-2xl sm:text-3xl font-black font-sans tracking-tight text-blue-600 tabular-nums">
+              {stats.receivable.remaining.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
           </div>
           <div className="mt-3 pt-3 border-t border-gray-100 flex items-center justify-between text-xs text-gray-600">
-            <span>تم تحصيله: €{stats.receivable.paid}</span>
-            <span className="font-bold text-gray-400">إجمالي: €{stats.receivable.total}</span>
+            <span>تم تحصيله: €{stats.receivable.paid.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
+            <span className="font-bold text-gray-400">إجمالي: €{stats.receivable.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
           </div>
         </div>
 
         {/* Net Balance */}
         <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-xs">
           <span className="text-xs font-bold text-gray-500">صافي الميزان (لنا - علينا)</span>
-          <div
-            className={`text-2xl sm:text-3xl font-serif font-black mt-1 ${
-              stats.netBalance >= 0 ? 'text-emerald-600' : 'text-amber-600'
-            }`}
-          >
-            €{stats.netBalance.toLocaleString('nl-NL')}
+          <div className="flex items-baseline gap-1 mt-1" dir="ltr">
+            <span className="text-base sm:text-lg font-bold text-gray-400 font-sans">€</span>
+            <span
+              className={`text-2xl sm:text-3xl font-black font-sans tracking-tight tabular-nums ${
+                stats.netBalance >= 0 ? 'text-emerald-600' : 'text-amber-600'
+              }`}
+            >
+              {Math.abs(stats.netBalance).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+            </span>
           </div>
           <div className="mt-3 pt-3 border-t border-gray-100 text-xs text-gray-500">
             {stats.netBalance >= 0
@@ -408,13 +417,15 @@ export const DebtsPage: React.FC = () => {
                     <div className="text-right sm:text-left min-w-[130px]">
                       <div className="text-xs text-gray-400">الرصيد المتبقي:</div>
                       <div
-                        className={`font-serif font-black text-xl sm:text-2xl ${
+                        className={`flex items-baseline gap-0.5 font-sans font-black text-xl sm:text-2xl tabular-nums ${
                           debt.remainingAmount > 0
                             ? isPayable ? 'text-red-600' : 'text-blue-600'
                             : 'text-emerald-600'
                         }`}
+                        dir="ltr"
                       >
-                        €{debt.remainingAmount.toLocaleString('nl-NL')}
+                        <span className="text-sm font-bold opacity-60 mr-0.5">€</span>
+                        <span>{debt.remainingAmount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</span>
                       </div>
                       <div className="text-[11px] text-gray-500 font-medium">
                         تم سداد €{debt.paidAmount} من €{debt.totalAmount} ({progressPct}%)

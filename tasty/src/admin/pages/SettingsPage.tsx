@@ -17,18 +17,25 @@ import {
   Clock,
   ShieldCheck,
   Database,
-  Trash2
+  Trash2,
+  Briefcase
 } from 'lucide-react';
 
 export const SettingsPage: React.FC = () => {
-  const { credentials, updateCredentials } = useAdminAuth();
+  const { credentials, updateCredentials, updateManagerCredentials } = useAdminAuth();
 
-  // Credentials change state
+  // Admin Credentials change state
   const [username, setUsername] = useState(credentials.username);
   const [currentPassword, setCurrentPassword] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
   const [credMessage, setCredMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+
+  // Manager Credentials state
+  const [mgrUsername, setMgrUsername] = useState(credentials.managerUsername || 'manager');
+  const [mgrNewPassword, setMgrNewPassword] = useState('');
+  const [mgrConfirmPassword, setMgrConfirmPassword] = useState('');
+  const [mgrMessage, setMgrMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
 
   // Backup state
   const [backupMessage, setBackupMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
@@ -55,12 +62,41 @@ export const SettingsPage: React.FC = () => {
 
     const res = updateCredentials(username, newPassword);
     if (res.success) {
-      setCredMessage({ type: 'success', text: 'تم تحديث بيانات الحساب بنجاح!' });
+      setCredMessage({ type: 'success', text: 'تم تحديث بيانات حساب المدير العام بنجاح!' });
       setCurrentPassword('');
       setNewPassword('');
       setConfirmPassword('');
     } else {
       setCredMessage({ type: 'error', text: res.error || 'فشل التحديث' });
+    }
+  };
+
+  const handleUpdateManagerCreds = (e: React.FormEvent) => {
+    e.preventDefault();
+    setMgrMessage(null);
+
+    if (!mgrUsername.trim()) {
+      setMgrMessage({ type: 'error', text: 'يرجى إدخال اسم مستخدم لمدير الصالة' });
+      return;
+    }
+
+    if (mgrNewPassword.length < 4) {
+      setMgrMessage({ type: 'error', text: 'كلمة المرور يجب أن تكون 4 أحرف/أرقام على الأقل' });
+      return;
+    }
+
+    if (mgrNewPassword !== mgrConfirmPassword) {
+      setMgrMessage({ type: 'error', text: 'كلمة المرور الجديدة وتأكيدها غير متطابقين' });
+      return;
+    }
+
+    const res = updateManagerCredentials(mgrUsername.trim(), mgrNewPassword.trim());
+    if (res.success) {
+      setMgrMessage({ type: 'success', text: 'تم تحديث بيانات حساب مدير الصالة (المشرف) بنجاح!' });
+      setMgrNewPassword('');
+      setMgrConfirmPassword('');
+    } else {
+      setMgrMessage({ type: 'error', text: res.error || 'فشل التحديث' });
     }
   };
 
@@ -214,7 +250,113 @@ export const SettingsPage: React.FC = () => {
               type="submit"
               className="w-full py-2.5 bg-tasty-teal hover:bg-tasty-teal-dark text-white rounded-xl text-xs font-bold transition-all shadow-xs"
             >
-              تحديث بيانات الدخول
+              تحديث بيانات المدير العام
+            </button>
+          </form>
+        </div>
+
+        {/* Manager Credentials Form */}
+        <div className="bg-white rounded-3xl p-5 sm:p-6 border border-gray-100 shadow-xs space-y-4">
+          <div className="flex items-center gap-2.5 pb-3 border-b border-gray-100">
+            <div className="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <Briefcase className="w-4 h-4" />
+            </div>
+            <div>
+              <div className="flex items-center gap-2">
+                <h2 className="font-cairo font-bold text-base text-tasty-charcoal">حساب مدير الصالة (Manager)</h2>
+                <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">
+                  صلاحية تشغيلية
+                </span>
+              </div>
+              <p className="text-xs text-gray-400">للمشرفين المسؤولين عن إدخال اليوميات والورديات دون كشف الإحصائيات</p>
+            </div>
+          </div>
+
+          {/* Role permissions summary pill */}
+          <div className="p-3 rounded-2xl bg-amber-50/50 border border-amber-100/70 text-[11px] text-amber-900 space-y-1.5">
+            <div className="font-bold flex items-center gap-1.5 text-amber-800">
+              <ShieldCheck className="w-3.5 h-3.5 text-amber-600" />
+              <span>الصلاحيات الممنوحة لمدير الصالة:</span>
+            </div>
+            <ul className="grid grid-cols-2 gap-x-2 gap-y-1 text-gray-600 text-[10px]">
+              <li className="flex items-center gap-1">
+                <span className="text-emerald-500 font-bold">✓</span> تسجيل مبيعات الكاش والبنك
+              </li>
+              <li className="flex items-center gap-1">
+                <span className="text-emerald-500 font-bold">✓</span> تسجيل حضور وساعات الموظفين
+              </li>
+              <li className="flex items-center gap-1">
+                <span className="text-emerald-500 font-bold">✓</span> طلبيات الشراء والنواقص
+              </li>
+              <li className="flex items-center gap-1">
+                <span className="text-emerald-500 font-bold">✓</span> تسجيل دفعات الديون
+              </li>
+              <li className="flex items-center gap-1 col-span-2 text-rose-600 font-semibold">
+                <span>✕</span> محجوب تماماً: الإحصائيات العامة، نسب النمو، وإعدادات النظام
+              </li>
+            </ul>
+          </div>
+
+          {mgrMessage && (
+            <div
+              className={`p-3 rounded-xl text-xs font-bold flex items-center gap-2 ${
+                mgrMessage.type === 'success'
+                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                  : 'bg-red-50 text-red-800 border border-red-200'
+              }`}
+            >
+              {mgrMessage.type === 'success' ? <CheckCircle2 className="w-4 h-4" /> : <AlertCircle className="w-4 h-4" />}
+              <span>{mgrMessage.text}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleUpdateManagerCreds} className="space-y-3.5">
+            <div>
+              <label className="block text-xs font-bold text-gray-700 mb-1">اسم مستخدم مدير الصالة</label>
+              <div className="relative">
+                <User className="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={mgrUsername}
+                  onChange={(e) => setMgrUsername(e.target.value)}
+                  placeholder="مثال: manager"
+                  required
+                  className="w-full pr-9 pl-3 py-2 text-xs rounded-xl border border-gray-200 focus:outline-none focus:border-amber-500 bg-white"
+                />
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">تعيين كلمة مرور جديدة</label>
+                <input
+                  type="password"
+                  value={mgrNewPassword}
+                  onChange={(e) => setMgrNewPassword(e.target.value)}
+                  placeholder="4 أحرف/أرقام على الأقل"
+                  required
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 focus:outline-none focus:border-amber-500 bg-white"
+                />
+              </div>
+
+              <div>
+                <label className="block text-xs font-bold text-gray-700 mb-1">تأكيد كلمة المرور</label>
+                <input
+                  type="password"
+                  value={mgrConfirmPassword}
+                  onChange={(e) => setMgrConfirmPassword(e.target.value)}
+                  placeholder="أعد كتابتها"
+                  required
+                  className="w-full px-3 py-2 text-xs rounded-xl border border-gray-200 focus:outline-none focus:border-amber-500 bg-white"
+                />
+              </div>
+            </div>
+
+            <button
+              type="submit"
+              className="w-full py-2.5 bg-amber-600 hover:bg-amber-700 text-white rounded-xl text-xs font-bold transition-all shadow-xs"
+            >
+              حفظ بيانات حساب مدير الصالة
             </button>
           </form>
         </div>
@@ -322,7 +464,7 @@ export const SettingsPage: React.FC = () => {
               <MapPin className="w-4 h-4 text-tasty-teal" />
               <span>العنوان والموقع:</span>
             </div>
-            <p>Leeuwenstraat 14, 1211 MD Hilversum</p>
+            <p>Groest 50, 1211 EC Hilversum</p>
             <p className="text-gray-400">هولندا • شمال هولندا</p>
           </div>
 

@@ -6,7 +6,14 @@ import {
   DebtPayment,
   AdminBackupData,
   ItemCategory,
-  ItemUnit
+  ItemUnit,
+  Employee,
+  EmployeeShift,
+  EmployeeAdvance,
+  EmployeePaymentMethod,
+  EmployeePaymentType,
+  WageType,
+  ShiftPaymentStatus
 } from '../types';
 
 const STORAGE_KEYS = {
@@ -14,6 +21,9 @@ const STORAGE_KEYS = {
   PURCHASE_ORDERS: 'tasty_admin_purchase_orders_v2',
   DAILY_SALES: 'tasty_admin_daily_sales_v2',
   DEBTS: 'tasty_admin_debts_v2',
+  EMPLOYEES: 'tasty_admin_employees_v1',
+  EMPLOYEE_SHIFTS: 'tasty_admin_employee_shifts_v1',
+  EMPLOYEE_ADVANCES: 'tasty_admin_employee_advances_v1',
   EVENT_NAME: 'tasty_storage_changed',
 };
 
@@ -592,6 +602,173 @@ const DEMO_DEBTS: DebtRecord[] = [
   },
 ];
 
+const INITIAL_EMPLOYEES: Employee[] = [
+  {
+    id: 'emp-1',
+    name: 'أبو أحمد الشامي',
+    phone: '0612345671',
+    role: 'معلم شاورما رئيسي',
+    wageType: 'hourly',
+    rate: 14.5,
+    scheduleType: 'fixed',
+    defaultHours: 8,
+    defaultStartTime: '10:00',
+    defaultEndTime: '18:30',
+    defaultBreakMinutes: 30,
+    workingDays: [1, 2, 3, 4, 5, 6, 0], // طيلة الأسبوع
+    isActive: true,
+    startDate: '2026-01-15',
+    notes: 'مسؤول سيخ الشاورما وتجهيز التتبيلة الصباحية',
+    createdAt: '2026-01-15T08:00:00Z',
+  },
+  {
+    id: 'emp-2',
+    name: 'سامر العلي',
+    phone: '0687654321',
+    role: 'كاشير وخدمة صالة',
+    wageType: 'hourly',
+    rate: 12.0,
+    scheduleType: 'fixed',
+    defaultHours: 7.5,
+    defaultStartTime: '11:00',
+    defaultEndTime: '19:00',
+    defaultBreakMinutes: 30,
+    workingDays: [2, 3, 4, 5, 6, 0], // ما عدا الاثنين
+    isActive: true,
+    startDate: '2026-03-01',
+    notes: 'استلام الصندوق وطلبيات الهاتف والزبائن',
+    createdAt: '2026-03-01T09:00:00Z',
+  },
+  {
+    id: 'emp-3',
+    name: 'محمود الحلبي',
+    phone: '0645678912',
+    role: 'شيف معجنات ومناقيش',
+    wageType: 'hourly',
+    rate: 13.5,
+    scheduleType: 'fixed',
+    defaultHours: 7.5,
+    defaultStartTime: '09:00',
+    defaultEndTime: '17:00',
+    defaultBreakMinutes: 30,
+    workingDays: [2, 3, 4, 5, 6, 0], // ما عدا الاثنين
+    isActive: true,
+    startDate: '2026-02-10',
+    notes: 'فرن المعجنات، العجين، والصفائح الشامية',
+    createdAt: '2026-02-10T08:00:00Z',
+  },
+  {
+    id: 'emp-4',
+    name: 'يوسف المصري',
+    phone: '0698761234',
+    role: 'مساعد مطبخ وتجهيز وسلطات',
+    wageType: 'hourly',
+    rate: 11.5,
+    scheduleType: 'flexible', // دوام مرن عند الحاجة
+    defaultHours: 8,
+    defaultStartTime: '12:00',
+    defaultEndTime: '20:30',
+    defaultBreakMinutes: 30,
+    workingDays: [5, 6, 0], // عطلة نهاية الأسبوع
+    isActive: true,
+    startDate: '2026-05-01',
+    notes: 'تقطيع الخضار والمقالي والتغليف - دوام مرن',
+    createdAt: '2026-05-01T10:00:00Z',
+  },
+];
+
+const DEMO_EMPLOYEE_SHIFTS: EmployeeShift[] = [
+  {
+    id: 'shift-1',
+    employeeId: 'emp-1',
+    employeeName: 'أبو أحمد الشامي',
+    date: '2026-10-06',
+    startTime: '10:00',
+    endTime: '18:30',
+    breakMinutes: 30,
+    totalHours: 8.0,
+    hourlyRate: 14.5,
+    totalEarned: 116.0,
+    paymentStatus: 'paid_cash',
+    paidAmount: 116.0,
+    notes: 'تسليم اليومية كاش نهاية الوردية',
+    createdAt: '2026-10-06T18:30:00Z',
+  },
+  {
+    id: 'shift-2',
+    employeeId: 'emp-2',
+    employeeName: 'سامر العلي',
+    date: '2026-10-06',
+    startTime: '11:00',
+    endTime: '19:00',
+    breakMinutes: 30,
+    totalHours: 7.5,
+    hourlyRate: 12.0,
+    totalEarned: 90.0,
+    paymentStatus: 'unpaid',
+    paidAmount: 0,
+    notes: 'حساب أسبوعي يتم تسليمه الأحد',
+    createdAt: '2026-10-06T19:00:00Z',
+  },
+  {
+    id: 'shift-3',
+    employeeId: 'emp-3',
+    employeeName: 'محمود الحلبي',
+    date: '2026-10-05',
+    startTime: '09:00',
+    endTime: '17:00',
+    breakMinutes: 30,
+    totalHours: 7.5,
+    hourlyRate: 13.5,
+    totalEarned: 101.25,
+    paymentStatus: 'paid_bank',
+    paidAmount: 101.25,
+    notes: 'تم التحويل لحسابه البنكي',
+    createdAt: '2026-10-05T17:00:00Z',
+  },
+  {
+    id: 'shift-4',
+    employeeId: 'emp-4',
+    employeeName: 'يوسف المصري',
+    date: '2026-10-05',
+    startTime: '12:00',
+    endTime: '20:30',
+    breakMinutes: 30,
+    totalHours: 8.0,
+    hourlyRate: 11.5,
+    totalEarned: 92.0,
+    paymentStatus: 'unpaid',
+    paidAmount: 0,
+    notes: 'مستحق معلق',
+    createdAt: '2026-10-05T20:30:00Z',
+  },
+];
+
+const DEMO_EMPLOYEE_ADVANCES: EmployeeAdvance[] = [
+  {
+    id: 'adv-1',
+    employeeId: 'emp-2',
+    employeeName: 'سامر العلي',
+    amount: 50.0,
+    date: '2026-10-06',
+    paymentMethod: 'cash',
+    paymentType: 'advance',
+    notes: 'سلفة نقدية من صندوق الكاش',
+    createdAt: '2026-10-06T15:00:00Z',
+  },
+  {
+    id: 'adv-2',
+    employeeId: 'emp-4',
+    employeeName: 'يوسف المصري',
+    amount: 30.0,
+    date: '2026-10-05',
+    paymentMethod: 'cash',
+    paymentType: 'advance',
+    notes: 'دفعة نقدية مسحوبة من الكاش',
+    createdAt: '2026-10-05T16:30:00Z',
+  }
+];
+
 // -------------------------------------------------------------
 // Server Sync State & Helpers
 // -------------------------------------------------------------
@@ -680,6 +857,15 @@ export const StorageService = {
         if (Array.isArray(serverResult.debts)) {
           localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify(serverResult.debts));
         }
+        if (Array.isArray(serverResult.employees)) {
+          localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(serverResult.employees));
+        }
+        if (Array.isArray(serverResult.employeeShifts)) {
+          localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(serverResult.employeeShifts));
+        }
+        if (Array.isArray(serverResult.employeeAdvances)) {
+          localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(serverResult.employeeAdvances));
+        }
         currentSyncStatus = 'synced';
         lastSyncedTime = new Date().toLocaleTimeString('ar-NL', { hour: '2-digit', minute: '2-digit' });
         notifySubscribers();
@@ -709,6 +895,9 @@ export const StorageService = {
       purchaseOrders: this.getPurchaseOrders(),
       dailySales: this.getDailySales(),
       debts: this.getDebts(),
+      employees: this.getEmployees(),
+      employeeShifts: this.getEmployeeShifts(),
+      employeeAdvances: this.getEmployeeAdvances(),
       clientTimestamp: new Date().toISOString(),
     };
 
@@ -1162,7 +1351,408 @@ export const StorageService = {
     };
   },
 
-  // 5. EXPORT / IMPORT / RESET
+  // 5. EMPLOYEES & SHIFTS
+  getEmployees(): Employee[] {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.EMPLOYEES);
+      if (!data) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(INITIAL_EMPLOYEES));
+        return INITIAL_EMPLOYEES;
+      }
+      return JSON.parse(data);
+    } catch {
+      return INITIAL_EMPLOYEES;
+    }
+  },
+
+  saveEmployee(employee: Partial<Employee> & { name: string }): Employee {
+    const list = this.getEmployees();
+    if (employee.id) {
+      const index = list.findIndex((e) => e.id === employee.id);
+      if (index !== -1) {
+        list[index] = {
+          ...list[index],
+          ...employee,
+        };
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(list));
+        notifySubscribers();
+        return list[index];
+      }
+    }
+
+    const newEmp: Employee = {
+      id: `emp-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      name: employee.name.trim(),
+      phone: employee.phone?.trim() || '',
+      role: employee.role?.trim() || 'موظف',
+      wageType: employee.wageType || 'hourly',
+      rate: Number(employee.rate) || 0,
+      scheduleType: employee.scheduleType || 'flexible',
+      defaultHours: employee.defaultHours !== undefined ? Number(employee.defaultHours) : 8,
+      defaultStartTime: employee.defaultStartTime || '10:00',
+      defaultEndTime: employee.defaultEndTime || '18:00',
+      defaultBreakMinutes: employee.defaultBreakMinutes !== undefined ? employee.defaultBreakMinutes : 30,
+      workingDays: employee.workingDays || [1, 2, 3, 4, 5, 6, 0],
+      isActive: employee.isActive !== false,
+      startDate: employee.startDate || new Date().toISOString().split('T')[0],
+      notes: employee.notes?.trim() || '',
+      createdAt: new Date().toISOString(),
+    };
+
+    list.push(newEmp);
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(list));
+    notifySubscribers();
+    return newEmp;
+  },
+
+  deleteEmployee(id: string): void {
+    const list = this.getEmployees().filter((e) => e.id !== id);
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(list));
+    notifySubscribers();
+  },
+
+  getEmployeeShifts(): EmployeeShift[] {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.EMPLOYEE_SHIFTS);
+      if (!data) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(DEMO_EMPLOYEE_SHIFTS));
+        return DEMO_EMPLOYEE_SHIFTS;
+      }
+      return JSON.parse(data);
+    } catch {
+      return DEMO_EMPLOYEE_SHIFTS;
+    }
+  },
+
+  saveEmployeeShift(shift: {
+    id?: string;
+    employeeId: string;
+    employeeName?: string;
+    date: string;
+    startTime?: string;
+    endTime?: string;
+    breakMinutes?: number;
+    totalHours?: number;
+    hourlyRate?: number;
+    paymentStatus?: ShiftPaymentStatus;
+    paidAmount?: number;
+    notes?: string;
+  }): EmployeeShift {
+    const shifts = this.getEmployeeShifts();
+    const employees = this.getEmployees();
+    const targetEmp = employees.find((e) => e.id === shift.employeeId);
+    const empName = shift.employeeName || targetEmp?.name || 'موظف';
+    const rate = shift.hourlyRate !== undefined ? Number(shift.hourlyRate) : (targetEmp?.rate || 0);
+
+    let netHours = 8;
+    let startTime = shift.startTime || targetEmp?.defaultStartTime || '10:00';
+    let endTime = shift.endTime || targetEmp?.defaultEndTime || '18:00';
+    const breakMins = shift.breakMinutes !== undefined ? Number(shift.breakMinutes) : (targetEmp?.defaultBreakMinutes ?? 30);
+
+    if (shift.totalHours !== undefined && Number(shift.totalHours) > 0) {
+      netHours = Number(shift.totalHours);
+      if (!shift.startTime || !shift.endTime) {
+        const startH = 10;
+        const totalDurationMins = Math.round(netHours * 60) + breakMins;
+        const endTotalMins = startH * 60 + totalDurationMins;
+        const endH = Math.floor(endTotalMins / 60) % 24;
+        const endM = endTotalMins % 60;
+        startTime = '10:00';
+        endTime = `${endH.toString().padStart(2, '0')}:${endM.toString().padStart(2, '0')}`;
+      }
+    } else {
+      // Calculate duration in hours
+      const [startH, startM] = (startTime).split(':').map(Number);
+      const [endH, endM] = (endTime).split(':').map(Number);
+      let durationMinutes = (endH * 60 + (endM || 0)) - (startH * 60 + (startM || 0));
+      if (durationMinutes < 0) {
+        durationMinutes += 24 * 60; // crossed midnight
+      }
+      const netMinutes = Math.max(0, durationMinutes - breakMins);
+      netHours = Number((netMinutes / 60).toFixed(2));
+    }
+
+    const totalEarned = Number((netHours * rate).toFixed(2));
+    const status = shift.paymentStatus || 'unpaid';
+    const paid = status === 'unpaid' ? 0 : (shift.paidAmount !== undefined ? Number(shift.paidAmount) : totalEarned);
+
+    if (shift.id) {
+      const index = shifts.findIndex((s) => s.id === shift.id);
+      if (index !== -1) {
+        shifts[index] = {
+          ...shifts[index],
+          employeeId: shift.employeeId,
+          employeeName: empName,
+          date: shift.date,
+          startTime: startTime,
+          endTime: endTime,
+          breakMinutes: breakMins,
+          totalHours: netHours,
+          hourlyRate: rate,
+          totalEarned,
+          paymentStatus: status,
+          paidAmount: paid,
+          notes: shift.notes?.trim() || '',
+        };
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(shifts));
+        notifySubscribers();
+        return shifts[index];
+      }
+    }
+
+    const newShift: EmployeeShift = {
+      id: `shift-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      employeeId: shift.employeeId,
+      employeeName: empName,
+      date: shift.date || new Date().toISOString().split('T')[0],
+      startTime: startTime,
+      endTime: endTime,
+      breakMinutes: breakMins,
+      totalHours: netHours,
+      hourlyRate: rate,
+      totalEarned,
+      paymentStatus: status,
+      paidAmount: paid,
+      notes: shift.notes?.trim() || '',
+      createdAt: new Date().toISOString(),
+    };
+
+    shifts.unshift(newShift);
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(shifts));
+    notifySubscribers();
+    return newShift;
+  },
+
+  deleteEmployeeShift(id: string): void {
+    const list = this.getEmployeeShifts().filter((s) => s.id !== id);
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(list));
+    notifySubscribers();
+  },
+
+  updateShiftPayment(id: string, paymentStatus: ShiftPaymentStatus, paidAmount?: number): EmployeeShift | null {
+    const shifts = this.getEmployeeShifts();
+    const index = shifts.findIndex((s) => s.id === id);
+    if (index === -1) return null;
+
+    const shift = shifts[index];
+    shift.paymentStatus = paymentStatus;
+    if (paymentStatus === 'unpaid') {
+      shift.paidAmount = 0;
+    } else {
+      shift.paidAmount = paidAmount !== undefined ? paidAmount : shift.totalEarned;
+    }
+
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(shifts));
+    notifySubscribers();
+    return shift;
+  },
+
+  // Check which fixed staff are scheduled for a date but not logged yet
+  getUnloggedFixedStaff(targetDate?: string): Employee[] {
+    const dateStr = targetDate || new Date().toISOString().split('T')[0];
+    const dayOfWeek = new Date(dateStr).getDay();
+    const employees = this.getEmployees().filter((e) => e.isActive && e.scheduleType === 'fixed');
+    const existingShifts = this.getEmployeeShifts();
+
+    return employees.filter((emp) => {
+      const isWorkingDay = !emp.workingDays || emp.workingDays.length === 0 || emp.workingDays.includes(dayOfWeek);
+      if (!isWorkingDay) return false;
+      const alreadyLogged = existingShifts.some((s) => s.employeeId === emp.id && s.date === dateStr);
+      return !alreadyLogged;
+    });
+  },
+
+  // Auto-generate shifts for fixed employees scheduled for a given date
+  generateTodayFixedShifts(targetDate?: string): { addedCount: number; alreadyCount: number } {
+    const dateStr = targetDate || new Date().toISOString().split('T')[0];
+    const dayOfWeek = new Date(dateStr).getDay();
+    const employees = this.getEmployees().filter((e) => e.isActive && e.scheduleType === 'fixed');
+    const existingShifts = this.getEmployeeShifts();
+
+    let addedCount = 0;
+    let alreadyCount = 0;
+
+    employees.forEach((emp) => {
+      const isWorkingDay = !emp.workingDays || emp.workingDays.length === 0 || emp.workingDays.includes(dayOfWeek);
+      if (!isWorkingDay) return;
+
+      const alreadyLogged = existingShifts.some((s) => s.employeeId === emp.id && s.date === dateStr);
+      if (alreadyLogged) {
+        alreadyCount++;
+        return;
+      }
+
+      this.saveEmployeeShift({
+        employeeId: emp.id,
+        employeeName: emp.name,
+        date: dateStr,
+        startTime: emp.defaultStartTime || '10:00',
+        endTime: emp.defaultEndTime || '18:00',
+        breakMinutes: emp.defaultBreakMinutes !== undefined ? emp.defaultBreakMinutes : 30,
+        hourlyRate: emp.rate,
+        paymentStatus: 'unpaid',
+        notes: 'تسجيل آلي من جدول الدوام الثابت',
+      });
+      addedCount++;
+    });
+
+    return { addedCount, alreadyCount };
+  },
+
+  // Auto-generate shifts for entire week for all fixed employees
+  generateWeekFixedShifts(startMonStr?: string): { addedCount: number } {
+    let baseDate: Date;
+    if (startMonStr) {
+      baseDate = new Date(startMonStr);
+    } else {
+      const now = new Date();
+      const day = now.getDay();
+      const diffToMon = (day === 0 ? -6 : 1) - day;
+      baseDate = new Date(now);
+      baseDate.setDate(now.getDate() + diffToMon);
+    }
+
+    let totalAdded = 0;
+    for (let i = 0; i < 7; i++) {
+      const d = new Date(baseDate);
+      d.setDate(baseDate.getDate() + i);
+      const dStr = d.toISOString().split('T')[0];
+      const res = this.generateTodayFixedShifts(dStr);
+      totalAdded += res.addedCount;
+    }
+
+    return { addedCount: totalAdded };
+  },
+
+  // 1-Click quick shift check-in for an employee
+  logShiftQuickForEmployee(employeeId: string, dateStr?: string, hours?: number, status: ShiftPaymentStatus = 'unpaid'): EmployeeShift | null {
+    const employees = this.getEmployees();
+    const emp = employees.find((e) => e.id === employeeId);
+    if (!emp) return null;
+    const targetDate = dateStr || new Date().toISOString().split('T')[0];
+    const totalHours = hours !== undefined ? hours : (emp.defaultHours || 8);
+    return this.saveEmployeeShift({
+      employeeId: emp.id,
+      employeeName: emp.name,
+      date: targetDate,
+      totalHours,
+      hourlyRate: emp.rate,
+      paymentStatus: status,
+      notes: 'تسجيل سريع بنقرة واحدة',
+    });
+  },
+
+  // 6. EMPLOYEE ADVANCES & CASH PAYMENTS (سحبيات ودفعات الموظفين)
+  getEmployeeAdvances(): EmployeeAdvance[] {
+    try {
+      const data = localStorage.getItem(STORAGE_KEYS.EMPLOYEE_ADVANCES);
+      if (!data) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(DEMO_EMPLOYEE_ADVANCES));
+        return DEMO_EMPLOYEE_ADVANCES;
+      }
+      return JSON.parse(data);
+    } catch {
+      return DEMO_EMPLOYEE_ADVANCES;
+    }
+  },
+
+  saveEmployeeAdvance(advance: {
+    id?: string;
+    employeeId: string;
+    employeeName?: string;
+    amount: number;
+    date: string;
+    paymentMethod?: EmployeePaymentMethod;
+    paymentType?: EmployeePaymentType;
+    notes?: string;
+  }): EmployeeAdvance {
+    const list = this.getEmployeeAdvances();
+    const employees = this.getEmployees();
+    const emp = employees.find((e) => e.id === advance.employeeId);
+    const empName = advance.employeeName || emp?.name || 'موظف';
+    const amount = Number(advance.amount) || 0;
+
+    if (advance.id) {
+      const index = list.findIndex((a) => a.id === advance.id);
+      if (index !== -1) {
+        list[index] = {
+          ...list[index],
+          employeeId: advance.employeeId,
+          employeeName: empName,
+          amount,
+          date: advance.date,
+          paymentMethod: advance.paymentMethod || 'cash',
+          paymentType: advance.paymentType || 'advance',
+          notes: advance.notes?.trim() || '',
+        };
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(list));
+        notifySubscribers();
+        return list[index];
+      }
+    }
+
+    const newAdvance: EmployeeAdvance = {
+      id: `adv-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+      employeeId: advance.employeeId,
+      employeeName: empName,
+      amount,
+      date: advance.date || new Date().toISOString().split('T')[0],
+      paymentMethod: advance.paymentMethod || 'cash',
+      paymentType: advance.paymentType || 'advance',
+      notes: advance.notes?.trim() || '',
+      createdAt: new Date().toISOString(),
+    };
+
+    list.unshift(newAdvance);
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(list));
+    notifySubscribers();
+    return newAdvance;
+  },
+
+  deleteEmployeeAdvance(id: string): void {
+    const list = this.getEmployeeAdvances().filter((a) => a.id !== id);
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(list));
+    notifySubscribers();
+  },
+
+  getEmployeeStats(filteredShifts?: EmployeeShift[], filteredAdvances?: EmployeeAdvance[]) {
+    const shifts = filteredShifts || this.getEmployeeShifts();
+    const advances = filteredAdvances || this.getEmployeeAdvances();
+    const employees = this.getEmployees();
+
+    let totalHours = 0;
+    let totalWages = 0;
+    let totalPaidShifts = 0;
+    let totalAdvances = 0;
+
+    shifts.forEach((s) => {
+      totalHours += s.totalHours;
+      totalWages += s.totalEarned;
+      totalPaidShifts += (s.paidAmount || 0);
+    });
+
+    advances.forEach((a) => {
+      totalAdvances += a.amount;
+    });
+
+    const totalPaid = Number((totalPaidShifts + totalAdvances).toFixed(2));
+    const totalUnpaid = Math.max(0, Number((totalWages - totalPaid).toFixed(2)));
+
+    return {
+      activeEmployeesCount: employees.filter((e) => e.isActive).length,
+      totalEmployeesCount: employees.length,
+      totalShiftsCount: shifts.length,
+      totalAdvancesCount: advances.length,
+      totalHours: Number(totalHours.toFixed(1)),
+      totalWages: Number(totalWages.toFixed(2)),
+      totalPaidShifts: Number(totalPaidShifts.toFixed(2)),
+      totalAdvances: Number(totalAdvances.toFixed(2)),
+      totalPaid,
+      totalUnpaid,
+    };
+  },
+
+  // 7. EXPORT / IMPORT / RESET
   exportBackup(): string {
     const backup: AdminBackupData = {
       version: '1.0.0',
@@ -1171,6 +1761,9 @@ export const StorageService = {
       purchaseOrders: this.getPurchaseOrders(),
       dailySales: this.getDailySales(),
       debts: this.getDebts(),
+      employees: this.getEmployees(),
+      employeeShifts: this.getEmployeeShifts(),
+      employeeAdvances: this.getEmployeeAdvances(),
     };
     return JSON.stringify(backup, null, 2);
   },
@@ -1208,6 +1801,15 @@ export const StorageService = {
       if (Array.isArray(data.debts)) {
         localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify(data.debts));
       }
+      if (Array.isArray(data.employees)) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(data.employees));
+      }
+      if (Array.isArray(data.employeeShifts)) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(data.employeeShifts));
+      }
+      if (Array.isArray(data.employeeAdvances)) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(data.employeeAdvances));
+      }
 
       notifySubscribers();
       return { success: true, message: 'تم استرجاع البيانات بنجاح وتحديث كافة السجلات!' };
@@ -1221,6 +1823,9 @@ export const StorageService = {
     localStorage.setItem(STORAGE_KEYS.PURCHASE_ORDERS, JSON.stringify(DEMO_PURCHASE_ORDERS));
     localStorage.setItem(STORAGE_KEYS.DAILY_SALES, JSON.stringify(DEMO_DAILY_SALES));
     localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify(DEMO_DEBTS));
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(INITIAL_EMPLOYEES));
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(DEMO_EMPLOYEE_SHIFTS));
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(DEMO_EMPLOYEE_ADVANCES));
     notifySubscribers();
   },
 
@@ -1228,6 +1833,8 @@ export const StorageService = {
     localStorage.setItem(STORAGE_KEYS.PURCHASE_ORDERS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.DAILY_SALES, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify([]));
+    localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify([]));
     notifySubscribers();
   },
 };

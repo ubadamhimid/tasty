@@ -102,7 +102,14 @@ export const DeliverySection: React.FC = () => {
               <Icon icon="mdi:map-marker-radius" className="text-tasty-teal text-2xl shrink-0 mt-0.5" />
               <div>
                 <strong className="block text-tasty-charcoal">Address</strong>
-                <span className="text-tasty-charcoal-muted">Leeuwenstraat 14, 1211 MD Hilversum</span>
+                <a 
+                  href="https://www.google.com/maps/search/?api=1&query=Groest+50,+1211+EC+Hilversum" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-tasty-charcoal-muted hover:text-tasty-teal transition-colors"
+                >
+                  Groest 50, 1211 EC Hilversum
+                </a>
               </div>
             </div>
 
@@ -329,13 +336,18 @@ export const Footer: React.FC = () => {
             </h4>
             
             <div className="bg-white rounded-2xl p-5 border border-tasty-sage/30 shadow-tasty-soft space-y-3">
-              <div className="flex items-start gap-2.5 text-xs text-tasty-charcoal">
-                <Icon icon="mdi:map-marker" className="text-tasty-teal text-lg shrink-0 mt-0.5" />
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=Groest+50,+1211+EC+Hilversum" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-start gap-2.5 text-xs text-tasty-charcoal group"
+              >
+                <Icon icon="mdi:map-marker" className="text-tasty-teal text-lg shrink-0 mt-0.5 group-hover:scale-110 transition-transform" />
                 <div>
-                  <span className="font-bold block">Leeuwenstraat 14</span>
-                  <span className="text-tasty-charcoal-muted">1211 MD Hilversum, Netherlands</span>
+                  <span className="font-bold block group-hover:text-tasty-teal transition-colors">Groest 50</span>
+                  <span className="text-tasty-charcoal-muted">1211 EC Hilversum, Netherlands</span>
                 </div>
-              </div>
+              </a>
 
               <div className="pt-2 border-t border-tasty-sage/20 flex items-center justify-between">
                 <div className="flex items-center gap-2">

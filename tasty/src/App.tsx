@@ -8,7 +8,18 @@ import { AdminDashboardHome } from './admin/pages/AdminDashboardHome';
 import { PurchasingPage } from './admin/pages/PurchasingPage';
 import { DailySalesPage } from './admin/pages/DailySalesPage';
 import { DebtsPage } from './admin/pages/DebtsPage';
+import { EmployeesPage } from './admin/pages/EmployeesPage';
 import { SettingsPage } from './admin/pages/SettingsPage';
+
+import { useAdminAuth } from './admin/context/AuthContext';
+
+const AdminDashboardIndex: React.FC = () => {
+  const { isAdmin } = useAdminAuth();
+  if (!isAdmin) {
+    return <Navigate to="/admin/sales" replace />;
+  }
+  return <AdminDashboardHome />;
+};
 
 export const App: React.FC = () => {
   return (
@@ -30,11 +41,20 @@ export const App: React.FC = () => {
               </ProtectedRoute>
             }
           >
-            <Route index element={<AdminDashboardHome />} />
+            {/* If Manager accesses /admin, redirect to /admin/sales */}
+            <Route index element={<AdminDashboardIndex />} />
             <Route path="orders" element={<PurchasingPage />} />
             <Route path="sales" element={<DailySalesPage />} />
             <Route path="debts" element={<DebtsPage />} />
-            <Route path="settings" element={<SettingsPage />} />
+            <Route path="employees" element={<EmployeesPage />} />
+            <Route
+              path="settings"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <SettingsPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="*" element={<Navigate to="/admin" replace />} />
           </Route>
 

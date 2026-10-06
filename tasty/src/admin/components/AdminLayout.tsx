@@ -8,33 +8,26 @@ import {
   ShoppingBag,
   Receipt,
   Scale,
+  Users,
   Settings,
   LogOut,
-  ExternalLink,
   Database,
   Menu,
   X,
-  Bell,
   Sparkles,
-  Cloud,
-  CloudOff,
-  RefreshCw
+  Crown,
+  UserCheck
 } from 'lucide-react';
 
 export const AdminLayout: React.FC = () => {
-  const { credentials, logout } = useAdminAuth();
+  const { logout, user, isAdmin } = useAdminAuth();
   const [isBackupOpen, setIsBackupOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [syncInfo, setSyncInfo] = useState(StorageService.getSyncInfo());
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     StorageService.initServerSync();
-    const unsubscribe = StorageService.subscribe(() => {
-      setSyncInfo(StorageService.getSyncInfo());
-    });
-    return unsubscribe;
   }, []);
 
   const handleLogout = () => {
@@ -44,12 +37,23 @@ export const AdminLayout: React.FC = () => {
     }
   };
 
-  const navItems = [
+  const allNavItems = [
     {
       to: '/admin',
-      label: 'نظرة عامة',
+      label: 'الإحصائيات العامة',
       icon: LayoutDashboard,
       exact: true,
+      adminOnly: true,
+    },
+    {
+      to: '/admin/sales',
+      label: 'تسجيل مبيعات اليوم',
+      icon: Receipt,
+    },
+    {
+      to: '/admin/employees',
+      label: 'الموظفون والورديات',
+      icon: Users,
     },
     {
       to: '/admin/orders',
@@ -57,21 +61,20 @@ export const AdminLayout: React.FC = () => {
       icon: ShoppingBag,
     },
     {
-      to: '/admin/sales',
-      label: 'تقفيل المبيعات',
-      icon: Receipt,
-    },
-    {
       to: '/admin/debts',
-      label: 'سجل الديون',
+      label: 'سجل الديون والدفعات',
       icon: Scale,
     },
     {
       to: '/admin/settings',
       label: 'الإعدادات والبيانات',
       icon: Settings,
+      adminOnly: true,
     },
   ];
+
+  // Filter tabs: Managers cannot see admin-only tabs (Statistics & Settings)
+  const navItems = allNavItems.filter((item) => !item.adminOnly || isAdmin);
 
   return (
     <div className="min-h-screen bg-[#FBF9F5] text-tasty-charcoal flex flex-col font-cairo selection:bg-tasty-teal selection:text-white" dir="rtl">
@@ -89,7 +92,7 @@ export const AdminLayout: React.FC = () => {
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            <NavLink to="/admin" className="flex items-center gap-3 group">
+            <NavLink to={isAdmin ? "/admin" : "/admin/sales"} className="flex items-center gap-3 group">
               <img 
                 src="/images/logo.webp" 
                 alt="TASTY Levantine Flavours" 
@@ -101,87 +104,33 @@ export const AdminLayout: React.FC = () => {
                     لوحة الإدارة
                   </span>
                 </div>
-                <p className="text-[10px] text-gray-400 hidden sm:block">Hilversum • Leeuwenstraat 14</p>
+                <p className="text-[10px] text-gray-400 hidden sm:block">Hilversum • Groest 50</p>
               </div>
             </NavLink>
           </div>
 
-          {/* Quick Actions (Right side in RTL) */}
-          <div className="flex items-center gap-2 sm:gap-3">
-            
-            {/* Server Sync Status Badge */}
+          {/* User Role Badge & Logout Button */}
+          <div className="flex items-center gap-2.5">
+            {isAdmin ? (
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold shadow-2xs">
+                <Crown className="w-3.5 h-3.5 text-amber-600" />
+                <span>المدير العام</span>
+              </span>
+            ) : (
+              <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-900 border border-blue-300 text-xs font-bold shadow-2xs">
+                <UserCheck className="w-3.5 h-3.5 text-blue-600" />
+                <span>مدير الصالة (صلاحية تشغيلية)</span>
+              </span>
+            )}
+
             <button
-              onClick={() => StorageService.triggerManualSync()}
-              className={`flex items-center gap-1.5 px-2.5 sm:px-3 py-1.5 rounded-xl border text-xs font-semibold transition-all shadow-2xs ${
-                syncInfo.status === 'synced'
-                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200 hover:bg-emerald-100'
-                  : syncInfo.status === 'syncing'
-                  ? 'bg-amber-50 text-amber-800 border-amber-200'
-                  : 'bg-gray-50 text-gray-600 border-gray-200 hover:bg-gray-100'
-              }`}
-              title={
-                syncInfo.status === 'synced'
-                  ? `البيانات متصلة ومحفوظة على السيرفر (${syncInfo.lastSyncedTime || 'الآن'}) - اضغط لتحديث الاتصال`
-                  : syncInfo.status === 'syncing'
-                  ? 'جاري حفظ ومزامنة البيانات على السيرفر...'
-                  : 'محفوظ في ذاكرة المتصفح - اضغط للمزامنة مع السيرفر'
-              }
+              onClick={handleLogout}
+              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100/80 border border-red-200/70 transition-all shadow-2xs"
+              title="تسجيل الخروج"
             >
-              {syncInfo.status === 'synced' ? (
-                <>
-                  <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-                  <Cloud className="w-3.5 h-3.5 text-emerald-600" />
-                  <span className="hidden sm:inline">محفوظ على السيرفر</span>
-                </>
-              ) : syncInfo.status === 'syncing' ? (
-                <>
-                  <RefreshCw className="w-3.5 h-3.5 text-amber-600 animate-spin" />
-                  <span className="hidden sm:inline">جاري الحفظ...</span>
-                </>
-              ) : (
-                <>
-                  <CloudOff className="w-3.5 h-3.5 text-gray-400" />
-                  <span className="hidden sm:inline">محفوظ محلياً</span>
-                </>
-              )}
+              <LogOut className="w-4 h-4" />
+              <span>تسجيل الخروج</span>
             </button>
-
-            {/* Backup & Restore Button */}
-            <button
-              onClick={() => setIsBackupOpen(true)}
-              className="hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl border border-gray-200 hover:border-tasty-teal hover:bg-tasty-teal-light/20 text-xs font-semibold text-tasty-charcoal transition-all shadow-xs"
-              title="تصدير واستيراد نسخة احتياطية"
-            >
-              <Database className="w-3.5 h-3.5 text-tasty-teal" />
-              <span>النسخ الاحتياطي</span>
-            </button>
-
-            {/* Visit Public Menu */}
-            <a
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-tasty-bg-warm hover:bg-amber-100/60 border border-amber-200/60 text-xs font-semibold text-amber-900 transition-all shadow-xs"
-            >
-              <ExternalLink className="w-3.5 h-3.5 text-amber-700" />
-              <span className="hidden xs:inline">المنيو العام</span>
-            </a>
-
-            {/* User Profile & Logout */}
-            <div className="flex items-center gap-2 pr-2 border-r border-gray-200">
-              <div className="hidden md:flex flex-col text-left">
-                <span className="text-xs font-bold text-tasty-charcoal leading-none">{credentials.username}</span>
-                <span className="text-[10px] text-emerald-600 font-medium">نشط الآن</span>
-              </div>
-              <button
-                onClick={handleLogout}
-                title="تسجيل الخروج"
-                className="p-2 rounded-xl text-gray-400 hover:text-red-600 hover:bg-red-50 transition-colors"
-              >
-                <LogOut className="w-4 h-4" />
-              </button>
-            </div>
-
           </div>
         </div>
       </header>

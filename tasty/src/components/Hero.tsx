@@ -122,10 +122,15 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
               transition={{ duration: 0.8, delay: 0.3 }}
               className="pt-1 flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-tasty-charcoal/70 font-medium"
             >
-              <div className="flex items-center gap-1.5">
+              <a 
+                href="https://www.google.com/maps/search/?api=1&query=Groest+50,+1211+EC+Hilversum" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="flex items-center gap-1.5 hover:text-tasty-terracotta transition-colors"
+              >
                 <Icon icon="mdi:map-marker-outline" className="text-tasty-terracotta text-sm sm:text-base shrink-0" />
-                <span>Leeuwenstraat 14, Hilversum</span>
-              </div>
+                <span>Groest 50, 1211 EC Hilversum</span>
+              </a>
               <div className="flex items-center gap-1.5">
                 <Icon icon="mdi:silverware-fork-knife" className="text-tasty-terracotta text-sm sm:text-base shrink-0" />
                 <span>Dine-In & Express Takeaway</span>

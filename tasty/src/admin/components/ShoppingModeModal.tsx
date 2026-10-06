@@ -122,7 +122,7 @@ export const ShoppingModeModal: React.FC<ShoppingModeModalProps> = ({
 
     text += `---------------------------------\n`;
     text += `📊 المجموع: ${completedItems}/${totalItems} تم شراؤها (${progressPercent}%)\n`;
-    text += `📍 TASTY Hilversum - Leeuwenstraat 14`;
+    text += `📍 TASTY Hilversum - Groest 50`;
 
     const encoded = encodeURIComponent(text);
     window.open(`https://wa.me/?text=${encoded}`, '_blank');

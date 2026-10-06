@@ -18,7 +18,10 @@ import {
   Filter
 } from 'lucide-react';
 
+import { useAdminAuth } from '../context/AuthContext';
+
 export const DailySalesPage: React.FC = () => {
+  const { isAdmin } = useAdminAuth();
   const [sales, setSales] = useState<DailySalesRecord[]>(StorageService.getDailySales());
   const [stats, setStats] = useState(StorageService.getSalesStats());
 
@@ -154,55 +157,66 @@ export const DailySalesPage: React.FC = () => {
         </div>
       )}
 
-      {/* Summary Stat Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-        {/* Stat 1: This Week */}
-        <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-xs">
-          <span className="text-xs font-bold text-gray-500">مبيعات هذا الأسبوع (آخر 7 أيام)</span>
-          <div className="text-2xl sm:text-3xl font-serif font-black text-tasty-charcoal mt-1">
-            €{stats.week.total.toLocaleString('nl-NL')}
-          </div>
-          <div className="mt-3 pt-3 border-t border-gray-100 space-y-1 text-xs text-gray-600">
-            <div className="flex justify-between">
-              <span>كاش نقد:</span>
-              <strong className="text-emerald-700 font-bold">€{stats.week.cash.toLocaleString('nl-NL')}</strong>
+      {/* Summary Stat Cards - Visible only to Admin */}
+      {isAdmin && (
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+          {/* Stat 1: This Week */}
+          <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-xs">
+            <span className="text-xs font-bold text-gray-500">مبيعات هذا الأسبوع (آخر 7 أيام)</span>
+            <div className="flex items-baseline gap-1 mt-1" dir="ltr">
+              <span className="text-base sm:text-lg font-bold text-gray-400 font-sans">€</span>
+              <span className="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-charcoal tabular-nums">
+                {stats.week.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
             </div>
-            <div className="flex justify-between">
-              <span>كرت شبكة PIN:</span>
-              <strong className="text-tasty-teal-dark font-bold">€{stats.week.card.toLocaleString('nl-NL')}</strong>
+            <div className="mt-3 pt-3 border-t border-gray-100 space-y-1 text-xs text-gray-600">
+              <div className="flex justify-between">
+                <span>كاش نقد:</span>
+                <strong className="text-emerald-700 font-bold font-sans">€{stats.week.cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+              </div>
+              <div className="flex justify-between">
+                <span>كرت شبكة PIN:</span>
+                <strong className="text-tasty-teal-dark font-bold font-sans">€{stats.week.card.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Stat 2: This Month */}
-        <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-xs">
-          <span className="text-xs font-bold text-gray-500">مبيعات هذا الشهر الحالي</span>
-          <div className="text-2xl sm:text-3xl font-serif font-black text-tasty-teal-dark mt-1">
-            €{stats.month.total.toLocaleString('nl-NL')}
-          </div>
-          <div className="mt-3 pt-3 border-t border-gray-100 space-y-1 text-xs text-gray-600">
-            <div className="flex justify-between">
-              <span>كاش نقد:</span>
-              <strong className="text-emerald-700 font-bold">€{stats.month.cash.toLocaleString('nl-NL')}</strong>
+          {/* Stat 2: This Month */}
+          <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-xs">
+            <span className="text-xs font-bold text-gray-500">مبيعات هذا الشهر الحالي</span>
+            <div className="flex items-baseline gap-1 mt-1" dir="ltr">
+              <span className="text-base sm:text-lg font-bold text-tasty-teal font-sans">€</span>
+              <span className="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-teal-dark tabular-nums">
+                {stats.month.total.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
             </div>
-            <div className="flex justify-between">
-              <span>كرت شبكة PIN:</span>
-              <strong className="text-tasty-teal-dark font-bold">€{stats.month.card.toLocaleString('nl-NL')}</strong>
+            <div className="mt-3 pt-3 border-t border-gray-100 space-y-1 text-xs text-gray-600">
+              <div className="flex justify-between">
+                <span>كاش نقد:</span>
+                <strong className="text-emerald-700 font-bold font-sans">€{stats.month.cash.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+              </div>
+              <div className="flex justify-between">
+                <span>كرت شبكة PIN:</span>
+                <strong className="text-tasty-teal-dark font-bold font-sans">€{stats.month.card.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</strong>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Stat 3: Daily Average */}
-        <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-xs">
-          <span className="text-xs font-bold text-gray-500">المتوسط اليومي العام</span>
-          <div className="text-2xl sm:text-3xl font-serif font-black text-tasty-terracotta mt-1">
-            €{stats.averageDaily.toLocaleString('nl-NL')}
-          </div>
-          <div className="mt-3 pt-3 border-t border-gray-100 text-xs text-gray-500">
-            محسوب بناءً على <strong>{stats.all.count}</strong> يوم عمل مسجل في النظام
+          {/* Stat 3: Daily Average */}
+          <div className="bg-white rounded-3xl p-5 border border-gray-100 shadow-xs">
+            <span className="text-xs font-bold text-gray-500">المتوسط اليومي العام</span>
+            <div className="flex items-baseline gap-1 mt-1" dir="ltr">
+              <span className="text-base sm:text-lg font-bold text-tasty-terracotta font-sans">€</span>
+              <span className="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-terracotta tabular-nums">
+                {stats.averageDaily.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+              </span>
+            </div>
+            <div className="mt-3 pt-3 border-t border-gray-100 text-xs text-gray-500">
+              محسوب بناءً على <strong>{stats.all.count}</strong> يوم عمل مسجل في النظام
+            </div>
           </div>
         </div>
-      </div>
+      )}
 
       {/* Main Form: Daily Sales Entry & Realtime Split */}
       <div className="bg-white rounded-3xl p-5 sm:p-7 border border-gray-100 shadow-xs">
@@ -301,7 +315,10 @@ export const DailySalesPage: React.FC = () => {
           <div className="p-4 rounded-2xl bg-tasty-bg-warm border border-gray-200/80 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold">
               <span className="text-gray-600">المجموع الإجمالي المحسوب:</span>
-              <span className="font-serif font-black text-lg text-tasty-charcoal">€{liveTotal}</span>
+              <div className="flex items-baseline gap-0.5 font-sans font-black text-lg text-tasty-charcoal tabular-nums" dir="ltr">
+                <span className="text-xs font-bold text-gray-400">€</span>
+                <span>{liveTotal.toFixed(2)}</span>
+              </div>
             </div>
 
             {/* Split Visual Bar */}
