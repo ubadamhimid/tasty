@@ -779,7 +779,12 @@ let lastSyncedTime: string | null = null;
 let bgSyncTimer: any = null;
 
 async function postToServer(payload: any): Promise<boolean> {
-  const endpoints = ['/api/sync.php', 'api/sync.php', '/tasty/api/sync.php'];
+  const endpoints = [
+    '/api/sync.php',
+    'api/sync.php',
+    '/tasty/api/sync.php',
+    'http://localhost/tasty/api/sync.php',
+  ];
   for (const url of endpoints) {
     try {
       const res = await fetch(url, {
@@ -801,7 +806,12 @@ async function postToServer(payload: any): Promise<boolean> {
 }
 
 async function fetchFromServer(): Promise<any | null> {
-  const endpoints = ['/api/sync.php', 'api/sync.php', '/tasty/api/sync.php'];
+  const endpoints = [
+    '/api/sync.php',
+    'api/sync.php',
+    '/tasty/api/sync.php',
+    'http://localhost/tasty/api/sync.php',
+  ];
   for (const url of endpoints) {
     try {
       const res = await fetch(url, { method: 'GET' });
