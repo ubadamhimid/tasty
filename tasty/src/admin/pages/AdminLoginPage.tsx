@@ -144,43 +144,51 @@ export const AdminLoginPage: React.FC = () => {
             </button>
           </form>
 
-          {/* Quick Credential Hints & Switchers */}
-          <div className="mt-5 pt-4 border-t border-gray-100">
-            <p className="text-[11px] font-bold text-gray-500 mb-2">اختر الحساب للتجربة السريعة:</p>
-            <div className="grid grid-cols-2 gap-2 text-right">
-              <button
-                type="button"
-                onClick={() => {
-                  setUsername('admin');
-                  setPassword('tasty2025');
-                  setError(null);
-                }}
-                className="p-2.5 rounded-xl border border-gray-100 bg-gray-50/80 hover:bg-tasty-teal-light/30 hover:border-tasty-teal/30 transition-all text-right group"
-              >
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-[11px] font-bold text-tasty-charcoal group-hover:text-tasty-teal">👑 المدير العام</span>
-                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-tasty-teal text-white font-bold">Admin</span>
-                </div>
-                <p className="text-[10px] text-gray-400">كامل الصلاحيات والإحصائيات</p>
-              </button>
+          {/* Quick Credential Hints & Switchers (Only visible in Development / Hidden automatically in Production) */}
+          {import.meta.env.DEV && (
+            <div className="mt-5 pt-4 border-t border-dashed border-amber-200 bg-amber-50/50 -mx-6 -mb-2 p-4 rounded-b-2xl">
+              <div className="flex items-center justify-between mb-2">
+                <p className="text-[11px] font-bold text-amber-800">بيئة التطوير والتجربة المحلية فقط:</p>
+                <span className="text-[9px] px-1.5 py-0.5 rounded bg-amber-200 text-amber-900 font-mono font-bold">DEV ONLY</span>
+              </div>
+              <p className="text-[10px] text-amber-700 mb-2.5">
+                (هذا القسم يختفي تلقائياً فور رفع الموقع أونلاين لحماية أمان النظام)
+              </p>
+              <div className="grid grid-cols-2 gap-2 text-right">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUsername('admin');
+                    setPassword('tasty2025');
+                    setError(null);
+                  }}
+                  className="p-2.5 rounded-xl border border-teal-200 bg-white hover:bg-teal-50 hover:border-tasty-teal transition-all text-right group shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-[11px] font-bold text-tasty-charcoal group-hover:text-tasty-teal">👑 المدير العام</span>
+                    <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-tasty-teal text-white font-bold">Admin</span>
+                  </div>
+                  <p className="text-[10px] text-gray-400">كامل الصلاحيات</p>
+                </button>
 
-              <button
-                type="button"
-                onClick={() => {
-                  setUsername('manager');
-                  setPassword('tasty123');
-                  setError(null);
-                }}
-                className="p-2.5 rounded-xl border border-gray-100 bg-gray-50/80 hover:bg-amber-50 hover:border-amber-200 transition-all text-right group"
-              >
-                <div className="flex items-center justify-between mb-0.5">
-                  <span className="text-[11px] font-bold text-tasty-charcoal group-hover:text-amber-700">💼 مدير الصالة</span>
-                  <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500 text-white font-bold">Manager</span>
-                </div>
-                <p className="text-[10px] text-gray-400">تسجيل يوميات وتشغيل فقط</p>
-              </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setUsername('manager');
+                    setPassword('tasty123');
+                    setError(null);
+                  }}
+                  className="p-2.5 rounded-xl border border-amber-200 bg-white hover:bg-amber-50 hover:border-amber-400 transition-all text-right group shadow-sm"
+                >
+                  <div className="flex items-center justify-between mb-0.5">
+                    <span className="text-[11px] font-bold text-tasty-charcoal group-hover:text-amber-700">💼 مدير الصالة</span>
+                    <span className="text-[9px] px-1.5 py-0.2 rounded-full bg-amber-500 text-white font-bold">Manager</span>
+                  </div>
+                  <p className="text-[10px] text-gray-400">تشغيل بدون إحصائيات</p>
+                </button>
+              </div>
             </div>
-          </div>
+          )}
 
           {/* Back to public site */}
           <div className="mt-4 pt-3 border-t border-gray-100 text-center">

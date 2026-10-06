@@ -212,7 +212,19 @@
         }
     ],
     "purchaseOrders": [],
-    "dailySales": [],
+    "dailySales": [
+        {
+            "id": "ds-1791315752330-iuu8",
+            "date": "2026-10-06",
+            "cashAmount": 10,
+            "cardAmount": 34,
+            "totalAmount": 44,
+            "cashPercentage": 22.7,
+            "cardPercentage": 77.3,
+            "notes": "",
+            "recordedAt": "2026-10-06T19:42:32.330Z"
+        }
+    ],
     "debts": [],
     "employees": [
         {
@@ -252,7 +264,56 @@
             "createdAt": "2026-05-01T10:00:00Z"
         }
     ],
-    "employeeShifts": [],
+    "employeeShifts": [
+        {
+            "id": "shift-1791314880568-wvqc",
+            "employeeId": "emp-4",
+            "employeeName": "يوسف المصري",
+            "date": "2026-10-06",
+            "startTime": "10:00",
+            "endTime": "18:30",
+            "breakMinutes": 30,
+            "totalHours": 8,
+            "hourlyRate": 11.5,
+            "totalEarned": 92,
+            "paymentStatus": "unpaid",
+            "paidAmount": 0,
+            "notes": "تسجيل سريع بنقرة واحدة",
+            "createdAt": "2026-10-06T19:28:00.568Z"
+        },
+        {
+            "id": "shift-1791314879402-ya15",
+            "employeeId": "emp-3",
+            "employeeName": "محمود الحلبي",
+            "date": "2026-10-06",
+            "startTime": "10:00",
+            "endTime": "18:30",
+            "breakMinutes": 30,
+            "totalHours": 8,
+            "hourlyRate": 13.5,
+            "totalEarned": 108,
+            "paymentStatus": "unpaid",
+            "paidAmount": 0,
+            "notes": "تسجيل سريع بنقرة واحدة",
+            "createdAt": "2026-10-06T19:27:59.402Z"
+        },
+        {
+            "id": "shift-1791314877187-rw91",
+            "employeeId": "emp-2",
+            "employeeName": "سامر العلي",
+            "date": "2026-10-06",
+            "startTime": "10:00",
+            "endTime": "18:30",
+            "breakMinutes": 30,
+            "totalHours": 8,
+            "hourlyRate": 12,
+            "totalEarned": 96,
+            "paymentStatus": "unpaid",
+            "paidAmount": 0,
+            "notes": "تسجيل سريع بنقرة واحدة",
+            "createdAt": "2026-10-06T19:27:57.187Z"
+        }
+    ],
     "employeeAdvances": [
         {
             "id": "adv-1",
@@ -277,6 +338,6 @@
             "createdAt": "2026-10-05T16:30:00Z"
         }
     ],
-    "clientTimestamp": "2026-10-06T19:27:34.006Z",
-    "_serverSyncedAt": "2026-10-06T21:27:34+02:00"
+    "clientTimestamp": "2026-10-06T19:43:34.736Z",
+    "_serverSyncedAt": "2026-10-06T21:43:34+02:00"
 }
