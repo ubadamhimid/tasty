@@ -210,12 +210,14 @@ export const PurchasingPage: React.FC = () => {
 
   const handleDeleteMasterItem = (id: string) => {
     if (window.confirm('هل أنت متأكد من حذف هذه المادة من الكتالوج؟')) {
+      setMasterItems((prev) => prev.filter((i) => i.id !== id));
       StorageService.deleteMasterItem(id);
     }
   };
 
   const handleDeleteOrder = (id: string) => {
     if (window.confirm('هل تود حذف هذه الطلبية من الأرشيف؟')) {
+      setOrders((prev) => prev.filter((o) => o.id !== id));
       StorageService.deletePurchaseOrder(id);
     }
   };

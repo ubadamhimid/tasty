@@ -339,6 +339,7 @@ export const EmployeesPage: React.FC = () => {
   // Delete Shift
   const handleDeleteShift = (id: string) => {
     if (window.confirm('هل تود حذف سجل هذه الوردية نهائياً؟')) {
+      setShifts((prev) => prev.filter((s) => s.id !== id));
       StorageService.deleteEmployeeShift(id);
       showToast('تم حذف الوردية بنجاح.');
     }
@@ -419,6 +420,7 @@ export const EmployeesPage: React.FC = () => {
   // Delete Employee
   const handleDeleteEmp = (id: string, name: string) => {
     if (window.confirm(`هل أنت متأكد من حذف الموظف "${name}"؟ ستظل وردياته السابقة محفوظة للتوثيق.`)) {
+      setEmployees((prev) => prev.filter((e) => e.id !== id));
       StorageService.deleteEmployee(id);
       showToast(`تم حذف الموظف "${name}" من القائمة.`);
     }
@@ -489,6 +491,7 @@ export const EmployeesPage: React.FC = () => {
   // Delete Advance
   const handleDeleteAdvance = (id: string) => {
     if (window.confirm('هل تود حذف سجل هذه الدفعة/السلفة؟')) {
+      setAdvances((prev) => prev.filter((a) => a.id !== id));
       StorageService.deleteEmployeeAdvance(id);
       showToast('تم حذف سجل السلفة بنجاح.');
     }

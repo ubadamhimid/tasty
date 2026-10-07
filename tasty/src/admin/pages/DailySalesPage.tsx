@@ -89,6 +89,7 @@ export const DailySalesPage: React.FC = () => {
 
   const handleDelete = (id: string) => {
     if (window.confirm('هل تود حذف هذا السجل اليومي نهائياً؟')) {
+      setSales((prev) => prev.filter((s) => s.id !== id));
       StorageService.deleteDailySale(id);
     }
   };

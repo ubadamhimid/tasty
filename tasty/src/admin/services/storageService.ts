@@ -777,6 +777,7 @@ export type SyncStatus = 'synced' | 'local_only' | 'syncing' | 'error';
 let currentSyncStatus: SyncStatus = 'local_only';
 let lastSyncedTime: string | null = null;
 let bgSyncTimer: any = null;
+let lastLocalMutationTime = 0;
 
 async function postToServer(payload: any): Promise<boolean> {
   const endpoints = [
@@ -848,12 +849,22 @@ export const StorageService = {
   },
 
   async initServerSync(): Promise<void> {
+    if (currentSyncStatus === 'syncing') return;
+    if (Date.now() - lastLocalMutationTime < 3500) return;
+
     currentSyncStatus = 'syncing';
     notifySubscribers(false);
 
     try {
       const serverResult = await fetchFromServer();
       if (serverResult && serverResult !== 'empty') {
+        // Double check no mutation happened during fetch
+        if (Date.now() - lastLocalMutationTime < 3500) {
+          currentSyncStatus = 'synced';
+          notifySubscribers(false);
+          return;
+        }
+
         // Server database exists -> hydrate local state from server
         if (Array.isArray(serverResult.masterItems)) {
           localStorage.setItem(STORAGE_KEYS.MASTER_ITEMS, JSON.stringify(serverResult.masterItems));
@@ -898,7 +909,7 @@ export const StorageService = {
 
   async syncToServer(): Promise<boolean> {
     currentSyncStatus = 'syncing';
-    notifySubscribers();
+    notifySubscribers(false);
 
     const payload = {
       masterItems: this.getMasterItems(),
@@ -918,15 +929,22 @@ export const StorageService = {
     } else {
       currentSyncStatus = 'local_only';
     }
-    notifySubscribers();
+    notifySubscribers(false);
     return ok;
   },
 
   triggerBackgroundSync(): void {
+    lastLocalMutationTime = Date.now();
     if (bgSyncTimer) clearTimeout(bgSyncTimer);
     bgSyncTimer = setTimeout(() => {
       this.syncToServer();
-    }, 500);
+    }, 400);
+  },
+
+  syncImmediately(): void {
+    lastLocalMutationTime = Date.now();
+    if (bgSyncTimer) clearTimeout(bgSyncTimer);
+    this.syncToServer();
   },
 
   async triggerManualSync(): Promise<{ success: boolean; message: string }> {
@@ -1062,7 +1080,8 @@ export const StorageService = {
   deletePurchaseOrder(id: string): void {
     const orders = this.getPurchaseOrders().filter((o) => o.id !== id);
     localStorage.setItem(STORAGE_KEYS.PURCHASE_ORDERS, JSON.stringify(orders));
-    notifySubscribers();
+    notifySubscribers(false);
+    this.syncImmediately();
   },
 
   // 3. DAILY SALES
@@ -1151,7 +1170,8 @@ export const StorageService = {
   deleteDailySale(id: string): void {
     const sales = this.getDailySales().filter((s) => s.id !== id);
     localStorage.setItem(STORAGE_KEYS.DAILY_SALES, JSON.stringify(sales));
-    notifySubscribers();
+    notifySubscribers(false);
+    this.syncImmediately();
   },
 
   getSalesStats() {
@@ -1321,7 +1341,8 @@ export const StorageService = {
   deleteDebt(id: string): void {
     const debts = this.getDebts().filter((d) => d.id !== id);
     localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify(debts));
-    notifySubscribers();
+    notifySubscribers(false);
+    this.syncImmediately();
   },
 
   getDebtStats() {
@@ -1418,7 +1439,8 @@ export const StorageService = {
   deleteEmployee(id: string): void {
     const list = this.getEmployees().filter((e) => e.id !== id);
     localStorage.setItem(STORAGE_KEYS.EMPLOYEES, JSON.stringify(list));
-    notifySubscribers();
+    notifySubscribers(false);
+    this.syncImmediately();
   },
 
   getEmployeeShifts(): EmployeeShift[] {
@@ -1536,7 +1558,8 @@ export const StorageService = {
   deleteEmployeeShift(id: string): void {
     const list = this.getEmployeeShifts().filter((s) => s.id !== id);
     localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(list));
-    notifySubscribers();
+    notifySubscribers(false);
+    this.syncImmediately();
   },
 
   updateShiftPayment(id: string, paymentStatus: ShiftPaymentStatus, paidAmount?: number): EmployeeShift | null {
@@ -1722,7 +1745,8 @@ export const StorageService = {
   deleteEmployeeAdvance(id: string): void {
     const list = this.getEmployeeAdvances().filter((a) => a.id !== id);
     localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(list));
-    notifySubscribers();
+    notifySubscribers(false);
+    this.syncImmediately();
   },
 
   getEmployeeStats(filteredShifts?: EmployeeShift[], filteredAdvances?: EmployeeAdvance[]) {

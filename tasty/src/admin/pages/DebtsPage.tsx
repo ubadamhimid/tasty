@@ -129,6 +129,7 @@ export const DebtsPage: React.FC = () => {
 
   const handleDeleteDebt = (id: string) => {
     if (window.confirm('هل تود حذف قيد الدين هذا وسجل دفعاته نهائياً؟')) {
+      setDebts((prev) => prev.filter((d) => d.id !== id));
       StorageService.deleteDebt(id);
     }
   };
