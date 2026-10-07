@@ -173,10 +173,10 @@ export const BackupModal: React.FC<BackupModalProps> = ({ isOpen, onClose }) => 
           </div>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => {
-                if (window.confirm('هل تود مسح وتصفير كافة سجلات المبيعات والديون والطلبيات والبدء بسجلات فارغة؟')) {
-                  StorageService.clearAllTransactionData();
-                  setStatusMessage({ type: 'success', text: 'تم تفريغ السجلات بنجاح (الأرصدة €0)!' });
+              onClick={async () => {
+                if (window.confirm('هل تود مسح وتصفير كافة سجلات المبيعات والديون والطلبيات والبدء بسجلات فارغة؟ ستتم المزامنة فوراً مع السيرفر.')) {
+                  await StorageService.clearAllTransactionData();
+                  setStatusMessage({ type: 'success', text: 'تم تفريغ السجلات محلياً وعلى السيرفر بنجاح (الأرصدة €0)!' });
                   setTimeout(() => onClose(), 1200);
                 }
               }}

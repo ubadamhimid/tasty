@@ -212,19 +212,7 @@
         }
     ],
     "purchaseOrders": [],
-    "dailySales": [
-        {
-            "id": "ds-1791315752330-iuu8",
-            "date": "2026-10-06",
-            "cashAmount": 10,
-            "cardAmount": 34,
-            "totalAmount": 44,
-            "cashPercentage": 22.7,
-            "cardPercentage": 77.3,
-            "notes": "",
-            "recordedAt": "2026-10-06T19:42:32.330Z"
-        }
-    ],
+    "dailySales": [],
     "debts": [],
     "employees": [
         {
@@ -264,80 +252,8 @@
             "createdAt": "2026-05-01T10:00:00Z"
         }
     ],
-    "employeeShifts": [
-        {
-            "id": "shift-1791314880568-wvqc",
-            "employeeId": "emp-4",
-            "employeeName": "يوسف المصري",
-            "date": "2026-10-06",
-            "startTime": "10:00",
-            "endTime": "18:30",
-            "breakMinutes": 30,
-            "totalHours": 8,
-            "hourlyRate": 11.5,
-            "totalEarned": 92,
-            "paymentStatus": "unpaid",
-            "paidAmount": 0,
-            "notes": "تسجيل سريع بنقرة واحدة",
-            "createdAt": "2026-10-06T19:28:00.568Z"
-        },
-        {
-            "id": "shift-1791314879402-ya15",
-            "employeeId": "emp-3",
-            "employeeName": "محمود الحلبي",
-            "date": "2026-10-06",
-            "startTime": "10:00",
-            "endTime": "18:30",
-            "breakMinutes": 30,
-            "totalHours": 8,
-            "hourlyRate": 13.5,
-            "totalEarned": 108,
-            "paymentStatus": "unpaid",
-            "paidAmount": 0,
-            "notes": "تسجيل سريع بنقرة واحدة",
-            "createdAt": "2026-10-06T19:27:59.402Z"
-        },
-        {
-            "id": "shift-1791314877187-rw91",
-            "employeeId": "emp-2",
-            "employeeName": "سامر العلي",
-            "date": "2026-10-06",
-            "startTime": "10:00",
-            "endTime": "18:30",
-            "breakMinutes": 30,
-            "totalHours": 8,
-            "hourlyRate": 12,
-            "totalEarned": 96,
-            "paymentStatus": "unpaid",
-            "paidAmount": 0,
-            "notes": "تسجيل سريع بنقرة واحدة",
-            "createdAt": "2026-10-06T19:27:57.187Z"
-        }
-    ],
-    "employeeAdvances": [
-        {
-            "id": "adv-1",
-            "employeeId": "emp-2",
-            "employeeName": "سامر العلي",
-            "amount": 50,
-            "date": "2026-10-06",
-            "paymentMethod": "cash",
-            "paymentType": "advance",
-            "notes": "سلفة نقدية من صندوق الكاش",
-            "createdAt": "2026-10-06T15:00:00Z"
-        },
-        {
-            "id": "adv-2",
-            "employeeId": "emp-4",
-            "employeeName": "يوسف المصري",
-            "amount": 30,
-            "date": "2026-10-05",
-            "paymentMethod": "cash",
-            "paymentType": "advance",
-            "notes": "دفعة نقدية مسحوبة من الكاش",
-            "createdAt": "2026-10-05T16:30:00Z"
-        }
-    ],
-    "clientTimestamp": "2026-10-06T19:43:50.077Z",
-    "_serverSyncedAt": "2026-10-06T21:43:50+02:00"
+    "employeeShifts": [],
+    "employeeAdvances": [],
+    "clientTimestamp": "2026-10-07T17:10:00.000Z",
+    "_serverSyncedAt": "2026-10-07T19:10:00+02:00"
 }

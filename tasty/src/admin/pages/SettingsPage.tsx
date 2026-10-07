@@ -427,10 +427,10 @@ export const SettingsPage: React.FC = () => {
             <div className="flex items-center gap-2">
               <button
                 type="button"
-                onClick={() => {
-                  if (window.confirm('هل تود تصفير ومسح كافة سجلات المبيعات والديون والطلبيات؟ ستصبح جميع الأرصدة €0.')) {
-                    StorageService.clearAllTransactionData();
-                    setBackupMessage({ type: 'success', text: 'تم تفريغ وتصفير كافة السجلات بنجاح (الأرصدة الحالية €0)!' });
+                onClick={async () => {
+                  if (window.confirm('هل تود تصفير ومسح كافة سجلات المبيعات والديون والطلبيات؟ ستصبح جميع الأرصدة €0 وتتزامن مع السيرفر.')) {
+                    await StorageService.clearAllTransactionData();
+                    setBackupMessage({ type: 'success', text: 'تم تفريغ وتصفير كافة السجلات محلياً وعلى السيرفر بنجاح (الأرصدة الحالية €0)!' });
                   }
                 }}
                 className="flex items-center justify-center gap-1 px-3 py-1.5 text-xs text-red-600 hover:bg-red-50 rounded-lg border border-red-200 transition-colors font-semibold"

@@ -28,6 +28,26 @@ export const AdminLayout: React.FC = () => {
 
   useEffect(() => {
     StorageService.initServerSync();
+
+    const handleFocus = () => {
+      if (document.visibilityState === 'visible') {
+        StorageService.initServerSync();
+      }
+    };
+    document.addEventListener('visibilitychange', handleFocus);
+    window.addEventListener('focus', handleFocus);
+
+    const interval = setInterval(() => {
+      if (document.visibilityState === 'visible') {
+        StorageService.initServerSync();
+      }
+    }, 30000);
+
+    return () => {
+      document.removeEventListener('visibilitychange', handleFocus);
+      window.removeEventListener('focus', handleFocus);
+      clearInterval(interval);
+    };
   }, []);
 
   const handleLogout = () => {

@@ -21,13 +21,15 @@ $backupsDir = $dataDir . '/backups';
 $dbFile = $dataDir . '/tasty_database.json';
 $htaccessFile = $dataDir . '/.htaccess';
 
-// Ensure data and backup directories exist
+// Ensure data and backup directories exist with permissive permissions
 if (!is_dir($dataDir)) {
-    @mkdir($dataDir, 0755, true);
+    @mkdir($dataDir, 0777, true);
 }
 if (!is_dir($backupsDir)) {
-    @mkdir($backupsDir, 0755, true);
+    @mkdir($backupsDir, 0777, true);
 }
+@chmod($dataDir, 0777);
+@chmod($backupsDir, 0777);
 
 // Secure the data folder so raw JSON cannot be opened directly from URL
 if (!file_exists($htaccessFile)) {
@@ -101,7 +103,13 @@ if ($method === 'POST') {
 
     if ($writeSuccess === false) {
         http_response_code(500);
-        echo json_encode(['status' => 'error', 'message' => 'Failed to write to server database.']);
+        $errMsg = 'Failed to write to server database.';
+        if (!is_dir($dataDir)) {
+            $errMsg .= ' Directory "data" does not exist and cannot be created.';
+        } elseif (!is_writable($dataDir)) {
+            $errMsg .= ' Directory "data" is not writable. Please CHMOD 775 or 777 on /api/data.';
+        }
+        echo json_encode(['status' => 'error', 'message' => $errMsg]);
         exit;
     }
 

@@ -849,7 +849,7 @@ export const StorageService = {
 
   async initServerSync(): Promise<void> {
     currentSyncStatus = 'syncing';
-    notifySubscribers();
+    notifySubscribers(false);
 
     try {
       const serverResult = await fetchFromServer();
@@ -878,7 +878,7 @@ export const StorageService = {
         }
         currentSyncStatus = 'synced';
         lastSyncedTime = new Date().toLocaleTimeString('ar-NL', { hour: '2-digit', minute: '2-digit' });
-        notifySubscribers();
+        notifySubscribers(false);
         return;
       }
 
@@ -889,10 +889,10 @@ export const StorageService = {
       }
 
       currentSyncStatus = 'local_only';
-      notifySubscribers();
+      notifySubscribers(false);
     } catch {
       currentSyncStatus = 'local_only';
-      notifySubscribers();
+      notifySubscribers(false);
     }
   },
 
@@ -989,13 +989,13 @@ export const StorageService = {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.PURCHASE_ORDERS);
       if (!data) {
-        localStorage.setItem(STORAGE_KEYS.PURCHASE_ORDERS, JSON.stringify(INITIAL_PURCHASE_ORDERS));
-        return INITIAL_PURCHASE_ORDERS;
+        localStorage.setItem(STORAGE_KEYS.PURCHASE_ORDERS, JSON.stringify([]));
+        return [];
       }
       return JSON.parse(data);
     } catch (e) {
       console.error('Error loading purchase orders:', e);
-      return INITIAL_PURCHASE_ORDERS;
+      return [];
     }
   },
 
@@ -1070,13 +1070,13 @@ export const StorageService = {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.DAILY_SALES);
       if (!data) {
-        localStorage.setItem(STORAGE_KEYS.DAILY_SALES, JSON.stringify(INITIAL_DAILY_SALES));
-        return INITIAL_DAILY_SALES;
+        localStorage.setItem(STORAGE_KEYS.DAILY_SALES, JSON.stringify([]));
+        return [];
       }
       return JSON.parse(data);
     } catch (e) {
       console.error('Error loading daily sales:', e);
-      return INITIAL_DAILY_SALES;
+      return [];
     }
   },
 
@@ -1210,13 +1210,13 @@ export const StorageService = {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.DEBTS);
       if (!data) {
-        localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify(INITIAL_DEBTS));
-        return INITIAL_DEBTS;
+        localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify([]));
+        return [];
       }
       return JSON.parse(data);
     } catch (e) {
       console.error('Error loading debts:', e);
-      return INITIAL_DEBTS;
+      return [];
     }
   },
 
@@ -1425,12 +1425,12 @@ export const StorageService = {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.EMPLOYEE_SHIFTS);
       if (!data) {
-        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(DEMO_EMPLOYEE_SHIFTS));
-        return DEMO_EMPLOYEE_SHIFTS;
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify([]));
+        return [];
       }
       return JSON.parse(data);
     } catch {
-      return DEMO_EMPLOYEE_SHIFTS;
+      return [];
     }
   },
 
@@ -1657,12 +1657,12 @@ export const StorageService = {
     try {
       const data = localStorage.getItem(STORAGE_KEYS.EMPLOYEE_ADVANCES);
       if (!data) {
-        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify(DEMO_EMPLOYEE_ADVANCES));
-        return DEMO_EMPLOYEE_ADVANCES;
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify([]));
+        return [];
       }
       return JSON.parse(data);
     } catch {
-      return DEMO_EMPLOYEE_ADVANCES;
+      return [];
     }
   },
 
@@ -1839,12 +1839,13 @@ export const StorageService = {
     notifySubscribers();
   },
 
-  clearAllTransactionData(): void {
+  async clearAllTransactionData(): Promise<boolean> {
     localStorage.setItem(STORAGE_KEYS.PURCHASE_ORDERS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.DAILY_SALES, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.DEBTS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify([]));
     localStorage.setItem(STORAGE_KEYS.EMPLOYEE_ADVANCES, JSON.stringify([]));
-    notifySubscribers();
+    notifySubscribers(false);
+    return await this.syncToServer();
   },
 };
