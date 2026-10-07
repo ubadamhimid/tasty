@@ -2,6 +2,7 @@ import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import { MenuItem } from '../types';
+import { getWhatsAppOrderUrl, formatDishOrderMessage } from '../utils/whatsapp';
 
 interface DishModalProps {
   item: MenuItem | null;
@@ -65,16 +66,36 @@ export const DishModal: React.FC<DishModalProps> = ({ item, onClose }) => {
               </div>
             </div>
 
-            {/* Direct Phone Order Button */}
-            <div className="pt-4 border-t border-tasty-sage/20">
+            {/* Order Actions */}
+            <div className="pt-4 border-t border-tasty-sage/20 space-y-2.5">
+              {/* Delivery Now Available Tag */}
+              <div className="flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-2xl bg-emerald-50 text-emerald-900 border border-emerald-200/80 text-[11px] font-bold text-center">
+                <span className="inline-block animate-pulse">🛵</span>
+                <span>Nu ook bezorging in Hilversum! Vers aan huis geleverd</span>
+              </div>
+
+              {/* WhatsApp Order Button */}
               <motion.a 
-                href="tel:0352042001"
+                href={getWhatsAppOrderUrl(formatDishOrderMessage(item.name, item.price))}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-4 rounded-full bg-tasty-teal text-white font-bold text-sm shadow-tasty-hover hover:bg-tasty-teal-dark transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group"
               >
-                <Icon icon="mdi:phone" className="text-lg" />
-                <span>Call to Order • 035 204 2001</span>
+                <Icon icon="mdi:whatsapp" className="text-xl shrink-0 group-hover:scale-110 transition-transform" />
+                <span>Bestel via WhatsApp</span>
+              </motion.a>
+
+              {/* Direct Phone Order Button */}
+              <motion.a 
+                href="tel:0352042001"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className="w-full py-2.5 rounded-full bg-tasty-bg-warm border border-tasty-charcoal/15 text-tasty-charcoal hover:bg-tasty-terracotta-light hover:text-tasty-terracotta font-semibold text-xs transition-all flex items-center justify-center gap-2"
+              >
+                <Icon icon="mdi:phone" className="text-base text-tasty-terracotta" />
+                <span>Of bel: 035 204 2001</span>
               </motion.a>
             </div>
 

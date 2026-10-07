@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
+import { getWhatsAppOrderUrl, formatGeneralInquiryMessage } from '../utils/whatsapp';
 
 interface HeroProps {
   onOpenCustomizer?: () => void;
@@ -86,20 +87,46 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
               </div>
             </motion.div>
 
-            {/* Action Buttons: Side-by-side responsive layout */}
+            {/* Delivery Now Available Announcement Badge */}
+            <motion.div
+              initial={{ opacity: 0, y: 15 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+              className="pt-1"
+            >
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-300/80 text-emerald-900 font-bold text-xs shadow-2xs">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
+                <span>🛵 Nu ook bezorging in Hilversum! Vers aan huis geleverd</span>
+              </div>
+            </motion.div>
+
+            {/* Action Buttons: Responsive layout with WhatsApp & Phone */}
             <motion.div 
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2 }}
-              className="flex flex-row items-center gap-3 pt-1"
+              className="flex flex-wrap items-center gap-2.5 sm:gap-3 pt-1"
             >
+              {/* WhatsApp Order Button */}
+              <motion.a 
+                href={getWhatsAppOrderUrl(formatGeneralInquiryMessage())}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3.5 sm:py-4 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group"
+              >
+                <Icon icon="mdi:whatsapp" className="text-xl sm:text-2xl text-white group-hover:scale-110 transition-transform shrink-0" />
+                <span>Bestel via WhatsApp</span>
+              </motion.a>
+
               <motion.a 
                 href="#menu"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-8 py-3.5 sm:py-4 rounded-full bg-tasty-charcoal text-white font-semibold text-sm sm:text-base shadow-sm hover:bg-[#111111] transition-all duration-300 whitespace-nowrap group"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-6 py-3.5 sm:py-4 rounded-full bg-tasty-charcoal text-white font-semibold text-sm sm:text-base shadow-sm hover:bg-[#111111] transition-all duration-300 whitespace-nowrap group"
               >
-                <span>Explore Menu</span>
+                <span>Menu</span>
                 <Icon icon="mdi:arrow-right" className="text-base sm:text-lg group-hover:translate-x-1 transition-transform" />
               </motion.a>
 
@@ -108,9 +135,9 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
                 href="tel:0352042001"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-4 sm:px-7 py-3.5 sm:py-4 rounded-full bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white font-semibold text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group"
+                className="flex-1 sm:flex-none inline-flex items-center justify-center gap-1.5 sm:gap-2 px-4 sm:px-5 py-3.5 sm:py-4 rounded-full bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white font-semibold text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group"
               >
-                <Icon icon="mdi:phone" className="text-base sm:text-xl text-white group-hover:rotate-12 transition-transform duration-300 shrink-0" />
+                <Icon icon="mdi:phone" className="text-base sm:text-lg text-white group-hover:rotate-12 transition-transform duration-300 shrink-0" />
                 <span>035 204 2001</span>
               </motion.a>
             </motion.div>
@@ -133,7 +160,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
               </a>
               <div className="flex items-center gap-1.5">
                 <Icon icon="mdi:silverware-fork-knife" className="text-tasty-terracotta text-sm sm:text-base shrink-0" />
-                <span>Dine-In & Express Takeaway</span>
+                <span>Dine-In • Takeaway • Bezorging 🛵</span>
               </div>
             </motion.div>
 

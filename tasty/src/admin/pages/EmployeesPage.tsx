@@ -73,6 +73,7 @@ export const EmployeesPage: React.FC = () => {
   const [shiftHours, setShiftHours] = useState<number>(8);
   const [shiftRate, setShiftRate] = useState<number>(12);
   const [shiftPaymentStatus, setShiftPaymentStatus] = useState<ShiftPaymentStatus>('unpaid');
+  const [shiftWageType, setShiftWageType] = useState<WageType>('hourly');
   const [shiftNotes, setShiftNotes] = useState('');
   // Collapsible Detailed times (start/end/break)
   const [showDetailedTimes, setShowDetailedTimes] = useState(false);
@@ -223,22 +224,34 @@ export const EmployeesPage: React.FC = () => {
 
   // Calculated live shift hours and wage
   const liveShiftCalculation = useMemo(() => {
+    let netHours = 0;
     if (!showDetailedTimes) {
-      const netHours = Number(shiftHours) || 0;
-      const totalEarned = Number((netHours * (Number(shiftRate) || 0)).toFixed(2));
-      return { netHours, totalEarned };
+      netHours = Number(shiftHours) || 0;
+    } else {
+      const [sH, sM] = (shiftStart || '00:00').split(':').map(Number);
+      const [eH, eM] = (shiftEnd || '00:00').split(':').map(Number);
+      let durMinutes = (eH * 60 + (eM || 0)) - (sH * 60 + (sM || 0));
+      if (durMinutes < 0) {
+        durMinutes += 24 * 60; // overnight
+      }
+      const netMinutes = Math.max(0, durMinutes - (Number(shiftBreak) || 0));
+      netHours = Number((netMinutes / 60).toFixed(2));
     }
-    const [sH, sM] = (shiftStart || '00:00').split(':').map(Number);
-    const [eH, eM] = (shiftEnd || '00:00').split(':').map(Number);
-    let durMinutes = (eH * 60 + (eM || 0)) - (sH * 60 + (sM || 0));
-    if (durMinutes < 0) {
-      durMinutes += 24 * 60; // overnight
+
+    const rate = Number(shiftRate) || 0;
+    let totalEarned = 0;
+    if (shiftWageType === 'daily') {
+      totalEarned = Number(rate.toFixed(2));
+    } else if (shiftWageType === 'weekly') {
+      const targetEmp = employees.find((e) => e.id === shiftEmpId);
+      const days = (targetEmp?.workingDays && targetEmp.workingDays.length > 0) ? targetEmp.workingDays.length : 6;
+      totalEarned = Number((rate / days).toFixed(2));
+    } else {
+      totalEarned = Number((netHours * rate).toFixed(2));
     }
-    const netMinutes = Math.max(0, durMinutes - (Number(shiftBreak) || 0));
-    const netHours = Number((netMinutes / 60).toFixed(2));
-    const totalEarned = Number((netHours * (Number(shiftRate) || 0)).toFixed(2));
+
     return { netHours, totalEarned };
-  }, [showDetailedTimes, shiftHours, shiftStart, shiftEnd, shiftBreak, shiftRate]);
+  }, [showDetailedTimes, shiftHours, shiftStart, shiftEnd, shiftBreak, shiftRate, shiftWageType, shiftEmpId, employees]);
 
   // Map of shifts recorded for today by employee ID
   const todayShiftsMap = useMemo(() => {
@@ -252,6 +265,7 @@ export const EmployeesPage: React.FC = () => {
     setShiftEmpId(empId);
     const emp = employees.find((e) => e.id === empId);
     if (emp) {
+      if (emp.wageType) setShiftWageType(emp.wageType);
       if (emp.rate) setShiftRate(emp.rate);
       if (emp.defaultHours) setShiftHours(emp.defaultHours);
       if (emp.defaultStartTime) setShiftStart(emp.defaultStartTime);
@@ -268,6 +282,7 @@ export const EmployeesPage: React.FC = () => {
       : (employees.find(e => e.isActive) || employees[0]);
       
     setShiftEmpId(targetEmp ? targetEmp.id : '');
+    setShiftWageType(targetEmp?.wageType || 'hourly');
     setShiftRate(targetEmp ? targetEmp.rate : 12);
     setShiftHours(targetEmp?.defaultHours || 8);
     setShiftDate(new Date().toISOString().split('T')[0]);
@@ -284,6 +299,8 @@ export const EmployeesPage: React.FC = () => {
   const handleEditShift = (shift: EmployeeShift) => {
     setEditingShiftId(shift.id);
     setShiftEmpId(shift.employeeId);
+    const targetEmp = employees.find(e => e.id === shift.employeeId);
+    setShiftWageType(shift.wageType || targetEmp?.wageType || 'hourly');
     setShiftDate(shift.date);
     setShiftHours(shift.totalHours);
     setShiftStart(shift.startTime);
@@ -315,6 +332,7 @@ export const EmployeesPage: React.FC = () => {
       breakMinutes: showDetailedTimes ? shiftBreak : 0,
       totalHours: finalHours,
       hourlyRate: shiftRate,
+      wageType: shiftWageType,
       paymentStatus: shiftPaymentStatus,
       notes: shiftNotes,
     });
@@ -527,8 +545,17 @@ export const EmployeesPage: React.FC = () => {
       if (!map[s.employeeId]) {
         map[s.employeeId] = { totalHours: 0, totalEarned: 0, paidShifts: 0, advances: 0, totalPaid: 0, netRemaining: 0, shiftCount: 0, advancesCount: 0 };
       }
+      const emp = employees.find(e => e.id === s.employeeId);
+      const wType = s.wageType || emp?.wageType || 'hourly';
+      let earned = s.totalEarned;
+      if (wType === 'daily') {
+        const expected = emp?.rate || s.hourlyRate || 0;
+        if (expected > 0 && earned > expected) {
+          earned = expected;
+        }
+      }
       map[s.employeeId].totalHours += s.totalHours;
-      map[s.employeeId].totalEarned += s.totalEarned;
+      map[s.employeeId].totalEarned += earned;
       map[s.employeeId].paidShifts += (s.paidAmount || 0);
       map[s.employeeId].shiftCount += 1;
     });
@@ -730,18 +757,18 @@ export const EmployeesPage: React.FC = () => {
       </div>
 
       {/* Main Tabs Navigation */}
-      <div className="flex items-center justify-between border-b border-gray-200/80 pb-1 print:hidden">
-        <div className="flex items-center gap-2">
+      <div className="border-b border-gray-200/80 pb-2 print:hidden overflow-x-auto no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="flex items-center gap-1.5 sm:gap-2 min-w-max">
           <button
             onClick={() => setActiveTab('shifts')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'shifts'
                 ? 'bg-tasty-charcoal text-white shadow-sm'
                 : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
             }`}
           >
-            <Clock className="w-4 h-4" />
-            <span>سجل الورديات وساعات العمل</span>
+            <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+            <span><span className="hidden sm:inline">سجل </span>الورديات<span className="hidden sm:inline"> وساعات العمل</span></span>
             <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeTab === 'shifts' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-700'}`}>
               {filteredShifts.length}
             </span>
@@ -749,14 +776,14 @@ export const EmployeesPage: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('advances')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'advances'
                 ? 'bg-amber-600 text-white shadow-sm'
                 : 'text-gray-500 hover:text-amber-800 hover:bg-amber-50'
             }`}
           >
-            <Banknote className="w-4 h-4" />
-            <span>سجل السلف والدفعات المسحوبة</span>
+            <Banknote className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+            <span><span className="hidden sm:inline">سجل </span>السلف والدفعات<span className="hidden sm:inline"> المسحوبة</span></span>
             <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeTab === 'advances' ? 'bg-white/20 text-white' : 'bg-amber-100 text-amber-900 font-bold'}`}>
               {filteredAdvances.length}
             </span>
@@ -764,14 +791,14 @@ export const EmployeesPage: React.FC = () => {
 
           <button
             onClick={() => setActiveTab('directory')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all ${
+            className={`flex items-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-2xl text-xs sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'directory'
                 ? 'bg-tasty-charcoal text-white shadow-sm'
                 : 'text-gray-500 hover:text-gray-900 hover:bg-gray-100'
             }`}
           >
-            <Users className="w-4 h-4" />
-            <span>فريق العمل وكشف الحساب</span>
+            <Users className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
+            <span>فريق العمل<span className="hidden sm:inline"> وكشف الحساب</span></span>
             <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${activeTab === 'directory' ? 'bg-white/20 text-white' : 'bg-gray-200 text-gray-700'}`}>
               {employees.length}
             </span>
@@ -839,7 +866,10 @@ export const EmployeesPage: React.FC = () => {
                         )}
                       </div>
                       <p className="text-[10px] text-gray-400 truncate mt-0.5">
-                        {emp.role} • €{emp.rate}/س
+                        {emp.role} • €{emp.rate}
+                        <span>
+                          {emp.wageType === 'hourly' ? '/س' : emp.wageType === 'daily' ? '/يوم' : '/أسبوع'}
+                        </span>
                       </p>
                     </div>
 
@@ -1002,7 +1032,7 @@ export const EmployeesPage: React.FC = () => {
                       <th className="py-3.5 px-4">أوقات العمل (من - إلى)</th>
                       <th className="py-3.5 px-4">الاستراحة</th>
                       <th className="py-3.5 px-4">صافي الساعات</th>
-                      <th className="py-3.5 px-4">الأجر / ساعة</th>
+                      <th className="py-3.5 px-4">الأجر والتعرفة</th>
                       <th className="py-3.5 px-4">المستحق (€)</th>
                       <th className="py-3.5 px-4">حالة الدفع</th>
                       <th className="py-3.5 px-4 print:hidden text-center">إجراءات</th>
@@ -1011,6 +1041,7 @@ export const EmployeesPage: React.FC = () => {
                   <tbody className="divide-y divide-gray-100">
                     {filteredShifts.map((shift) => {
                       const emp = employees.find((e) => e.id === shift.employeeId);
+                      const currentWageType = shift.wageType || emp?.wageType || 'hourly';
                       return (
                         <tr key={shift.id} className="hover:bg-amber-50/20 transition-colors">
                           
@@ -1069,9 +1100,12 @@ export const EmployeesPage: React.FC = () => {
                             <span className="text-[10px] text-gray-400 font-sans mr-1">ساعة</span>
                           </td>
 
-                          {/* Hourly Rate */}
-                          <td className="py-3.5 px-4 whitespace-nowrap text-gray-600 font-mono">
-                            €{shift.hourlyRate.toFixed(2)}
+                          {/* Rate & Wage Type */}
+                          <td className="py-3.5 px-4 whitespace-nowrap text-gray-700 font-mono">
+                            <span className="font-bold">€{shift.hourlyRate.toFixed(2)}</span>
+                            <span className="text-[10px] text-gray-400 font-sans mr-1">
+                              {currentWageType === 'daily' ? '/يوم' : currentWageType === 'weekly' ? '/أسبوع' : '/س'}
+                            </span>
                           </td>
 
                           {/* Total Earned */}
@@ -1426,7 +1460,7 @@ export const EmployeesPage: React.FC = () => {
                       <div className="text-left font-mono">
                         <span className="text-base font-black text-tasty-teal-dark">€{emp.rate.toFixed(2)}</span>
                         <span className="text-[10px] text-gray-400 block font-sans">
-                          {emp.wageType === 'hourly' ? '/ ساعة' : emp.wageType === 'daily' ? '/ يوم' : '/ شهر'}
+                          {emp.wageType === 'hourly' ? '/ ساعة' : emp.wageType === 'daily' ? '/ يوم' : emp.wageType === 'weekly' ? '/ أسبوع' : '/ شهر'}
                         </span>
                       </div>
                     </div>
@@ -1653,10 +1687,16 @@ export const EmployeesPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Hourly Rate & Quick Total */}
+              {/* Hourly / Daily Rate & Quick Total */}
               <div className="grid grid-cols-2 gap-3">
                 <div>
-                  <label className="block font-bold text-gray-700 mb-1">أجر الساعة (€) *</label>
+                  <label className="block font-bold text-gray-700 mb-1">
+                    {shiftWageType === 'daily' 
+                      ? 'قيمة اليومية (€) *' 
+                      : shiftWageType === 'weekly' 
+                        ? 'المبلغ الأسبوعي (€) *' 
+                        : 'أجر الساعة (€) *'}
+                  </label>
                   <input
                     type="number"
                     step="0.5"
@@ -1670,11 +1710,24 @@ export const EmployeesPage: React.FC = () => {
 
                 {/* Live Preview Box */}
                 <div className="p-3 rounded-2xl bg-gradient-to-r from-tasty-teal-light/60 to-emerald-50 border border-tasty-teal/20 flex flex-col justify-center text-left">
-                  <span className="text-[10px] text-gray-500 font-bold block text-right">المستحق الإجمالي:</span>
+                  <span className="text-[10px] text-gray-500 font-bold block text-right">
+                    {shiftWageType === 'daily' 
+                      ? 'المستحق (يومية ثابتة):' 
+                      : shiftWageType === 'weekly' 
+                        ? 'المستحق (حصة اليوم):' 
+                        : 'المستحق الإجمالي:'}
+                  </span>
                   <div className="flex items-baseline gap-0.5 text-lg font-sans font-black text-tasty-charcoal tabular-nums justify-end" dir="ltr">
                     <span className="text-xs font-bold text-gray-400 mr-0.5">€</span>
                     <span>{liveShiftCalculation.totalEarned.toFixed(2)}</span>
                   </div>
+                  <span className="text-[9px] text-gray-400 text-right mt-0.5">
+                    {shiftWageType === 'daily' 
+                      ? 'يومية كاملة مقطوعة' 
+                      : shiftWageType === 'weekly' 
+                        ? 'حصة دوام اليوم' 
+                        : `${liveShiftCalculation.netHours}س × €${shiftRate}`}
+                  </span>
                 </div>
               </div>
 

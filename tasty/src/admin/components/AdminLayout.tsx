@@ -15,8 +15,7 @@ import {
   Menu,
   X,
   Sparkles,
-  Crown,
-  UserCheck
+  Crown
 } from 'lucide-react';
 
 export const AdminLayout: React.FC = () => {
@@ -61,6 +60,7 @@ export const AdminLayout: React.FC = () => {
     {
       to: '/admin',
       label: 'الإحصائيات العامة',
+      shortLabel: 'الإحصائيات',
       icon: LayoutDashboard,
       exact: true,
       adminOnly: true,
@@ -68,26 +68,31 @@ export const AdminLayout: React.FC = () => {
     {
       to: '/admin/sales',
       label: 'تسجيل مبيعات اليوم',
+      shortLabel: 'المبيعات',
       icon: Receipt,
     },
     {
       to: '/admin/employees',
       label: 'الموظفون والورديات',
+      shortLabel: 'الموظفون',
       icon: Users,
     },
     {
       to: '/admin/orders',
       label: 'طلبيات الشراء',
+      shortLabel: 'المشتريات',
       icon: ShoppingBag,
     },
     {
       to: '/admin/debts',
       label: 'سجل الديون والدفعات',
+      shortLabel: 'الديون',
       icon: Scale,
     },
     {
       to: '/admin/settings',
       label: 'الإعدادات والبيانات',
+      shortLabel: 'الإعدادات',
       icon: Settings,
       adminOnly: true,
     },
@@ -104,52 +109,45 @@ export const AdminLayout: React.FC = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
           
           {/* Logo & Title */}
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 min-w-0">
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="lg:hidden p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+              className="lg:hidden p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors shrink-0"
+              aria-label="القائمة"
             >
               {isMobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
 
-            <NavLink to={isAdmin ? "/admin" : "/admin/sales"} className="flex items-center gap-3 group">
+            <NavLink to={isAdmin ? "/admin" : "/admin/sales"} className="flex items-center gap-2 sm:gap-2.5 group shrink-0">
               <img 
                 src="/images/logo.webp" 
                 alt="TASTY Levantine Flavours" 
-                className="h-9 sm:h-10 w-auto object-contain group-hover:scale-105 transition-transform" 
+                className="h-8 sm:h-9 w-auto object-contain group-hover:scale-105 transition-transform" 
               />
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/20">
-                    لوحة الإدارة
-                  </span>
-                </div>
-                <p className="text-[10px] text-gray-400 hidden sm:block">Hilversum • Groest 50</p>
-              </div>
+              <span className="text-[10px] sm:text-[11px] font-bold px-2 sm:px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/20 whitespace-nowrap shrink-0">
+                لوحة الإدارة
+              </span>
+              <p className="text-[10px] text-gray-400 hidden md:block whitespace-nowrap">Hilversum • Groest 50</p>
             </NavLink>
           </div>
 
           {/* User Role Badge & Logout Button */}
-          <div className="flex items-center gap-2.5">
-            {isAdmin ? (
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold shadow-2xs">
+          <div className="flex items-center gap-2 shrink-0">
+            {isAdmin && (
+              <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold shadow-2xs whitespace-nowrap">
                 <Crown className="w-3.5 h-3.5 text-amber-600" />
                 <span>المدير العام</span>
-              </span>
-            ) : (
-              <span className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-900 border border-blue-300 text-xs font-bold shadow-2xs">
-                <UserCheck className="w-3.5 h-3.5 text-blue-600" />
-                <span>مدير الصالة (صلاحية تشغيلية)</span>
               </span>
             )}
 
             <button
               onClick={handleLogout}
-              className="flex items-center gap-2 px-3.5 py-1.5 rounded-xl text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100/80 border border-red-200/70 transition-all shadow-2xs"
+              className="flex items-center justify-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-xl text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200/80 transition-all shadow-2xs whitespace-nowrap shrink-0"
               title="تسجيل الخروج"
+              aria-label="تسجيل الخروج"
             >
-              <LogOut className="w-4 h-4" />
-              <span>تسجيل الخروج</span>
+              <LogOut className="w-4 h-4 shrink-0" />
+              <span className="hidden sm:inline">تسجيل الخروج</span>
             </button>
           </div>
         </div>
@@ -289,7 +287,7 @@ export const AdminLayout: React.FC = () => {
       </div>
 
       {/* Mobile Sticky Bottom Tab Bar */}
-      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 px-2 py-1.5 flex items-center justify-around shadow-lg">
+      <nav className="lg:hidden fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-gray-200 px-1 py-1.5 flex items-center justify-around shadow-lg">
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = item.exact 
@@ -301,14 +299,14 @@ export const AdminLayout: React.FC = () => {
               key={item.to}
               to={item.to}
               end={item.exact}
-              className={`flex flex-col items-center py-1 px-2.5 rounded-xl text-[10px] font-bold transition-all ${
+              className={`flex-1 flex flex-col items-center py-1 px-0.5 rounded-xl text-[10px] sm:text-xs font-bold transition-all text-center ${
                 isActive ? 'text-tasty-teal' : 'text-gray-400 hover:text-gray-700'
               }`}
             >
-              <div className={`p-1 rounded-xl transition-colors ${isActive ? 'bg-tasty-teal-light' : ''}`}>
-                <Icon className="w-5 h-5" />
+              <div className={`p-1 sm:p-1.5 rounded-xl transition-colors ${isActive ? 'bg-tasty-teal-light text-tasty-teal-dark' : ''}`}>
+                <Icon className="w-4 h-4 sm:w-5 sm:h-5" />
               </div>
-              <span className="mt-0.5 truncate max-w-[64px]">{item.label}</span>
+              <span className="mt-0.5 whitespace-nowrap leading-tight text-[10px] sm:text-[11px] font-semibold">{item.shortLabel || item.label}</span>
             </NavLink>
           );
         })}

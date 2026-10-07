@@ -149,7 +149,8 @@ export interface EmployeeShift {
   endTime: string; // HH:mm
   breakMinutes: number; // break in minutes
   totalHours: number; // calculated net hours (e.g. 7.50)
-  hourlyRate: number; // EUR per hour
+  hourlyRate: number; // EUR per hour or per day/week depending on wageType
+  wageType?: WageType; // 'hourly' | 'daily' | 'weekly' | 'monthly'
   totalEarned: number; // total EUR for this shift
   paymentStatus: ShiftPaymentStatus;
   paidAmount: number; // amount paid

@@ -270,10 +270,11 @@ export const DailySalesPage: React.FC = () => {
                   type="number"
                   step="0.01"
                   min="0"
+                  inputMode="decimal"
                   placeholder="0.00"
                   value={cashAmount}
                   onChange={(e) => setCashAmount(e.target.value)}
-                  className="w-full pr-8 pl-3 py-2.5 rounded-xl border border-emerald-200 focus:outline-none focus:border-emerald-500 font-mono text-base font-bold text-emerald-800 bg-emerald-50/20"
+                  className="w-full pr-8 pl-3 py-3 sm:py-2.5 rounded-2xl border border-emerald-200 focus:outline-none focus:border-emerald-500 font-mono text-lg sm:text-base font-bold text-emerald-800 bg-emerald-50/20 shadow-2xs"
                 />
               </div>
             </div>
@@ -290,10 +291,11 @@ export const DailySalesPage: React.FC = () => {
                   type="number"
                   step="0.01"
                   min="0"
+                  inputMode="decimal"
                   placeholder="0.00"
                   value={cardAmount}
                   onChange={(e) => setCardAmount(e.target.value)}
-                  className="w-full pr-8 pl-3 py-2.5 rounded-xl border border-tasty-teal/30 focus:outline-none focus:border-tasty-teal font-mono text-base font-bold text-tasty-teal-dark bg-tasty-teal-light/30"
+                  className="w-full pr-8 pl-3 py-3 sm:py-2.5 rounded-2xl border border-tasty-teal/30 focus:outline-none focus:border-tasty-teal font-mono text-lg sm:text-base font-bold text-tasty-teal-dark bg-tasty-teal-light/30 shadow-2xs"
                 />
               </div>
             </div>
@@ -308,7 +310,7 @@ export const DailySalesPage: React.FC = () => {
               placeholder="مثال: ذروة عطلة نهاية الأسبوع، طلبية مناسبات خاصة، صيانة ماكينة القلي..."
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              className="w-full px-3 py-2 rounded-xl border border-gray-200 focus:outline-none focus:border-tasty-teal text-xs bg-white"
+              className="w-full px-3.5 py-2.5 rounded-2xl border border-gray-200 focus:outline-none focus:border-tasty-teal text-xs bg-white"
             />
           </div>
 
@@ -316,7 +318,7 @@ export const DailySalesPage: React.FC = () => {
           <div className="p-4 rounded-2xl bg-tasty-bg-warm border border-gray-200/80 space-y-2">
             <div className="flex items-center justify-between text-xs font-bold">
               <span className="text-gray-600">المجموع الإجمالي المحسوب:</span>
-              <div className="flex items-baseline gap-0.5 font-sans font-black text-lg text-tasty-charcoal tabular-nums" dir="ltr">
+              <div className="flex items-baseline gap-0.5 font-sans font-black text-xl text-tasty-charcoal tabular-nums" dir="ltr">
                 <span className="text-xs font-bold text-gray-400">€</span>
                 <span>{liveTotal.toFixed(2)}</span>
               </div>
@@ -336,7 +338,7 @@ export const DailySalesPage: React.FC = () => {
               />
             </div>
 
-            <div className="flex items-center justify-between text-xs text-gray-500 font-medium">
+            <div className="flex flex-wrap items-center justify-between gap-2 text-xs text-gray-500 font-medium">
               <span className="flex items-center gap-1.5">
                 <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 inline-block" />
                 كاش: €{numCash} (<strong>{liveCashPct}%</strong>)
@@ -349,10 +351,10 @@ export const DailySalesPage: React.FC = () => {
           </div>
 
           {/* Submit Button */}
-          <div className="flex justify-end gap-2">
+          <div className="flex justify-end">
             <button
               type="submit"
-              className="flex items-center gap-2 px-6 py-3 rounded-xl bg-tasty-teal hover:bg-tasty-teal-dark text-white font-bold text-xs sm:text-sm shadow-md shadow-tasty-teal/20 transition-all active:scale-95"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-7 py-3.5 rounded-2xl bg-tasty-teal hover:bg-tasty-teal-dark text-white font-bold text-sm shadow-md shadow-tasty-teal/20 transition-all active:scale-95"
             >
               <Save className="w-4 h-4" />
               <span>{editingId ? 'حفظ التعديلات' : 'تسجيل وحفظ تقفيل اليوم'}</span>
@@ -361,7 +363,7 @@ export const DailySalesPage: React.FC = () => {
         </form>
       </div>
 
-      {/* History Table */}
+      {/* History Table & Mobile Cards */}
       <div className="bg-white rounded-3xl border border-gray-100 shadow-xs overflow-hidden">
         <div className="p-4 sm:p-5 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div>
@@ -376,12 +378,72 @@ export const DailySalesPage: React.FC = () => {
               placeholder="بحث بالتاريخ أو الملاحظة..."
               value={searchDate}
               onChange={(e) => setSearchDate(e.target.value)}
-              className="w-full sm:w-60 pr-9 pl-3 py-1.5 text-xs rounded-xl border border-gray-200 focus:outline-none focus:border-tasty-teal bg-white"
+              className="w-full sm:w-60 pr-9 pl-3 py-2 text-xs rounded-2xl border border-gray-200 focus:outline-none focus:border-tasty-teal bg-white"
             />
           </div>
         </div>
 
-        <div className="overflow-x-auto">
+        {/* Mobile View: Cards */}
+        <div className="block sm:hidden divide-y divide-gray-100">
+          {filteredSales.map((sale) => (
+            <div key={sale.id} className="p-4 space-y-2.5">
+              <div className="flex items-center justify-between">
+                <div className="flex items-center gap-1.5">
+                  <span className="font-bold text-sm text-tasty-charcoal">{sale.date}</span>
+                  {sale.date === new Date().toISOString().split('T')[0] && (
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold">
+                      اليوم
+                    </span>
+                  )}
+                </div>
+                <div className="font-sans font-black text-base text-tasty-charcoal" dir="ltr">
+                  €{sale.totalAmount.toFixed(2)}
+                </div>
+              </div>
+
+              <div className="flex flex-wrap items-center gap-1.5">
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-emerald-50 text-emerald-800 text-xs font-bold border border-emerald-200/60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+                  <span>كاش:</span>
+                  <span dir="ltr" className="font-mono">€{sale.cashAmount}</span>
+                  <span className="text-[10px] text-emerald-600">({sale.cashPercentage}%)</span>
+                </span>
+                <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-teal-50 text-teal-800 text-xs font-bold border border-teal-200/60">
+                  <span className="w-1.5 h-1.5 rounded-full bg-teal-500"></span>
+                  <span>كرت:</span>
+                  <span dir="ltr" className="font-mono">€{sale.cardAmount}</span>
+                  <span className="text-[10px] text-teal-600">({sale.cardPercentage}%)</span>
+                </span>
+              </div>
+
+              {sale.notes && (
+                <p className="text-[11px] text-gray-500 bg-gray-50 p-2.5 rounded-xl border border-gray-100 italic">
+                  {sale.notes}
+                </p>
+              )}
+
+              <div className="flex items-center justify-end gap-2 pt-1 border-t border-gray-50">
+                <button
+                  onClick={() => handleEdit(sale)}
+                  className="px-3 py-1.5 rounded-xl bg-tasty-teal-light/50 text-tasty-teal-dark text-xs font-bold flex items-center gap-1 hover:bg-tasty-teal-light transition-colors"
+                >
+                  <Edit2 className="w-3.5 h-3.5" />
+                  <span>تعديل</span>
+                </button>
+                <button
+                  onClick={() => handleDelete(sale.id)}
+                  className="px-3 py-1.5 rounded-xl bg-red-50 text-red-600 text-xs font-bold flex items-center gap-1 hover:bg-red-100 transition-colors"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span>حذف</span>
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Desktop View: Full Table */}
+        <div className="hidden sm:block overflow-x-auto">
           <table className="w-full text-right text-xs">
             <thead>
               <tr className="bg-tasty-bg-warm border-b border-gray-100 text-gray-500 font-bold">

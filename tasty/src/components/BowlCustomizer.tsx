@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Icon } from '@iconify/react';
+import { getWhatsAppOrderUrl, formatBowlOrderMessage } from '../utils/whatsapp';
 
 export const BowlCustomizer: React.FC = () => {
   const [selectedBase, setSelectedBase] = useState('Fragrant Spiced Rice');
@@ -233,21 +234,49 @@ export const BowlCustomizer: React.FC = () => {
               </div>
             </div>
 
-            {/* Price & Phone Order Action */}
+            {/* Price & Order Actions */}
             <div className="pt-2 flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <span className="text-xs text-tasty-charcoal-muted font-semibold">Estimated Price:</span>
                 <span className="text-2xl font-bold text-tasty-charcoal">€{totalPrice.toFixed(2)}</span>
               </div>
 
+              {/* Delivery Now Available Tag */}
+              <div className="flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-2xl bg-emerald-50 text-emerald-900 border border-emerald-200/80 text-[11px] font-bold text-center">
+                <span className="inline-block animate-pulse">🛵</span>
+                <span>Nu ook bezorging in Hilversum! Vers aan huis geleverd</span>
+              </div>
+
+              {/* Primary: WhatsApp Order Button with customized message */}
               <motion.a 
-                href="tel:0352042001"
+                href={getWhatsAppOrderUrl(
+                  formatBowlOrderMessage({
+                    base: selectedBase,
+                    protein: selectedProtein,
+                    toppings: selectedToppings,
+                    sauces: selectedSauces,
+                    price: totalPrice,
+                  })
+                )}
+                target="_blank"
+                rel="noopener noreferrer"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3.5 rounded-full bg-tasty-teal text-white font-bold text-sm shadow-tasty-hover hover:bg-tasty-teal-dark transition-all flex items-center justify-center gap-2"
+                className="w-full py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group"
               >
-                <Icon icon="mdi:phone" className="text-lg" />
-                <span>Call to Order This Bowl • 035 204 2001</span>
+                <Icon icon="mdi:whatsapp" className="text-xl shrink-0 group-hover:scale-110 transition-transform" />
+                <span>Bestel via WhatsApp</span>
+              </motion.a>
+
+              {/* Secondary: Phone Order */}
+              <motion.a 
+                href="tel:0352042001"
+                whileHover={{ scale: 1.01 }}
+                whileTap={{ scale: 0.99 }}
+                className="w-full py-2.5 rounded-full bg-tasty-bg-warm border border-tasty-charcoal/15 text-tasty-charcoal hover:bg-tasty-terracotta-light hover:text-tasty-terracotta font-semibold text-xs transition-all flex items-center justify-center gap-2"
+              >
+                <Icon icon="mdi:phone" className="text-base text-tasty-terracotta" />
+                <span>Of bel: 035 204 2001</span>
               </motion.a>
             </div>
           </div>

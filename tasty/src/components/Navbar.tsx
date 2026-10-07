@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Icon } from '@iconify/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SocialShareModal } from './SocialShare';
+import { getWhatsAppOrderUrl, formatGeneralInquiryMessage } from '../utils/whatsapp';
 
 interface NavbarProps {
   onOpenCustomizer: () => void;
@@ -57,35 +58,49 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCustomizer }) => {
           </div>
 
           {/* Right Actions */}
-          <div className="flex items-center gap-1.5 sm:gap-3 shrink-0">
-            {/* Share Button */}
+          <div className="flex items-center gap-1.5 sm:gap-2 shrink-0">
+            {/* Share Button (hidden on small mobile, accessible via mobile menu) */}
             <button
               onClick={() => setShareModalOpen(true)}
-              className="p-2 sm:p-2.5 rounded-full bg-tasty-bg-warm text-tasty-charcoal border border-tasty-terracotta/20 hover:bg-tasty-terracotta-light hover:text-tasty-terracotta transition-all duration-300"
+              className="hidden sm:flex p-2 sm:p-2.5 rounded-full bg-tasty-bg-warm text-tasty-charcoal border border-tasty-terracotta/20 hover:bg-tasty-terracotta-light hover:text-tasty-terracotta transition-all duration-300"
               title="Share TASTY Hilversum"
             >
               <Icon icon="mdi:share-variant" className="text-base sm:text-lg" />
             </button>
 
-            {/* Dynamic Tactile Phone Pill Button */}
+            {/* Dynamic WhatsApp Button: compact icon circle on mobile, expanded pill on sm+ */}
+            <motion.a 
+              href={getWhatsAppOrderUrl(formatGeneralInquiryMessage())}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="inline-flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold p-2 sm:px-3.5 sm:py-2 rounded-full shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group shrink-0"
+              title="Bestel direct via WhatsApp (+31 6 84632782)"
+            >
+              <Icon icon="mdi:whatsapp" className="text-lg sm:text-base text-white group-hover:scale-110 transition-transform shrink-0" />
+              <span className="hidden sm:inline text-xs font-bold">WhatsApp</span>
+            </motion.a>
+
+            {/* Dynamic Tactile Phone Pill Button: compact icon circle on mobile, expanded on sm+ */}
             <motion.a 
               href="tel:0352042001"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-1.5 sm:gap-2 bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white text-xs sm:text-sm font-semibold px-3 sm:px-5 py-2 sm:py-2.5 rounded-full shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group"
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.96 }}
+              className="inline-flex items-center justify-center gap-1.5 bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white font-semibold p-2 sm:px-3.5 sm:py-2 rounded-full shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group shrink-0"
+              title="Bel 035 204 2001"
             >
-              <Icon icon="mdi:phone" className="text-sm sm:text-base text-white group-hover:rotate-12 transition-transform duration-300 shrink-0" />
-              <span className="font-bold tracking-tight hidden sm:inline">035 204 2001</span>
-              <span className="font-bold tracking-tight sm:hidden text-xs">Call</span>
+              <Icon icon="mdi:phone" className="text-lg sm:text-sm text-white group-hover:rotate-12 transition-transform duration-300 shrink-0" />
+              <span className="font-bold tracking-tight hidden sm:inline text-xs">035 204 2001</span>
             </motion.a>
 
             {/* Mobile Hamburger Button */}
             <button 
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="md:hidden p-2 rounded-full text-tasty-charcoal hover:bg-tasty-terracotta-light transition-colors"
+              className="md:hidden p-1.5 rounded-full text-tasty-charcoal hover:bg-tasty-terracotta-light transition-colors shrink-0"
               aria-label="Toggle menu"
             >
-              <Icon icon={mobileMenuOpen ? "mdi:close" : "mdi:menu"} className="text-xl sm:text-2xl" />
+              <Icon icon={mobileMenuOpen ? "mdi:close" : "mdi:menu"} className="text-2xl" />
             </button>
           </div>
         </nav>
@@ -141,6 +156,15 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCustomizer }) => {
                   <Icon icon="mdi:share-variant" />
                   <span>Share Website</span>
                 </button>
+                <a 
+                  href={getWhatsAppOrderUrl(formatGeneralInquiryMessage())}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center justify-center gap-2 py-2.5 rounded-full bg-[#25D366] text-white font-bold text-sm shadow-sm whitespace-nowrap"
+                >
+                  <Icon icon="mdi:whatsapp" className="text-lg" />
+                  <span>Bestel via WhatsApp</span>
+                </a>
                 <a 
                   href="tel:0352042001"
                   className="flex items-center justify-center gap-2 py-2.5 rounded-full bg-tasty-terracotta text-white font-semibold text-sm shadow-sm whitespace-nowrap"

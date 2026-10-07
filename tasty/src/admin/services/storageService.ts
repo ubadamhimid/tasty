@@ -1450,7 +1450,34 @@ export const StorageService = {
         localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify([]));
         return [];
       }
-      return JSON.parse(data);
+      const shifts: EmployeeShift[] = JSON.parse(data);
+      // Auto-heal shifts if any daily-wage employee's shift was erroneously multiplied by hours
+      const employees = this.getEmployees();
+      let modified = false;
+      shifts.forEach((s) => {
+        const emp = employees.find((e) => e.id === s.employeeId);
+        const wType = s.wageType || emp?.wageType || 'hourly';
+        if (!s.wageType && emp?.wageType) {
+          s.wageType = emp.wageType;
+          modified = true;
+        }
+        if (wType === 'daily') {
+          const expectedDailyEarned = Number((emp?.rate || s.hourlyRate || 0).toFixed(2));
+          if (expectedDailyEarned > 0 && s.totalEarned !== expectedDailyEarned) {
+            const oldEarned = s.totalEarned;
+            s.totalEarned = expectedDailyEarned;
+            s.hourlyRate = expectedDailyEarned;
+            if (s.paidAmount === oldEarned) {
+              s.paidAmount = expectedDailyEarned;
+            }
+            modified = true;
+          }
+        }
+      });
+      if (modified) {
+        localStorage.setItem(STORAGE_KEYS.EMPLOYEE_SHIFTS, JSON.stringify(shifts));
+      }
+      return shifts;
     } catch {
       return [];
     }
@@ -1466,6 +1493,7 @@ export const StorageService = {
     breakMinutes?: number;
     totalHours?: number;
     hourlyRate?: number;
+    wageType?: WageType;
     paymentStatus?: ShiftPaymentStatus;
     paidAmount?: number;
     notes?: string;
@@ -1475,6 +1503,7 @@ export const StorageService = {
     const targetEmp = employees.find((e) => e.id === shift.employeeId);
     const empName = shift.employeeName || targetEmp?.name || 'موظف';
     const rate = shift.hourlyRate !== undefined ? Number(shift.hourlyRate) : (targetEmp?.rate || 0);
+    const wageType: WageType = shift.wageType || targetEmp?.wageType || 'hourly';
 
     let netHours = 8;
     let startTime = shift.startTime || targetEmp?.defaultStartTime || '10:00';
@@ -1504,7 +1533,17 @@ export const StorageService = {
       netHours = Number((netMinutes / 60).toFixed(2));
     }
 
-    const totalEarned = Number((netHours * rate).toFixed(2));
+    // Calculate total earned according to wageType
+    let totalEarned = 0;
+    if (wageType === 'daily') {
+      totalEarned = Number(rate.toFixed(2));
+    } else if (wageType === 'weekly') {
+      const workDaysCount = (targetEmp?.workingDays && targetEmp.workingDays.length > 0) ? targetEmp.workingDays.length : 6;
+      totalEarned = Number((rate / workDaysCount).toFixed(2));
+    } else {
+      totalEarned = Number((netHours * rate).toFixed(2));
+    }
+
     const status = shift.paymentStatus || 'unpaid';
     const paid = status === 'unpaid' ? 0 : (shift.paidAmount !== undefined ? Number(shift.paidAmount) : totalEarned);
 
@@ -1521,6 +1560,7 @@ export const StorageService = {
           breakMinutes: breakMins,
           totalHours: netHours,
           hourlyRate: rate,
+          wageType,
           totalEarned,
           paymentStatus: status,
           paidAmount: paid,
@@ -1542,6 +1582,7 @@ export const StorageService = {
       breakMinutes: breakMins,
       totalHours: netHours,
       hourlyRate: rate,
+      wageType,
       totalEarned,
       paymentStatus: status,
       paidAmount: paid,
@@ -1623,6 +1664,7 @@ export const StorageService = {
         endTime: emp.defaultEndTime || '18:00',
         breakMinutes: emp.defaultBreakMinutes !== undefined ? emp.defaultBreakMinutes : 30,
         hourlyRate: emp.rate,
+        wageType: emp.wageType,
         paymentStatus: 'unpaid',
         notes: 'تسجيل آلي من جدول الدوام الثابت',
       });
@@ -1670,6 +1712,7 @@ export const StorageService = {
       date: targetDate,
       totalHours,
       hourlyRate: emp.rate,
+      wageType: emp.wageType,
       paymentStatus: status,
       notes: 'تسجيل سريع بنقرة واحدة',
     });

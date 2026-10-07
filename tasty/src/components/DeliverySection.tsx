@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Icon } from '@iconify/react';
+import { getWhatsAppOrderUrl, formatGeneralInquiryMessage, RESTAURANT_WHATSAPP_DISPLAY } from '../utils/whatsapp';
 
 export const DeliverySection: React.FC = () => {
   const [formSubmitted, setFormSubmitted] = useState(false);
@@ -29,30 +30,48 @@ export const DeliverySection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
           
           <div className="lg:col-span-8 space-y-4 text-left">
-            <span className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold tracking-wide">
-              <Icon icon="mdi:store-outline" className="text-base" />
-              Dine-In & Express Takeaway
-            </span>
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold tracking-wide text-white">
+                <Icon icon="mdi:store-outline" className="text-base" />
+                Dine-In • Takeaway • Bezorging
+              </span>
+              <span className="inline-flex items-center gap-1.5 bg-[#25D366] text-white px-3 py-1 rounded-full text-xs font-bold shadow-xs">
+                <span>🛵</span>
+                <span>Nu ook bezorging in Hilversum!</span>
+              </span>
+            </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold leading-tight">
-              Visit TASTY in Hilversum or Call for Pickup
+              Bestel via WhatsApp, Bel ons, of Kom Gezellig Langs
             </h2>
-            <p className="text-white/80 text-sm sm:text-base max-w-2xl font-light leading-relaxed">
-              Experience authentic Levantine hospitality in our warm Hilversum kitchen, or call us directly at <strong>035 204 2001</strong> to place your order for fast takeaway pickup.
+            <p className="text-white/85 text-sm sm:text-base max-w-2xl font-light leading-relaxed">
+              Proef de authentieke Levantijnse smaken in Hilversum! Bestel gemakkelijk via <strong>WhatsApp</strong> voor snelle bezorging aan huis of kom gezellig afhalen in ons restaurant.
             </p>
-            <div className="flex flex-wrap gap-4 pt-2">
+            <div className="flex flex-wrap items-center gap-3 pt-2">
+              {/* WhatsApp Button */}
+              <a 
+                href={getWhatsAppOrderUrl(formatGeneralInquiryMessage())}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold px-7 py-3.5 rounded-full text-sm shadow-lg transition-all flex items-center gap-2 group"
+              >
+                <Icon icon="mdi:whatsapp" className="text-xl text-white group-hover:scale-110 transition-transform" />
+                <span>Bestel via WhatsApp</span>
+              </a>
+
               <a 
                 href="tel:0352042001"
-                className="bg-white text-tasty-teal hover:bg-tasty-sage-light font-bold px-7 py-3.5 rounded-full text-sm shadow-md transition-all flex items-center gap-2"
+                className="bg-white text-tasty-teal hover:bg-tasty-sage-light font-bold px-6 py-3.5 rounded-full text-sm shadow-md transition-all flex items-center gap-2"
               >
-                <Icon icon="mdi:phone" className="text-xl text-tasty-teal" />
-                <span>Call 035 204 2001</span>
+                <Icon icon="mdi:phone" className="text-lg text-tasty-teal" />
+                <span>035 204 2001</span>
               </a>
+
               <a 
                 href="#contact" 
-                className="bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white font-bold px-7 py-3.5 rounded-full text-sm shadow-md transition-all flex items-center gap-2"
+                className="bg-white/15 hover:bg-white/25 text-white font-bold px-5 py-3.5 rounded-full text-sm backdrop-blur-md transition-all flex items-center gap-2"
               >
-                <Icon icon="mdi:map-marker" className="text-xl" />
-                <span>View Store Location</span>
+                <Icon icon="mdi:map-marker" className="text-lg" />
+                <span>Locatie</span>
               </a>
             </div>
           </div>
@@ -349,10 +368,27 @@ export const Footer: React.FC = () => {
                 </div>
               </a>
 
+              {/* WhatsApp Orders & Delivery */}
+              <div className="pt-2 border-t border-tasty-sage/20 flex items-center justify-between">
+                <div className="flex items-center gap-2">
+                  <Icon icon="mdi:whatsapp" className="text-base text-[#25D366]" />
+                  <span className="text-xs font-bold text-tasty-charcoal">WhatsApp & Delivery:</span>
+                </div>
+                <a 
+                  href={getWhatsAppOrderUrl(formatGeneralInquiryMessage())} 
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="px-3.5 py-1.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-xs shadow-sm transition-colors flex items-center gap-1"
+                >
+                  <span>{RESTAURANT_WHATSAPP_DISPLAY}</span>
+                </a>
+              </div>
+
+              {/* Phone Orders & Pickup */}
               <div className="pt-2 border-t border-tasty-sage/20 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                  <span className="text-xs font-bold text-tasty-charcoal">Orders & Pickup:</span>
+                  <span className="text-xs font-bold text-tasty-charcoal">Phone Pickup:</span>
                 </div>
                 <a 
                   href="tel:0352042001" 
@@ -387,7 +423,7 @@ export const Footer: React.FC = () => {
             <a 
               href="/admin" 
               className="text-gray-400 hover:text-tasty-teal transition-colors inline-flex items-center gap-1 font-medium"
-              title="لوحة تحكم إدارة المطعم"
+              title="Admin Portaal"
             >
               <span>Admin Portal</span>
             </a>

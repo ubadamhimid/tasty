@@ -9,6 +9,7 @@ import { OurStory } from './OurStory';
 import { DeliverySection, Footer } from './DeliverySection';
 import { DishModal } from './DishModal';
 import { GoogleReviewModal } from './GoogleReviewModal';
+import { FloatingWhatsApp } from './FloatingWhatsApp';
 import { MenuItem } from '../types';
 
 export const CustomerLandingPage: React.FC = () => {
@@ -67,6 +68,9 @@ export const CustomerLandingPage: React.FC = () => {
 
       {/* Google Review Pop-up Prompt */}
       <GoogleReviewModal />
+
+      {/* Floating 1-Click WhatsApp Quick Order Button */}
+      <FloatingWhatsApp />
 
     </div>
   );

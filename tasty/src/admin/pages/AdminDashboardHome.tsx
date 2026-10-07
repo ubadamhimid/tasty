@@ -190,52 +190,54 @@ export const AdminDashboardHome: React.FC = () => {
     <div className="space-y-6">
       
       {/* 1. Executive Top Hero Banner with Status & Period Switcher */}
-      <div className="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
+      <div className="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal rounded-3xl p-4 sm:p-7 text-white shadow-xl relative overflow-hidden">
         <div className="absolute -left-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none" />
         <div className="absolute top-0 right-1/3 w-48 h-48 bg-amber-400/10 rounded-full blur-2xl pointer-events-none" />
 
-        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-5">
+        <div className="relative z-10 flex flex-col lg:flex-row lg:items-center justify-between gap-4 sm:gap-5">
           <div>
-            <div className="flex flex-wrap items-center gap-2 mb-2.5">
-              <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-md flex items-center gap-1.5 shadow-xs">
-                <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                <span>لوحة القيادة التنفيذية للمدير العام</span>
+            <div className="flex flex-wrap items-center gap-1.5 sm:gap-2 mb-2">
+              <span className="text-[10px] sm:text-[11px] font-bold px-2.5 sm:px-3 py-1 rounded-full bg-white/20 text-white backdrop-blur-md flex items-center gap-1.5 shadow-xs whitespace-nowrap">
+                <Sparkles className="w-3.5 h-3.5 text-amber-300 shrink-0" />
+                <span>لوحة القيادة</span>
+                <span className="hidden sm:inline">التنفيذية للمدير العام</span>
               </span>
-              <span className="text-[11px] font-bold px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 flex items-center gap-1.5">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
-                <span>المطعم مفتوح • Hilversum</span>
+              <span className="text-[10px] sm:text-[11px] font-bold px-2.5 sm:px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-200 border border-emerald-400/30 flex items-center gap-1.5 whitespace-nowrap">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0" />
+                <span>المطعم مفتوح</span>
               </span>
-              <span className="text-xs text-tasty-sage-light hidden sm:inline">
+              <span className="text-xs text-tasty-sage-light hidden md:inline">
                 {new Date().toLocaleDateString('ar-NL', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' })}
               </span>
             </div>
 
-            <h1 className="font-serif font-black text-2xl sm:text-3xl text-white tracking-tight">
+            <h1 className="font-serif font-black text-xl sm:text-3xl text-white tracking-tight">
               أهلاً بك في نظام إدارة TASTY
             </h1>
-            <p className="text-xs sm:text-sm text-tasty-sage-light/90 max-w-2xl mt-1.5 leading-relaxed">
+            <p className="text-xs sm:text-sm text-tasty-sage-light/90 max-w-2xl mt-1 leading-relaxed hidden sm:block">
               تحليل شامل وفوري للأداء المالي، مراقبة الإيرادات والكاش، أجور الكوادر والورديات، وحركة المشتريات والديون.
             </p>
           </div>
 
-          {/* Quick Period Selector Tabs */}
-          <div className="bg-black/30 backdrop-blur-md p-1.5 rounded-2xl border border-white/15 flex items-center gap-1 shrink-0 self-start lg:self-center">
+          {/* Quick Period Selector Tabs - Clean 4-Column Grid on Mobile */}
+          <div className="w-full lg:w-auto bg-black/35 backdrop-blur-md p-1 sm:p-1.5 rounded-2xl border border-white/15 grid grid-cols-4 lg:flex items-center gap-1 shrink-0">
             {[
-              { id: 'today', label: 'اليوم' },
-              { id: 'week', label: 'هذا الأسبوع' },
-              { id: 'month', label: 'هذا الشهر' },
-              { id: 'all', label: 'كافة الفترات' },
+              { id: 'today', label: 'اليوم', shortLabel: 'اليوم' },
+              { id: 'week', label: 'هذا الأسبوع', shortLabel: 'أسبوع' },
+              { id: 'month', label: 'هذا الشهر', shortLabel: 'شهر' },
+              { id: 'all', label: 'كافة الفترات', shortLabel: 'الكل' },
             ].map((p) => (
               <button
                 key={p.id}
                 onClick={() => setPeriod(p.id as any)}
-                className={`px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+                className={`py-2 px-1 lg:px-3.5 rounded-xl text-xs font-bold transition-all text-center whitespace-nowrap ${
                   period === p.id
                     ? 'bg-white text-tasty-charcoal shadow-sm'
                     : 'text-white/80 hover:text-white hover:bg-white/10'
                 }`}
               >
-                {p.label}
+                <span className="lg:hidden">{p.shortLabel}</span>
+                <span className="hidden lg:inline">{p.label}</span>
               </button>
             ))}
           </div>
@@ -245,18 +247,18 @@ export const AdminDashboardHome: React.FC = () => {
       {/* 2. Executive Alert & Action Highlights (If any actions are pending) */}
       {(!todaySale || unloggedFixedToday.length > 0 || pendingOrders.length > 0) && (
         <div className="bg-gradient-to-r from-amber-500/10 via-amber-500/5 to-white border border-amber-200/80 rounded-3xl p-4 sm:p-5 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm">
-              <Zap className="w-5 h-5" />
+          <div className="flex items-start sm:items-center gap-3">
+            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-2xl bg-amber-500 text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5 sm:mt-0">
+              <Zap className="w-4 h-4 sm:w-5 sm:h-5" />
             </div>
             <div>
               <div className="flex items-center gap-2">
-                <h4 className="font-bold text-sm text-amber-950">تنبيهات العمليات المباشرة لليوم</h4>
+                <h4 className="font-bold text-xs sm:text-sm text-amber-950">تنبيهات العمليات المباشرة</h4>
                 <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-amber-100 text-amber-900 border border-amber-300/50">
-                  مطلوب المتابعة
+                  مطلوب
                 </span>
               </div>
-              <div className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-amber-900/80 mt-1">
+              <div className="flex flex-col sm:flex-row sm:flex-wrap sm:items-center gap-1 sm:gap-x-3 text-xs text-amber-900/80 mt-1">
                 {!todaySale && (
                   <span className="flex items-center gap-1 text-rose-700 font-semibold">
                     • لم يتم إدخال مبيعات اليوم بعد
@@ -272,11 +274,11 @@ export const AdminDashboardHome: React.FC = () => {
             </div>
           </div>
 
-          <div className="flex items-center gap-2 shrink-0">
+          <div className="flex items-center gap-2 w-full sm:w-auto shrink-0 pt-2 sm:pt-0 border-t sm:border-t-0 border-amber-200/50">
             {!todaySale && (
               <Link
                 to="/admin/sales"
-                className="px-3.5 py-2 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs transition-all flex items-center gap-1.5"
+                className="flex-1 sm:flex-initial px-4 py-2.5 rounded-xl bg-amber-600 hover:bg-amber-700 text-white font-bold text-xs shadow-xs transition-all flex items-center justify-center gap-1.5"
               >
                 <TrendingUp className="w-3.5 h-3.5" />
                 <span>تسجيل مبيعات اليوم</span>
@@ -285,7 +287,7 @@ export const AdminDashboardHome: React.FC = () => {
             {activeOrderToShop && (
               <button
                 onClick={() => setActiveShoppingOrder(activeOrderToShop)}
-                className="px-3 py-2 rounded-xl border border-amber-300 text-amber-900 bg-white hover:bg-amber-50 font-bold text-xs transition-all flex items-center gap-1.5"
+                className="flex-1 sm:flex-initial px-3 py-2.5 rounded-xl border border-amber-300 text-amber-900 bg-white hover:bg-amber-50 font-bold text-xs transition-all flex items-center justify-center gap-1.5"
               >
                 <ShoppingBag className="w-3.5 h-3.5 text-amber-600" />
                 <span>وضع السوق</span>
@@ -769,10 +771,19 @@ export const AdminDashboardHome: React.FC = () => {
                       </span>
                     )}
                   </div>
-                  <div className="flex items-center gap-3 text-xs text-gray-500 mt-1 font-mono">
-                    <span>كاش: €{sale.cashAmount.toFixed(0)} ({sale.cashPercentage}%)</span>
-                    <span>•</span>
-                    <span>كرت: €{sale.cardAmount.toFixed(0)} ({sale.cardPercentage}%)</span>
+                  <div className="flex flex-wrap items-center gap-1.5 mt-1.5">
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-emerald-50 text-emerald-800 border border-emerald-200/60 text-[11px] font-semibold whitespace-nowrap">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0"></span>
+                      <span>كاش</span>
+                      <span dir="ltr" className="font-mono font-bold">€{sale.cashAmount.toFixed(0)}</span>
+                      <span className="text-[10px] text-emerald-600/90 font-mono">({sale.cashPercentage}%)</span>
+                    </span>
+                    <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-lg bg-teal-50 text-teal-800 border border-teal-200/60 text-[11px] font-semibold whitespace-nowrap">
+                      <span className="w-1.5 h-1.5 rounded-full bg-teal-500 shrink-0"></span>
+                      <span>كرت</span>
+                      <span dir="ltr" className="font-mono font-bold">€{sale.cardAmount.toFixed(0)}</span>
+                      <span className="text-[10px] text-teal-600/90 font-mono">({sale.cardPercentage}%)</span>
+                    </span>
                   </div>
                 </div>
 
