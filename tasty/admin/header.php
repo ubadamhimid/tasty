@@ -9,42 +9,42 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 // Define navigation items with permissions
 $navItems = [
     [
-        'url' => APP_URL . '/admin/index.php',
+        'url' => APP_URL . '/admin',
         'file' => 'index.php',
         'label' => 'الإحصائيات العامة',
         'adminOnly' => true,
         'icon' => '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"/></svg>'
     ],
     [
-        'url' => APP_URL . '/admin/sales.php',
+        'url' => APP_URL . '/admin/sales',
         'file' => 'sales.php',
         'label' => 'تسجيل مبيعات اليوم',
         'adminOnly' => false,
         'icon' => '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 14l6-6m-5.5.5h.01m4.99 5h.01M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16l3.5-2 3.5 2 3.5-2 3.5 2zM10 8.5a.5.5 0 11-1 0 .5.5 0 011 0zm5 5a.5.5 0 11-1 0 .5.5 0 011 0z"/></svg>'
     ],
     [
-        'url' => APP_URL . '/admin/employees.php',
+        'url' => APP_URL . '/admin/employees',
         'file' => 'employees.php',
         'label' => 'الموظفون والورديات',
         'adminOnly' => false,
         'icon' => '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>'
     ],
     [
-        'url' => APP_URL . '/admin/orders.php',
+        'url' => APP_URL . '/admin/orders',
         'file' => 'orders.php',
         'label' => 'طلبيات الشراء',
         'adminOnly' => false,
         'icon' => '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>'
     ],
     [
-        'url' => APP_URL . '/admin/debts.php',
+        'url' => APP_URL . '/admin/debts',
         'file' => 'debts.php',
         'label' => 'سجل الديون والدفعات',
         'adminOnly' => true, // STRICTLY Admin only!
         'icon' => '<svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/></svg>'
     ],
     [
-        'url' => APP_URL . '/admin/settings.php',
+        'url' => APP_URL . '/admin/settings',
         'file' => 'settings.php',
         'label' => 'الإعدادات والبيانات',
         'adminOnly' => true, // STRICTLY Admin only!
@@ -108,7 +108,7 @@ $dbDriver = strtoupper($db->getAttribute(PDO::ATTR_DRIVER_NAME));
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
-        <a href="<?= $isAdmin ? (APP_URL . '/admin/index.php') : (APP_URL . '/admin/sales.php') ?>" class="flex items-center gap-3 group">
+        <a href="<?= $isAdmin ? (APP_URL . '/admin') : (APP_URL . '/admin/sales') ?>" class="flex items-center gap-3 group">
           <img src="/images/logo.webp" alt="TASTY" class="h-10 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.src='/images/logo.png'">
           <span class="text-xs font-black px-2.5 py-1 rounded-xl bg-tasty-teal/10 text-tasty-teal border border-tasty-teal/20">
             لوحة الإدارة
@@ -140,7 +140,7 @@ $dbDriver = strtoupper($db->getAttribute(PDO::ATTR_DRIVER_NAME));
 
         <!-- Logout Button -->
         <a 
-          href="<?= APP_URL ?>/admin/logout.php" 
+          href="<?= APP_URL ?>/admin/logout" 
           onclick="return confirm('هل تود تسجيل الخروج؟');" 
           class="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition border border-red-100"
           title="تسجيل الخروج"
@@ -223,7 +223,7 @@ $dbDriver = strtoupper($db->getAttribute(PDO::ATTR_DRIVER_NAME));
         </div>
 
         <div class="pt-4 border-t border-gray-100">
-          <a href="<?= APP_URL ?>/admin/logout.php" onclick="return confirm('هل تود تسجيل الخروج؟');" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-50 text-red-600 text-xs font-bold">
+          <a href="<?= APP_URL ?>/admin/logout" onclick="return confirm('هل تود تسجيل الخروج؟');" class="w-full flex items-center justify-center gap-2 py-2.5 rounded-xl bg-red-50 text-red-600 text-xs font-bold">
             <span>تسجيل الخروج</span>
           </a>
         </div>

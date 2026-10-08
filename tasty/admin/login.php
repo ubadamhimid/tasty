@@ -2,7 +2,7 @@
 require_once __DIR__ . '/auth.php';
 
 if (isLoggedIn()) {
-    header('Location: ' . APP_URL . (isAdmin() ? '/admin/index.php' : '/admin/sales.php'));
+    header('Location: ' . APP_URL . (isAdmin() ? '/admin' : '/admin/sales'));
     exit;
 }
 
@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $res = loginUser($username, $password);
         if ($res['success']) {
-            header('Location: ' . APP_URL . ($res['role'] === 'admin' ? '/admin/index.php' : '/admin/sales.php'));
+            header('Location: ' . APP_URL . ($res['role'] === 'admin' ? '/admin' : '/admin/sales'));
             exit;
         } else {
             $error = $res['error'];

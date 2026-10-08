@@ -4,7 +4,7 @@ require_once __DIR__ . '/header.php';
 
 // Strict Admin Enforcement (Managers can only see Sales, Employees, Orders)
 if (!isAdmin()) {
-    header('Location: ' . APP_URL . '/admin/sales.php');
+    header('Location: ' . APP_URL . '/admin/sales');
     exit;
 }
 
@@ -135,7 +135,7 @@ $isTodayLogged = (bool)$db->query("SELECT COUNT(*) FROM daily_sales WHERE date =
           <p class="text-xs text-amber-700 mt-0.5">لم يتم إدخال مبيعات اليوم بعد (<?= date('Y-m-d') ?>).</p>
         </div>
       </div>
-      <a href="<?= APP_URL ?>/admin/sales.php" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all shrink-0">
+      <a href="<?= APP_URL ?>/admin/sales" class="px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold rounded-xl shadow-xs transition-all shrink-0">
         تسجيل مبيعات اليوم
       </a>
     </div>
@@ -239,7 +239,7 @@ $isTodayLogged = (bool)$db->query("SELECT COUNT(*) FROM daily_sales WHERE date =
     <div class="lg:col-span-2 bg-white rounded-3xl p-6 border border-gray-100 shadow-xs">
       <div class="flex items-center justify-between mb-4">
         <h3 class="text-base font-bold text-tasty-charcoal">سجل المبيعات الأخير للفترة</h3>
-        <a href="<?= APP_URL ?>/admin/sales.php" class="text-xs text-tasty-teal font-bold hover:underline">عرض الكل ←</a>
+        <a href="<?= APP_URL ?>/admin/sales" class="text-xs text-tasty-teal font-bold hover:underline">عرض الكل ←</a>
       </div>
 
       <div class="space-y-3">
@@ -275,7 +275,7 @@ $isTodayLogged = (bool)$db->query("SELECT COUNT(*) FROM daily_sales WHERE date =
       <div class="bg-gradient-to-br from-tasty-teal-light to-white p-5 rounded-3xl border border-tasty-teal/20 shadow-xs">
         <h4 class="text-xs font-bold text-tasty-teal-dark mb-1">تسجيل مبيعات جديد</h4>
         <p class="text-xs text-gray-500 mb-3">إدخال جرد الكاش والبطاقة نهاية وردية اليوم.</p>
-        <a href="<?= APP_URL ?>/admin/sales.php" class="inline-flex items-center justify-center w-full py-2.5 bg-tasty-teal text-white rounded-xl text-xs font-bold shadow-xs hover:bg-tasty-teal-dark transition-all">
+        <a href="<?= APP_URL ?>/admin/sales" class="inline-flex items-center justify-center w-full py-2.5 bg-tasty-teal text-white rounded-xl text-xs font-bold shadow-xs hover:bg-tasty-teal-dark transition-all">
           فتح نموذج المبيعات
         </a>
       </div>
@@ -283,7 +283,7 @@ $isTodayLogged = (bool)$db->query("SELECT COUNT(*) FROM daily_sales WHERE date =
       <div class="bg-gradient-to-br from-amber-50 to-white p-5 rounded-3xl border border-amber-200/60 shadow-xs">
         <h4 class="text-xs font-bold text-amber-900 mb-1">سجل الديون والموردين</h4>
         <p class="text-xs text-gray-500 mb-3">متابعة فواتير اللحوم والخضار ودفعات الموردين.</p>
-        <a href="<?= APP_URL ?>/admin/debts.php" class="inline-flex items-center justify-center w-full py-2.5 bg-amber-600 text-white rounded-xl text-xs font-bold shadow-xs hover:bg-amber-700 transition-all">
+        <a href="<?= APP_URL ?>/admin/debts" class="inline-flex items-center justify-center w-full py-2.5 bg-amber-600 text-white rounded-xl text-xs font-bold shadow-xs hover:bg-amber-700 transition-all">
           إدارة سجل الديون
         </a>
       </div>
@@ -291,7 +291,7 @@ $isTodayLogged = (bool)$db->query("SELECT COUNT(*) FROM daily_sales WHERE date =
       <div class="bg-gradient-to-br from-blue-50 to-white p-5 rounded-3xl border border-blue-200/60 shadow-xs">
         <h4 class="text-xs font-bold text-blue-900 mb-1">ورديات الموظفين</h4>
         <p class="text-xs text-gray-500 mb-3">تسجيل ساعات عمل الكاشير والشيف والمساعدين.</p>
-        <a href="<?= APP_URL ?>/admin/employees.php" class="inline-flex items-center justify-center w-full py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-xs hover:bg-blue-700 transition-all">
+        <a href="<?= APP_URL ?>/admin/employees" class="inline-flex items-center justify-center w-full py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold shadow-xs hover:bg-blue-700 transition-all">
           تسجيل ساعات الكادر
         </a>
       </div>

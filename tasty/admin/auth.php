@@ -33,7 +33,7 @@ function isManager(): bool {
 
 function requireAuth(): void {
     if (!isLoggedIn()) {
-        header('Location: ' . APP_URL . '/admin/login.php');
+        header('Location: ' . APP_URL . '/admin/login');
         exit;
     }
 }
@@ -42,7 +42,7 @@ function requireAdmin(): void {
     requireAuth();
     if (!isAdmin()) {
         $_SESSION['flash_error'] = 'عذراً، هذا القسم مخصص للمدير العام فقط.';
-        header('Location: ' . APP_URL . '/admin/sales.php');
+        header('Location: ' . APP_URL . '/admin/sales');
         exit;
     }
 }
@@ -75,6 +75,6 @@ function logoutUser(): void {
         $_SESSION = [];
         session_destroy();
     }
-    header('Location: ' . APP_URL . '/admin/login.php');
+    header('Location: ' . APP_URL . '/admin/login');
     exit;
 }

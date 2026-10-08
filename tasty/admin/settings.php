@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         $errorMsg = 'كلمة المرور يجب أن تتكون من 4 خانات على الأقل.';
     } else {
         $newHash = password_hash($newPassword, PASSWORD_DEFAULT);
-        $stmt = $db->prepare("UPDATE users SET password = ? WHERE username = ?");
+        $stmt = $db->prepare("UPDATE users SET password_hash = ? WHERE username = ?");
         $stmt->execute([$newHash, $targetUsername]);
         if ($stmt->rowCount() > 0) {
             $successMsg = "تم تحديث كلمة المرور للحساب ({$targetUsername}) بنجاح!";
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 // Handle Export Backup
 if (isset($_GET['action']) && $_GET['action'] === 'export_backup') {
     $tables = [
-        'users' => 'SELECT id, username, role, full_name, created_at FROM users',
+        'users' => 'SELECT id, username, role, display_name, created_at FROM users',
         'daily_sales' => 'SELECT * FROM daily_sales',
         'employees' => 'SELECT * FROM employees',
         'employee_shifts' => 'SELECT * FROM employee_shifts',
@@ -202,7 +202,7 @@ $stats = [
 ];
 
 // Fetch users list
-$usersList = $db->query("SELECT id, username, role, full_name FROM users ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
+$usersList = $db->query("SELECT id, username, role, display_name FROM users ORDER BY id ASC")->fetchAll(PDO::FETCH_ASSOC);
 
 $pageTitle = 'الإعدادات وقاعدة البيانات - TASTY Hilversum';
 require_once __DIR__ . '/header.php';
