@@ -622,9 +622,35 @@ if ($method === 'POST') {
     $inputJSON = file_get_contents('php://input');
     $payload = json_decode($inputJSON, true);
     if (is_array($payload)) {
-        @file_put_contents($activeJson, json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE));
-        echo json_encode(['status' => 'success', 'engine' => 'json_fallback']);
-        exit;
+        $encoded = json_encode($payload, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+        
+        $targets = [
+            $jsonPrimary,
+            $jsonSecondary,
+            __DIR__ . '/tasty_database.json',
+            sys_get_temp_dir() . '/tasty_database.json'
+        ];
+
+        $written = false;
+        foreach ($targets as $target) {
+            $w = @file_put_contents($target, $encoded, LOCK_EX);
+            if ($w !== false) {
+                $written = true;
+                break;
+            }
+        }
+
+        if ($written) {
+            echo json_encode(['status' => 'success', 'engine' => 'json_fallback']);
+            exit;
+        } else {
+            http_response_code(500);
+            echo json_encode([
+                'status' => 'error',
+                'message' => 'Permission denied: server cannot write to files. Please run: chmod -R 777 /var/www/tasty'
+            ]);
+            exit;
+        }
     }
     http_response_code(400);
     echo json_encode(['status' => 'error']);
