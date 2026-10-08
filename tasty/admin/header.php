@@ -98,43 +98,42 @@ $dbDriver = strtoupper($db->getAttribute(PDO::ATTR_DRIVER_NAME));
 </head>
 <body class="min-h-screen bg-[#FBF9F5] text-tasty-charcoal flex flex-col font-cairo selection:bg-tasty-teal selection:text-white">
 
-  <!-- Top Sticky Header -->
-  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-tasty-teal/15 shadow-xs">
+  <!-- Top Sticky Header (Clean & Minimal) -->
+  <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between gap-4">
       
-      <!-- Brand & Mobile Toggle -->
-      <div class="flex items-center gap-2 sm:gap-3 min-w-0">
-        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors shrink-0" aria-label="القائمة">
+      <!-- Brand & Logo -->
+      <div class="flex items-center gap-3">
+        <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-xl text-gray-500 hover:text-gray-900 hover:bg-gray-100 transition-colors" aria-label="القائمة">
           <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
         </button>
 
-        <a href="<?= $isAdmin ? (APP_URL . '/admin/index.php') : (APP_URL . '/admin/sales.php') ?>" class="flex items-center gap-2 sm:gap-2.5 group shrink-0">
-          <img src="<?= APP_URL ?>/public/images/logo.png" alt="TASTY" class="h-8 sm:h-9 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.src='<?= APP_URL ?>/public/images/logo.webp'">
-          <span class="text-[10px] sm:text-[11px] font-bold px-2 sm:px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/20 whitespace-nowrap shrink-0">
+        <a href="<?= $isAdmin ? (APP_URL . '/admin/index.php') : (APP_URL . '/admin/sales.php') ?>" class="flex items-center gap-3 group">
+          <img src="/images/logo.webp" alt="TASTY" class="h-10 w-auto object-contain group-hover:scale-105 transition-transform" onerror="this.src='/images/logo.png'">
+          <span class="text-xs font-black px-2.5 py-1 rounded-xl bg-tasty-teal/10 text-tasty-teal border border-tasty-teal/20">
             لوحة الإدارة
           </span>
-          <p class="text-[10px] text-gray-400 hidden md:block whitespace-nowrap">Hilversum • Groest 50</p>
         </a>
       </div>
 
-      <!-- Live Database & Role Badge & Logout -->
-      <div class="flex items-center gap-2 shrink-0">
+      <!-- User Role, Web Link & Logout -->
+      <div class="flex items-center gap-2.5">
         
-        <!-- Live Database Badge -->
-        <div class="flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl bg-emerald-50 text-emerald-800 border border-emerald-300 text-xs font-bold shadow-2xs">
-          <span class="w-2 h-2 rounded-full bg-emerald-500 ring-2 ring-emerald-300 shrink-0 animate-pulse"></span>
-          <span class="hidden sm:inline">قاعدة بيانات <?= $dbDriver ?> متصلة</span>
-          <span class="sm:hidden"><?= $dbDriver ?></span>
-        </div>
+        <!-- View Website Link -->
+        <a href="/" target="_blank" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold text-gray-600 hover:text-tasty-teal hover:bg-gray-50 transition border border-gray-200">
+          <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14"/></svg>
+          <span>الموقع</span>
+        </a>
 
-        <!-- Role Badge -->
+        <!-- User Role Pill -->
         <?php if ($isAdmin): ?>
-          <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold shadow-2xs whitespace-nowrap">
-            <svg class="w-3.5 h-3.5 text-amber-600" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/></svg>
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-200 text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
             <span>المدير العام</span>
           </span>
         <?php else: ?>
-          <span class="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold shadow-2xs whitespace-nowrap">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-blue-50 text-blue-900 border border-blue-200 text-xs font-bold">
+            <span class="w-2 h-2 rounded-full bg-blue-500"></span>
             <span>مدير الوردية</span>
           </span>
         <?php endif; ?>
@@ -142,12 +141,12 @@ $dbDriver = strtoupper($db->getAttribute(PDO::ATTR_DRIVER_NAME));
         <!-- Logout Button -->
         <a 
           href="<?= APP_URL ?>/admin/logout.php" 
-          onclick="return confirm('هل تود تسجيل الخروج من لوحة التحكم؟');" 
-          class="flex items-center justify-center gap-1.5 p-2 sm:px-3 sm:py-1.5 rounded-xl text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 border border-red-200/80 transition-all shadow-2xs whitespace-nowrap shrink-0"
+          onclick="return confirm('هل تود تسجيل الخروج؟');" 
+          class="flex items-center gap-1 px-3 py-1.5 rounded-xl text-xs font-bold text-red-600 hover:bg-red-50 transition border border-red-100"
           title="تسجيل الخروج"
         >
-          <svg class="w-4 h-4 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
-          <span class="hidden sm:inline">تسجيل الخروج</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          <span class="hidden sm:inline">خروج</span>
         </a>
 
       </div>
@@ -200,7 +199,7 @@ $dbDriver = strtoupper($db->getAttribute(PDO::ATTR_DRIVER_NAME));
         <div>
           <div class="flex items-center justify-between pb-4 border-b border-gray-100 mb-4">
             <div class="flex items-center gap-2">
-              <img src="/images/logo.png" alt="TASTY" class="h-8 w-auto object-contain" onerror="this.src='/images/logo.webp'">
+              <img src="/images/logo.webp" alt="TASTY" class="h-8 w-auto object-contain" onerror="this.src='/images/logo.png'">
               <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark">لوحة الإدارة</span>
             </div>
             <button id="closeDrawerBtn" class="p-2 text-gray-400 hover:text-black">

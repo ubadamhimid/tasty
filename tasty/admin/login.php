@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <!-- Logo & Restaurant Title -->
     <div class="text-center mb-8">
       <div class="inline-flex p-3 rounded-2xl bg-white/10 border border-white/20 mb-3 shadow-inner">
-        <img src="<?= APP_URL ?>/public/images/logo.png" alt="TASTY" class="h-12 w-auto object-contain" onerror="this.src='<?= APP_URL ?>/public/images/logo.webp'">
+        <img src="/images/logo.webp" alt="TASTY" class="h-12 w-auto object-contain" onerror="this.src='/images/logo.png'">
       </div>
       <h1 class="text-2xl font-bold tracking-tight text-white">لوحة إدارة المطعم</h1>
       <p class="text-xs text-tasty-teal-light/80 mt-1">TASTY Hilversum • Groest 50</p>
