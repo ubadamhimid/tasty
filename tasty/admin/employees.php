@@ -276,322 +276,306 @@ foreach ($employees as $e) {
 }
 ?>
 
-<div class="space-y-6">
+<div class="space-y-5">
 
-  <!-- 1. Header Banner -->
-  <div class="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-5">
-    <div class="absolute -left-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+  <!-- 1. Sleek Compact Header -->
+  <div class="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal text-white p-4 sm:p-5 rounded-3xl shadow-lg relative overflow-hidden flex flex-col md:flex-row md:items-center justify-between gap-4">
+    <div class="absolute -left-10 -bottom-10 w-48 h-48 bg-white/10 rounded-full blur-2xl pointer-events-none"></div>
     <div class="relative z-10">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-tasty-teal-light text-xs font-bold mb-3 border border-white/20 backdrop-blur-md">
-        <svg class="w-3.5 h-3.5 text-tasty-terracotta-light" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"/></svg>
-        <span>إدارة الكوادر وساعات العمل</span>
+      <div class="inline-flex items-center gap-2 px-2.5 py-0.5 rounded-full bg-white/15 text-tasty-teal-light text-[11px] font-bold mb-1.5 border border-white/20 backdrop-blur-md">
+        <span>إدارة فريق العمل والورديات</span>
         <span>•</span>
         <span><?= $todayDayName ?> <?= date('j F Y') ?></span>
       </div>
-      <h1 class="font-serif font-black text-2xl sm:text-3xl tracking-tight text-white">إدارة الموظفين والورديات والأجور</h1>
-      <p class="text-tasty-teal-light/90 text-sm mt-1 max-w-xl leading-relaxed">
-        تنظيم عمال الدوام الثابت والورديات المرنة، حساب الأجر بالساعة أو اليومي، وتوثيق السلف واليوميات.
+      <h1 class="font-serif font-black text-xl sm:text-2xl text-white">إدارة الموظفين والورديات</h1>
+      <p class="text-tasty-teal-light/85 text-xs mt-0.5 max-w-lg">
+        تسجيل الحضور اليومي، احتساب ساعات العمل والأجور، وتوثيق السلف النقدية.
       </p>
     </div>
 
     <!-- Quick Buttons -->
     <div class="flex items-center gap-2 shrink-0 relative z-10 flex-wrap">
-      <button onclick="openShiftModal()" class="px-4 py-2.5 rounded-2xl bg-white text-tasty-teal-dark font-bold text-xs hover:bg-tasty-teal-light shadow-md transition-all active:scale-95 flex items-center gap-1.5">
-        <svg class="w-4 h-4 text-tasty-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+      <button onclick="openShiftModal()" class="px-3.5 py-2 rounded-xl bg-white text-tasty-teal-dark font-bold text-xs hover:bg-tasty-teal-light shadow-sm transition-all active:scale-95 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5 text-tasty-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         <span>تسجيل وردية</span>
       </button>
-      <button onclick="openEmpModal()" class="px-4 py-2.5 rounded-2xl bg-tasty-terracotta text-white font-bold text-xs hover:bg-tasty-terracotta-dark shadow-md transition-all active:scale-95 flex items-center gap-1.5">
-        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
-        <span>إضافة موظف جديد</span>
+      <button onclick="openGeneralAdvanceModal()" class="px-3.5 py-2 rounded-xl bg-white/15 hover:bg-white/25 text-white font-bold text-xs border border-white/25 transition-all active:scale-95 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span>سلفة كاش</span>
+      </button>
+      <button onclick="openEmpModal()" class="px-3.5 py-2 rounded-xl bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white font-bold text-xs shadow-sm transition-all active:scale-95 flex items-center gap-1.5">
+        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
+        <span>إضافة موظف</span>
       </button>
     </div>
   </div>
 
   <!-- Messages -->
   <?php if (!empty($message)): ?>
-    <div class="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between">
-      <span><?= htmlspecialchars($message) ?></span>
-      <button onclick="this.parentElement.remove();" class="text-emerald-600">&times;</button>
+    <div class="p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-bold flex items-center justify-between">
+      <div class="flex items-center gap-2">
+        <svg class="w-4 h-4 text-emerald-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
+        <span><?= htmlspecialchars($message) ?></span>
+      </div>
+      <button onclick="this.parentElement.remove();" class="text-emerald-600 text-base font-bold">&times;</button>
     </div>
   <?php endif; ?>
   <?php if (!empty($error)): ?>
-    <div class="p-4 rounded-2xl bg-tasty-terracotta-light border border-tasty-terracotta/40 text-tasty-terracotta-dark text-xs font-bold flex items-center justify-between">
+    <div class="p-3.5 rounded-2xl bg-tasty-terracotta-light border border-tasty-terracotta/40 text-tasty-terracotta-dark text-xs font-bold flex items-center justify-between">
       <span><?= htmlspecialchars($error) ?></span>
-      <button onclick="this.parentElement.remove();" class="text-tasty-terracotta-dark">&times;</button>
+      <button onclick="this.parentElement.remove();" class="text-tasty-terracotta-dark text-base font-bold">&times;</button>
     </div>
   <?php endif; ?>
 
-  <!-- 2. Summary KPI Cards -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-    
-    <!-- Card 1: Total Earned This Month -->
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs text-tasty-charcoal font-bold">أجور شهر <?= date('m / Y') ?></span>
-        <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 text-[10px] font-bold">إجمالي الأجور</span>
-      </div>
-      <div dir="ltr" class="flex items-baseline justify-end gap-1">
-        <span class="text-xs font-bold text-gray-400 font-sans">€</span>
-        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-charcoal tabular-nums">
-          <?= number_format($totalEarnedMonth, 2) ?>
-        </span>
-      </div>
-      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">إجمالي (<?= number_format($totalHoursMonth, 1) ?>) ساعة عمل مسجلة</p>
-    </div>
-
-    <!-- Card 2: Pending Wages -->
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs text-tasty-charcoal font-bold">مستحقات معلقة (غير مسددة)</span>
-        <span class="px-2.5 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 text-[10px] font-bold">مطلوب صرفها</span>
-      </div>
-      <div dir="ltr" class="flex items-baseline justify-end gap-1">
-        <span class="text-xs font-bold text-tasty-terracotta-dark font-sans">€</span>
-        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-terracotta-dark tabular-nums">
-          <?= number_format($unpaidWagesTotal, 2) ?>
-        </span>
-      </div>
-      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">ورديات مسجلة لم تسلم رواتبها بعد</p>
-    </div>
-
-    <!-- Card 3: Cash Advances -->
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
-      <div class="flex items-center justify-between mb-3">
-        <span class="text-xs text-tasty-charcoal font-bold">السلف المسحوبة هذا الشهر</span>
-        <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 text-[10px] font-bold">سلف نقدية</span>
-      </div>
-      <div dir="ltr" class="flex items-baseline justify-end gap-1">
-        <span class="text-xs font-bold text-tasty-teal font-sans">€</span>
-        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-teal-dark tabular-nums">
-          <?= number_format($totalAdvancesMonth, 2) ?>
-        </span>
-      </div>
-      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">مخصومة من رواتب الموظفين القادمة</p>
-    </div>
-
-  </div>
-
-  <!-- 3. Quick 1-Click Attendance Panel for Today (تحضير كادر العمل لليوم) -->
-  <div class="bg-gradient-to-r from-tasty-terracotta/10 via-tasty-teal/5 to-white border border-tasty-terracotta/30 rounded-3xl p-5 shadow-xs space-y-3.5">
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-      <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-2xl bg-tasty-terracotta text-white flex items-center justify-center shrink-0 shadow-sm">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-        </div>
-        <div>
-          <div class="flex items-center gap-2">
-            <h3 class="font-bold text-sm sm:text-base text-tasty-charcoal">تحضير كادر العمل لليوم (<?= $todayDayName ?>)</h3>
-            <span class="text-[10px] font-bold px-2 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/30">
-              تحضير سريع بضغطة زر
-            </span>
-          </div>
-          <p class="text-xs text-gray-500 mt-0.5">
-            اضغط زر التحضير السريع الأخضر أمام اسم الموظف لتسجيل ورديته فوراً وفق ساعاته المعتمدة!
-          </p>
-        </div>
-      </div>
-
-      <?php if ($unloggedFixedCount > 0): ?>
-        <form method="POST" action="" class="shrink-0">
-          <input type="hidden" name="action" value="quick_log_all_fixed_today">
-          <button type="submit" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white text-xs font-bold transition-all shadow-sm active:scale-95">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
-            <span>تسجيل حضور كل الثابتين لليوم (<?= $unloggedFixedCount ?> موظف)</span>
-          </button>
-        </form>
-      <?php endif; ?>
-    </div>
-
-    <!-- Live Quick Attendance Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 pt-3 border-t border-tasty-terracotta/20">
-      <?php foreach ($employees as $emp): ?>
-        <?php 
-          if (!$emp['is_active']) continue;
-          $hasShift = isset($todayShiftsMap[$emp['id']]);
-          $shift = $hasShift ? $todayShiftsMap[$emp['id']] : null;
-          $isFixed = ($emp['schedule_type'] === 'fixed');
-        ?>
-        <div class="p-3 rounded-2xl border transition-all flex items-center justify-between gap-2 <?= $hasShift ? 'bg-emerald-50/70 border-emerald-200 shadow-2xs' : 'bg-white border-gray-200 hover:border-tasty-teal/50 shadow-2xs' ?>">
-          <div class="min-w-0 pr-1">
-            <div class="flex items-center gap-1.5">
-              <span class="font-bold text-xs text-tasty-charcoal truncate"><?= htmlspecialchars($emp['name']) ?></span>
-              <span class="w-2 h-2 rounded-full shrink-0 <?= $hasShift ? 'bg-emerald-500' : 'bg-amber-400 animate-pulse' ?>" title="<?= $hasShift ? 'حاضر اليوم' : 'بانتظار التحضير' ?>"></span>
-            </div>
-            <div class="flex items-center gap-1 text-[10px] text-gray-500 mt-0.5">
-              <span><?= htmlspecialchars($emp['role'] ?: 'موظف') ?></span>
-              <span>•</span>
-              <span class="font-semibold text-tasty-teal-dark">
-                <?= $emp['wage_type'] === 'daily' ? ('€' . $emp['rate'] . ' /يومي') : ('€' . $emp['rate'] . ' /ساعة') ?>
-              </span>
-            </div>
-          </div>
-
-          <div class="shrink-0 flex items-center gap-1.5">
-            <?php if ($hasShift): ?>
-              <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-emerald-100 text-emerald-800 text-[11px] font-bold">
-                <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
-                <span><?= $shift['total_hours'] ?>س</span>
-                <span class="font-mono text-[10px] text-emerald-950 font-sans" dir="ltr">€<?= number_format($shift['total_earned'], 0) ?></span>
-              </span>
-            <?php else: ?>
-              <form method="POST" action="" class="inline">
-                <input type="hidden" name="action" value="quick_log_today">
-                <input type="hidden" name="employee_id" value="<?= $emp['id'] ?>">
-                <button type="submit" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold shadow-2xs transition-all active:scale-95 flex items-center gap-1">
-                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/></svg>
-                  <span>تسجيل حضور (<?= $emp['default_hours'] ?>س)</span>
-                </button>
-              </form>
-            <?php endif; ?>
-          </div>
-        </div>
-      <?php endforeach; ?>
-    </div>
-  </div>
-
-  <!-- 4. Team Directory: Two Clear Sections (دوام ثابت vs دوام مرن / ورديات) -->
-  <div class="space-y-6">
-
-    <!-- Section Header & Filter Tabs -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pb-2 border-b border-gray-200">
+  <!-- 2. Compact Metrics Bar -->
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+    <!-- Metric 1: Total Earned This Month -->
+    <div class="bg-white p-3.5 rounded-2xl border border-gray-200/80 shadow-2xs flex items-center justify-between">
       <div>
-        <h2 class="text-lg font-bold text-tasty-charcoal flex items-center gap-2">
-          <span>دليل فريق العمل وتفاصيل الموظفين</span>
-          <span class="text-xs px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark font-bold">
-            <?= count($employees) ?> موظف
+        <span class="text-[11px] font-bold text-gray-500 block">أجور شهر <?= date('m / Y') ?></span>
+        <div dir="ltr" class="flex items-baseline gap-1 mt-0.5">
+          <span class="text-xs font-bold text-gray-400">€</span>
+          <span class="text-xl sm:text-2xl font-black font-sans text-tasty-charcoal"><?= number_format($totalEarnedMonth, 2) ?></span>
+        </div>
+        <span class="text-[10px] text-gray-400 block mt-0.5"><?= number_format($totalHoursMonth, 1) ?> ساعة مسجلة</span>
+      </div>
+      <div class="w-10 h-10 rounded-xl bg-tasty-teal-light text-tasty-teal-dark flex items-center justify-center font-bold">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+    </div>
+
+    <!-- Metric 2: Pending Wages -->
+    <div class="bg-white p-3.5 rounded-2xl border border-gray-200/80 shadow-2xs flex items-center justify-between">
+      <div>
+        <span class="text-[11px] font-bold text-gray-500 block">مستحقات معلقة (مطلوب صرفها)</span>
+        <div dir="ltr" class="flex items-baseline gap-1 mt-0.5">
+          <span class="text-xs font-bold text-tasty-terracotta-dark">€</span>
+          <span class="text-xl sm:text-2xl font-black font-sans text-tasty-terracotta-dark"><?= number_format($unpaidWagesTotal, 2) ?></span>
+        </div>
+        <span class="text-[10px] text-gray-400 block mt-0.5">ورديات لم تسلم رواتبها بعد</span>
+      </div>
+      <div class="w-10 h-10 rounded-xl bg-tasty-terracotta-light text-tasty-terracotta-dark flex items-center justify-center font-bold">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+      </div>
+    </div>
+
+    <!-- Metric 3: Cash Advances -->
+    <div class="bg-white p-3.5 rounded-2xl border border-gray-200/80 shadow-2xs flex items-center justify-between">
+      <div>
+        <span class="text-[11px] font-bold text-gray-500 block">سلف مسحوبة هذا الشهر</span>
+        <div dir="ltr" class="flex items-baseline gap-1 mt-0.5">
+          <span class="text-xs font-bold text-tasty-teal">€</span>
+          <span class="text-xl sm:text-2xl font-black font-sans text-tasty-teal-dark"><?= number_format($totalAdvancesMonth, 2) ?></span>
+        </div>
+        <span class="text-[10px] text-gray-400 block mt-0.5">مخصومة من رواتب الموظفين</span>
+      </div>
+      <div class="w-10 h-10 rounded-xl bg-tasty-sage-light text-tasty-charcoal flex items-center justify-center font-bold">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. Master Tabs Navigation (Organizes the page into 3 neat sections) -->
+  <div class="flex items-center justify-between gap-2 border-b border-gray-200 pb-2">
+    <div class="flex items-center gap-1.5 p-1 bg-gray-100/80 rounded-2xl border border-gray-200 text-xs font-bold">
+      <button onclick="switchMasterTab('team')" id="masterTab-team" class="px-3.5 py-1.5 rounded-xl bg-white text-tasty-charcoal shadow-xs transition-all flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-tasty-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span>فريق العمل والحضور</span>
+        <span class="px-1.5 py-0.5 text-[10px] rounded-full bg-gray-100 text-gray-700"><?= count($employees) ?></span>
+      </button>
+
+      <button onclick="switchMasterTab('shifts')" id="masterTab-shifts" class="px-3.5 py-1.5 rounded-xl text-gray-600 hover:text-tasty-charcoal transition-all flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>سجل الورديات</span>
+        <span class="px-1.5 py-0.5 text-[10px] rounded-full bg-gray-200 text-gray-700"><?= count($shifts) ?></span>
+      </button>
+
+      <button onclick="switchMasterTab('advances')" id="masterTab-advances" class="px-3.5 py-1.5 rounded-xl text-gray-600 hover:text-tasty-charcoal transition-all flex items-center gap-1.5">
+        <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
+        <span>سجل السلف والكاش</span>
+        <span class="px-1.5 py-0.5 text-[10px] rounded-full bg-gray-200 text-gray-700"><?= count($advances) ?></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ================= TAB 1: TEAM & ATTENDANCE ================= -->
+  <div id="viewSection-team" class="space-y-4">
+
+    <!-- 1. Quick Daily Attendance Strip -->
+    <div class="bg-gradient-to-r from-emerald-50/90 via-[#FCFAF7] to-white border border-emerald-200/70 rounded-2xl p-3 sm:p-4 shadow-2xs">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-3 mb-2.5">
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded-lg bg-emerald-600 text-white flex items-center justify-center shrink-0 shadow-2xs">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+          </div>
+          <div>
+            <span class="font-bold text-xs sm:text-sm text-tasty-charcoal">تحضير كادر العمل لليوم (<?= $todayDayName ?> <?= date('j M') ?>)</span>
+            <span class="text-[11px] text-gray-500 mr-1.5">تسجيل فوري بضغطة زر</span>
+          </div>
+        </div>
+
+        <?php if ($unloggedFixedCount > 0): ?>
+          <form method="POST" action="" class="shrink-0">
+            <input type="hidden" name="action" value="quick_log_all_fixed_today">
+            <button type="submit" class="w-full md:w-auto inline-flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-all shadow-2xs active:scale-95">
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+              <span>تحضير كل الثابتين (<?= $unloggedFixedCount ?> موظف)</span>
+            </button>
+          </form>
+        <?php else: ?>
+          <span class="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-full bg-emerald-100 text-emerald-800">
+            <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"/></svg>
+            <span>جميع عمال الدوام الثابت حاضرين اليوم</span>
           </span>
-        </h2>
-        <p class="text-xs text-gray-400 mt-0.5">تفاصيل الأجر بالساعة أو اليومي، مواعيد الدوام الثابت والمرن، وكشف حساب مستحقات كل موظف.</p>
+        <?php endif; ?>
       </div>
 
-      <!-- Quick Filter Pills -->
-      <div class="flex items-center gap-1.5 p-1 bg-white rounded-2xl border border-gray-200 shadow-2xs self-start sm:self-auto text-xs font-bold">
-        <button onclick="filterStaff('all')" id="tabBtn-all" class="px-3 py-1.5 rounded-xl bg-tasty-charcoal text-white transition-all">
+      <!-- Quick action chips -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 pt-2 border-t border-emerald-100/70">
+        <?php foreach ($employees as $emp): ?>
+          <?php 
+            if (!$emp['is_active']) continue;
+            $hasShift = isset($todayShiftsMap[$emp['id']]);
+            $shift = $hasShift ? $todayShiftsMap[$emp['id']] : null;
+          ?>
+          <div class="p-2 rounded-xl border flex items-center justify-between gap-1.5 <?= $hasShift ? 'bg-emerald-50 border-emerald-200' : 'bg-white border-gray-200 hover:border-tasty-teal/50' ?>">
+            <div class="min-w-0 pr-1">
+              <div class="flex items-center gap-1">
+                <span class="w-1.5 h-1.5 rounded-full shrink-0 <?= $hasShift ? 'bg-emerald-500' : 'bg-amber-400' ?>"></span>
+                <span class="font-bold text-xs text-tasty-charcoal truncate"><?= htmlspecialchars($emp['name']) ?></span>
+              </div>
+              <span class="text-[10px] text-gray-500 block truncate">
+                <?= $emp['wage_type'] === 'daily' ? ('€' . $emp['rate'] . '/يوم') : ('€' . $emp['rate'] . '/س') ?>
+              </span>
+            </div>
+
+            <div class="shrink-0">
+              <?php if ($hasShift): ?>
+                <span class="inline-flex items-center gap-0.5 px-2 py-0.5 rounded-lg bg-emerald-100 text-emerald-800 text-[10px] font-bold">
+                  <span><?= $shift['total_hours'] ?>س</span>
+                  <span class="font-sans" dir="ltr">€<?= number_format($shift['total_earned'], 0) ?></span>
+                </span>
+              <?php else: ?>
+                <form method="POST" action="" class="inline">
+                  <input type="hidden" name="action" value="quick_log_today">
+                  <input type="hidden" name="employee_id" value="<?= $emp['id'] ?>">
+                  <button type="submit" class="px-2 py-1 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold shadow-2xs transition-all active:scale-95">
+                    + تحضير
+                  </button>
+                </form>
+              <?php endif; ?>
+            </div>
+          </div>
+        <?php endforeach; ?>
+      </div>
+    </div>
+
+    <!-- 2. Staff Filter Bar -->
+    <div class="flex items-center justify-between gap-2 pt-1">
+      <div class="flex items-center gap-1.5 p-1 bg-white rounded-xl border border-gray-200 shadow-2xs text-xs font-bold">
+        <button onclick="filterStaff('all')" id="tabBtn-all" class="px-3 py-1 rounded-lg bg-tasty-charcoal text-white transition-all">
           كافة الكادر (<?= count($employees) ?>)
         </button>
-        <button onclick="filterStaff('fixed')" id="tabBtn-fixed" class="px-3 py-1.5 rounded-xl text-gray-600 hover:text-tasty-charcoal transition-all">
+        <button onclick="filterStaff('fixed')" id="tabBtn-fixed" class="px-3 py-1 rounded-lg text-gray-600 hover:text-tasty-charcoal transition-all">
           دوام ثابت (<?= count(array_filter($employees, fn($e) => $e['schedule_type'] === 'fixed')) ?>)
         </button>
-        <button onclick="filterStaff('flexible')" id="tabBtn-flexible" class="px-3 py-1.5 rounded-xl text-gray-600 hover:text-tasty-charcoal transition-all">
-          دوام مرن / ورديات (<?= count(array_filter($employees, fn($e) => $e['schedule_type'] !== 'fixed')) ?>)
+        <button onclick="filterStaff('flexible')" id="tabBtn-flexible" class="px-3 py-1 rounded-lg text-gray-600 hover:text-tasty-charcoal transition-all">
+          دوام مرن (<?= count(array_filter($employees, fn($e) => $e['schedule_type'] !== 'fixed')) ?>)
         </button>
       </div>
+
+      <button onclick="openEmpModal()" class="text-xs font-bold text-tasty-teal hover:text-tasty-teal-dark flex items-center gap-1">
+        <span>+ موظف جديد</span>
+      </button>
     </div>
 
-    <!-- Employee Cards Grid -->
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+    <!-- 3. Streamlined, Compact Employee Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3.5">
       <?php foreach ($employees as $emp): ?>
         <?php 
           $isFixed = ($emp['schedule_type'] === 'fixed');
           $st = $empStats[$emp['id']] ?? ['hours' => 0, 'earned' => 0, 'advances' => 0, 'shifts_count' => 0];
           $netDue = $st['earned'] - $st['advances'];
         ?>
-        <div class="emp-card bg-white rounded-3xl p-5 border border-gray-100 shadow-xs hover:shadow-md transition-all flex flex-col justify-between" data-schedule="<?= $isFixed ? 'fixed' : 'flexible' ?>">
+        <div class="emp-card bg-white rounded-2xl p-4 border border-gray-200/80 hover:border-tasty-teal/50 hover:shadow-sm transition-all flex flex-col justify-between" data-schedule="<?= $isFixed ? 'fixed' : 'flexible' ?>">
           
           <div>
-            <!-- Card Top: Name, Role, Schedule Badge -->
-            <div class="flex items-start justify-between gap-2 mb-3">
-              <div class="flex items-center gap-3">
-                <div class="w-11 h-11 rounded-2xl flex items-center justify-center font-bold text-base shadow-2xs <?= $isFixed ? 'bg-tasty-terracotta-light text-tasty-terracotta-dark' : 'bg-tasty-teal-light text-tasty-teal-dark' ?>">
+            <!-- Header: Avatar + Name + Role + Badge -->
+            <div class="flex items-start justify-between gap-2 mb-2.5">
+              <div class="flex items-center gap-2.5 min-w-0">
+                <div class="w-10 h-10 rounded-xl flex items-center justify-center font-bold text-sm shrink-0 shadow-2xs <?= $isFixed ? 'bg-tasty-terracotta-light text-tasty-terracotta-dark' : 'bg-tasty-teal-light text-tasty-teal-dark' ?>">
                   <?= mb_substr($emp['name'], 0, 1, 'UTF-8') ?>
                 </div>
-                <div>
-                  <h3 class="text-base font-bold text-tasty-charcoal"><?= htmlspecialchars($emp['name']) ?></h3>
-                  <p class="text-xs text-gray-400 font-semibold"><?= htmlspecialchars($emp['role'] ?: 'موظف') ?></p>
+                <div class="min-w-0">
+                  <h3 class="text-sm font-bold text-tasty-charcoal truncate"><?= htmlspecialchars($emp['name']) ?></h3>
+                  <p class="text-[11px] text-gray-400 font-semibold truncate"><?= htmlspecialchars($emp['role'] ?: 'موظف') ?></p>
                 </div>
               </div>
 
-              <!-- Schedule Badge (ثابت أو مرن) -->
-              <div>
+              <div class="shrink-0">
                 <?php if ($isFixed): ?>
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 text-[11px] font-bold whitespace-nowrap">
-                    <span>دوام ثابت (<?= $emp['default_hours'] ?>س)</span>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-lg bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 text-[10px] font-bold">
+                    دوام ثابت (<?= $emp['default_hours'] ?>س)
                   </span>
                 <?php else: ?>
-                  <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-xl bg-tasty-sage-light text-tasty-charcoal border border-tasty-sage/30 text-[11px] font-bold whitespace-nowrap">
-                    <span>دوام مرن / ورديات</span>
+                  <span class="inline-flex items-center px-2 py-0.5 rounded-lg bg-tasty-sage-light text-tasty-charcoal border border-tasty-sage/30 text-[10px] font-bold">
+                    دوام مرن
                   </span>
                 <?php endif; ?>
               </div>
             </div>
 
-            <!-- Wage Rate Banner -->
-            <div class="p-3 rounded-2xl bg-[#FCFAF7] border border-gray-100 flex items-center justify-between text-xs mb-3">
+            <!-- Compact 3-Column Info Strip -->
+            <div class="p-2.5 rounded-xl bg-[#FCFAF7] border border-gray-100 grid grid-cols-3 gap-1 text-center text-xs mb-2">
               <div>
-                <span class="text-gray-400 block text-[10px] font-bold">طريقة حساب الأجر</span>
-                <span class="font-bold text-tasty-charcoal">
-                  <?= $emp['wage_type'] === 'daily' ? 'أجر يومي مقطوع' : 'أجر حسب ساعات العمل' ?>
-                </span>
+                <span class="text-[10px] text-gray-400 block font-bold">الأجر</span>
+                <span class="font-bold text-tasty-charcoal font-sans" dir="ltr">€<?= number_format($emp['rate'], 1) ?><span class="text-[9px] text-gray-400 font-normal"><?= $emp['wage_type'] === 'daily' ? '/يوم' : '/س' ?></span></span>
               </div>
-              <div class="text-left font-sans font-black text-sm text-tasty-teal-dark" dir="ltr">
-                €<?= number_format($emp['rate'], 2) ?>
-                <span class="text-[10px] font-bold text-gray-400">
-                  <?= $emp['wage_type'] === 'daily' ? '/يوم' : '/ساعة' ?>
-                </span>
-              </div>
-            </div>
-
-            <!-- Contact & Schedule Info -->
-            <div class="space-y-1.5 text-xs text-gray-500 mb-3 px-1">
-              <div class="flex items-center justify-between">
-                <span>رقم الهاتف للتواصل:</span>
-                <span class="font-bold text-gray-700 dir-ltr font-mono"><?= htmlspecialchars($emp['phone'] ?: '—') ?></span>
-              </div>
-              <div class="flex items-center justify-between">
-                <span>مواعيد الدوام الافتراضية:</span>
-                <span class="font-bold text-gray-700 dir-ltr font-mono"><?= htmlspecialchars($emp['default_start_time'] ?: '10:00') ?> - <?= htmlspecialchars($emp['default_end_time'] ?: '18:00') ?></span>
-              </div>
-              <?php if (!empty($emp['notes'])): ?>
-                <p class="text-[11px] text-gray-400 pt-1 border-t border-gray-100 truncate"><?= htmlspecialchars($emp['notes']) ?></p>
-              <?php endif; ?>
-            </div>
-
-            <!-- Individual Mini Account Summary -->
-            <div class="p-3 rounded-2xl bg-gray-50 border border-gray-100 grid grid-cols-3 gap-2 text-center text-xs">
               <div>
                 <span class="text-[10px] text-gray-400 block font-bold">الساعات</span>
-                <span class="font-bold text-tasty-charcoal font-sans"><?= number_format($st['hours'], 1) ?>س</span>
-              </div>
-              <div>
-                <span class="text-[10px] text-gray-400 block font-bold">المستحق</span>
-                <span class="font-bold text-tasty-teal-dark font-sans" dir="ltr">€<?= number_format($st['earned'], 0) ?></span>
+                <span class="font-bold text-gray-700 font-sans"><?= number_format($st['hours'], 1) ?>س</span>
               </div>
               <div>
                 <span class="text-[10px] text-gray-400 block font-bold">صافي المتبقي</span>
-                <span class="font-bold font-sans <?= $netDue > 0 ? 'text-tasty-terracotta-dark' : 'text-emerald-700' ?>" dir="ltr">
+                <span class="font-black font-sans <?= $netDue > 0 ? 'text-tasty-terracotta-dark' : 'text-emerald-700' ?>" dir="ltr">
                   €<?= number_format($netDue, 0) ?>
                 </span>
               </div>
             </div>
 
+            <!-- Phone & Hours Info -->
+            <div class="flex items-center justify-between text-[11px] text-gray-500 px-1 mb-2">
+              <span class="font-mono font-bold text-gray-600" dir="ltr"><?= htmlspecialchars($emp['phone'] ?: '—') ?></span>
+              <span class="font-mono text-gray-400 text-[10px]" dir="ltr"><?= htmlspecialchars($emp['default_start_time'] ?: '10:00') ?> - <?= htmlspecialchars($emp['default_end_time'] ?: '18:00') ?></span>
+            </div>
           </div>
 
           <!-- Bottom Action Buttons -->
-          <div class="mt-4 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
+          <div class="pt-2 border-t border-gray-100 flex items-center justify-between gap-1.5">
             <button 
               onclick='openShiftModalFor("<?= $emp['id'] ?>", "<?= addslashes($emp['name']) ?>", <?= $emp['rate'] ?>, "<?= $emp['wage_type'] ?>", <?= $emp['default_hours'] ?>, "<?= $emp['default_start_time'] ?>", "<?= $emp['default_end_time'] ?>", <?= $emp['default_break_minutes'] ?>)'
-              class="flex-1 py-2 bg-tasty-teal-light hover:bg-tasty-teal hover:text-white text-tasty-teal-dark rounded-xl font-bold text-xs transition-all text-center shadow-2xs flex items-center justify-center gap-1"
+              class="flex-1 py-1.5 bg-tasty-teal-light hover:bg-tasty-teal hover:text-white text-tasty-teal-dark rounded-xl font-bold text-xs transition-all text-center flex items-center justify-center gap-1 shadow-2xs"
             >
               <span>+ وردية</span>
             </button>
             <button 
               onclick='openAdvanceModalFor("<?= $emp['id'] ?>", "<?= addslashes($emp['name']) ?>")'
-              class="flex-1 py-2 bg-tasty-terracotta-light hover:bg-tasty-terracotta hover:text-white text-tasty-terracotta-dark rounded-xl font-bold text-xs transition-all text-center shadow-2xs flex items-center justify-center gap-1"
+              class="flex-1 py-1.5 bg-tasty-terracotta-light hover:bg-tasty-terracotta hover:text-white text-tasty-terracotta-dark rounded-xl font-bold text-xs transition-all text-center flex items-center justify-center gap-1 shadow-2xs"
             >
-              <span>سلفة كاش</span>
+              <span>سلفة</span>
             </button>
             <button 
               onclick='openEditEmpModal(<?= json_encode($emp) ?>)'
               title="تعديل بيانات الموظف"
-              class="p-2 text-gray-400 hover:text-tasty-teal rounded-xl transition-colors"
+              class="p-1.5 text-gray-400 hover:text-tasty-teal rounded-lg transition-colors"
             >
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+              <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
             </button>
-            <form method="POST" action="" onsubmit="return confirm('حذف الموظف <?= addslashes($emp['name']) ?> بالكامل؟ ستظل وردياته السابقة محفوظة للتوثيق.');" class="inline">
+            <form method="POST" action="" onsubmit="return confirm('حذف الموظف <?= addslashes($emp['name']) ?>؟');" class="inline">
               <input type="hidden" name="action" value="delete_employee">
               <input type="hidden" name="id" value="<?= $emp['id'] ?>">
-              <button type="submit" title="حذف الموظف" class="p-2 text-gray-400 hover:text-red-600 rounded-xl transition-colors">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+              <button type="submit" title="حذف الموظف" class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg transition-colors">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
               </button>
             </form>
           </div>
@@ -602,139 +586,146 @@ foreach ($employees as $e) {
 
   </div>
 
-  <!-- 5. Shifts History Table (سجل الورديات الأخير) -->
-  <div class="bg-white rounded-3xl border border-gray-100 shadow-xs overflow-hidden">
-    <div class="p-5 sm:p-6 border-b border-gray-100 flex items-center justify-between">
-      <div>
-        <h3 class="text-base font-bold text-tasty-charcoal">سجل الورديات الأخير وساعات العمل</h3>
-        <p class="text-xs text-gray-400 mt-0.5">آخر (<?= count($shifts) ?>) وردية عمل موثقة في النظام</p>
+  <!-- ================= TAB 2: SHIFTS HISTORY ================= -->
+  <div id="viewSection-shifts" class="space-y-4 hidden">
+    <div class="bg-white rounded-2xl border border-gray-200/80 shadow-xs overflow-hidden">
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold text-tasty-charcoal">سجل الورديات وساعات العمل</h3>
+          <p class="text-[11px] text-gray-400 mt-0.5">آخر (<?= count($shifts) ?>) وردية عمل موثقة بالنظام</p>
+        </div>
+        <button onclick="openShiftModal()" class="px-3 py-1.5 rounded-xl bg-tasty-teal text-white font-bold text-xs hover:bg-tasty-teal-dark transition-all flex items-center gap-1 shadow-2xs">
+          <span>+ تسجيل وردية جديدة</span>
+        </button>
       </div>
-      <button onclick="openShiftModal()" class="px-3.5 py-1.5 rounded-xl bg-tasty-teal-light text-tasty-teal-dark font-bold text-xs hover:bg-tasty-teal hover:text-white transition-all">
-        + تسجيل وردية جديدة
-      </button>
-    </div>
 
-    <div class="overflow-x-auto">
-      <table class="w-full text-right text-xs">
-        <thead>
-          <tr class="bg-gray-50 text-gray-500 font-bold border-b border-gray-100">
-            <th class="p-4">الموظف</th>
-            <th class="p-4">التاريخ</th>
-            <th class="p-4">الوقت والدوام</th>
-            <th class="p-4">الساعات</th>
-            <th class="p-4">الأجر</th>
-            <th class="p-4">الإجمالي المستحق</th>
-            <th class="p-4">حالة الصرف</th>
-            <th class="p-4 text-center">إجراء</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-          <?php if (empty($shifts)): ?>
-            <tr>
-              <td colspan="8" class="p-10 text-center text-gray-400 font-bold">
-                لا توجد أي ورديات مسجلة بعد. استخدم زر "تسجيل وردية" للبدء.
-              </td>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-xs">
+          <thead>
+            <tr class="bg-gray-50 text-gray-500 font-bold border-b border-gray-100">
+              <th class="p-3">الموظف</th>
+              <th class="p-3">التاريخ</th>
+              <th class="p-3">الوقت والدوام</th>
+              <th class="p-3">الساعات</th>
+              <th class="p-3">الأجر</th>
+              <th class="p-3">الإجمالي المستحق</th>
+              <th class="p-3">حالة الصرف</th>
+              <th class="p-3 text-center">إجراء</th>
             </tr>
-          <?php else: ?>
-            <?php foreach ($shifts as $s): ?>
-              <tr class="hover:bg-tasty-bg-warm/60 transition-colors">
-                <td class="p-4 font-bold text-tasty-charcoal">
-                  <?= htmlspecialchars($s['employee_name']) ?>
-                  <?php if (!empty($s['notes'])): ?>
-                    <p class="text-[10px] text-gray-400 font-normal"><?= htmlspecialchars($s['notes']) ?></p>
-                  <?php endif; ?>
-                </td>
-                <td class="p-4 whitespace-nowrap font-mono text-gray-600"><?= htmlspecialchars($s['date']) ?></td>
-                <td class="p-4 whitespace-nowrap dir-ltr text-right text-gray-500 font-mono">
-                  <?= htmlspecialchars($s['start_time']) ?> - <?= htmlspecialchars($s['end_time']) ?>
-                </td>
-                <td class="p-4 font-bold text-tasty-charcoal font-sans"><?= $s['total_hours'] ?> س</td>
-                <td class="p-4 dir-ltr text-right font-mono">€<?= number_format($s['hourly_rate'], 2) ?></td>
-                <td class="p-4 font-bold text-tasty-teal-dark dir-ltr text-right font-sans">
-                  €<?= number_format($s['total_earned'], 2) ?>
-                </td>
-                <td class="p-4 whitespace-nowrap">
-                  <?php if ($s['payment_status'] === 'paid_cash'): ?>
-                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 font-bold text-[10px]">مسدد كاش</span>
-                  <?php elseif ($s['payment_status'] === 'paid_bank'): ?>
-                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-sage-light text-tasty-charcoal border border-tasty-sage/30 font-bold text-[10px]">مسدد بنك</span>
-                  <?php else: ?>
-                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 font-bold text-[10px]">مستحق معلق</span>
-                  <?php endif; ?>
-                </td>
-                <td class="p-4 text-center">
-                  <form method="POST" action="" onsubmit="return confirm('حذف هذه الوردية نهائياً؟');" class="inline">
-                    <input type="hidden" name="action" value="delete_shift">
-                    <input type="hidden" name="id" value="<?= $s['id'] ?>">
-                    <button type="submit" class="p-1.5 text-gray-400 hover:text-red-600 rounded-xl transition-colors">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                    </button>
-                  </form>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <?php if (empty($shifts)): ?>
+              <tr>
+                <td colspan="8" class="p-8 text-center text-gray-400 font-bold">
+                  لا توجد أي ورديات مسجلة بعد. استخدم زر "تسجيل وردية جديدة" للبدء.
                 </td>
               </tr>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </tbody>
-      </table>
+            <?php else: ?>
+              <?php foreach ($shifts as $s): ?>
+                <tr class="hover:bg-[#FCFAF7] transition-colors">
+                  <td class="p-3 font-bold text-tasty-charcoal">
+                    <?= htmlspecialchars($s['employee_name']) ?>
+                    <?php if (!empty($s['notes'])): ?>
+                      <p class="text-[10px] text-gray-400 font-normal"><?= htmlspecialchars($s['notes']) ?></p>
+                    <?php endif; ?>
+                  </td>
+                  <td class="p-3 whitespace-nowrap font-mono text-gray-600" dir="ltr"><?= htmlspecialchars($s['date']) ?></td>
+                  <td class="p-3 whitespace-nowrap text-gray-500 font-mono text-[11px]" dir="ltr">
+                    <?= htmlspecialchars($s['start_time']) ?> - <?= htmlspecialchars($s['end_time']) ?>
+                  </td>
+                  <td class="p-3 font-bold text-tasty-charcoal font-sans"><?= $s['total_hours'] ?> س</td>
+                  <td class="p-3 font-mono text-right" dir="ltr">€<?= number_format($s['hourly_rate'], 2) ?></td>
+                  <td class="p-3 font-bold text-tasty-teal-dark text-right font-sans" dir="ltr">
+                    €<?= number_format($s['total_earned'], 2) ?>
+                  </td>
+                  <td class="p-3 whitespace-nowrap">
+                    <?php if ($s['payment_status'] === 'paid_cash'): ?>
+                      <span class="px-2 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 font-bold text-[10px]">مسدد كاش</span>
+                    <?php elseif ($s['payment_status'] === 'paid_bank'): ?>
+                      <span class="px-2 py-0.5 rounded-full bg-tasty-sage-light text-tasty-charcoal border border-tasty-sage/30 font-bold text-[10px]">مسدد بنك</span>
+                    <?php else: ?>
+                      <span class="px-2 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 font-bold text-[10px]">مستحق معلق</span>
+                    <?php endif; ?>
+                  </td>
+                  <td class="p-3 text-center">
+                    <form method="POST" action="" onsubmit="return confirm('حذف هذه الوردية نهائياً؟');" class="inline">
+                      <input type="hidden" name="action" value="delete_shift">
+                      <input type="hidden" name="id" value="<?= $s['id'] ?>">
+                      <button type="submit" class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
-  <!-- 6. Cash Advances Table (سجل السلف والدفعات المسحوبة) -->
-  <div class="bg-white rounded-3xl border border-gray-100 shadow-xs overflow-hidden">
-    <div class="p-5 sm:p-6 border-b border-gray-100 flex items-center justify-between">
-      <div>
-        <h3 class="text-base font-bold text-tasty-charcoal">سجل السلف والدفعات النقدية المسحوبة من الكاش</h3>
-        <p class="text-xs text-gray-400 mt-0.5">مبالغ تم صرفها للموظفين مسبقاً وتُخصم من رواتبهم</p>
+  <!-- ================= TAB 3: ADVANCES ================= -->
+  <div id="viewSection-advances" class="space-y-4 hidden">
+    <div class="bg-white rounded-2xl border border-gray-200/80 shadow-xs overflow-hidden">
+      <div class="p-4 border-b border-gray-100 flex items-center justify-between">
+        <div>
+          <h3 class="text-sm font-bold text-tasty-charcoal">سجل السلف والدفعات المسحوبة من الكاش</h3>
+          <p class="text-[11px] text-gray-400 mt-0.5">مبالغ مصروفة مقدماً للموظفين وتُخصم من مستحقاتهم</p>
+        </div>
+        <button onclick="openGeneralAdvanceModal()" class="px-3 py-1.5 rounded-xl bg-tasty-terracotta text-white font-bold text-xs hover:bg-tasty-terracotta-dark transition-all flex items-center gap-1 shadow-2xs">
+          <span>+ صرف سلفة جديدة</span>
+        </button>
       </div>
-    </div>
 
-    <div class="overflow-x-auto">
-      <table class="w-full text-right text-xs">
-        <thead>
-          <tr class="bg-gray-50 text-gray-500 font-bold border-b border-gray-100">
-            <th class="p-4">الموظف</th>
-            <th class="p-4">التاريخ</th>
-            <th class="p-4">المبلغ المسحوب</th>
-            <th class="p-4">طريقة الصرف</th>
-            <th class="p-4">الملاحظات</th>
-            <th class="p-4 text-center">إجراء</th>
-          </tr>
-        </thead>
-        <tbody class="divide-y divide-gray-100">
-          <?php if (empty($advances)): ?>
-            <tr>
-              <td colspan="6" class="p-8 text-center text-gray-400 font-bold">
-                لا توجد سلف أو دفعات مسحوبة مسجلة.
-              </td>
+      <div class="overflow-x-auto">
+        <table class="w-full text-right text-xs">
+          <thead>
+            <tr class="bg-gray-50 text-gray-500 font-bold border-b border-gray-100">
+              <th class="p-3">الموظف</th>
+              <th class="p-3">التاريخ</th>
+              <th class="p-3">المبلغ المسحوب</th>
+              <th class="p-3">طريقة الصرف</th>
+              <th class="p-3">الملاحظات</th>
+              <th class="p-3 text-center">إجراء</th>
             </tr>
-          <?php else: ?>
-            <?php foreach ($advances as $a): ?>
-              <tr class="hover:bg-tasty-bg-warm/60 transition-colors">
-                <td class="p-4 font-bold text-tasty-charcoal"><?= htmlspecialchars($a['employee_name']) ?></td>
-                <td class="p-4 whitespace-nowrap font-mono text-gray-600"><?= htmlspecialchars($a['date']) ?></td>
-                <td class="p-4 font-bold text-tasty-terracotta-dark dir-ltr text-right font-sans">
-                  €<?= number_format($a['amount'], 2) ?>
-                </td>
-                <td class="p-4 whitespace-nowrap">
-                  <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark text-[10px] font-bold">
-                    <?= $a['payment_method'] === 'cash' ? 'كاش من الصندوق' : 'تحويل بنكي' ?>
-                  </span>
-                </td>
-                <td class="p-4 text-gray-500"><?= htmlspecialchars($a['notes'] ?: '—') ?></td>
-                <td class="p-4 text-center">
-                  <form method="POST" action="" onsubmit="return confirm('حذف سجل هذه السلفة؟');" class="inline">
-                    <input type="hidden" name="action" value="delete_advance">
-                    <input type="hidden" name="id" value="<?= $a['id'] ?>">
-                    <button type="submit" class="p-1.5 text-gray-400 hover:text-red-600 rounded-xl transition-colors">
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
-                    </button>
-                  </form>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <?php if (empty($advances)): ?>
+              <tr>
+                <td colspan="6" class="p-8 text-center text-gray-400 font-bold">
+                  لا توجد أي سلف نقدية مسجلة حالياً.
                 </td>
               </tr>
-            <?php endforeach; ?>
-          <?php endif; ?>
-        </tbody>
-      </table>
+            <?php else: ?>
+              <?php foreach ($advances as $a): ?>
+                <tr class="hover:bg-[#FCFAF7] transition-colors">
+                  <td class="p-3 font-bold text-tasty-charcoal"><?= htmlspecialchars($a['employee_name']) ?></td>
+                  <td class="p-3 whitespace-nowrap font-mono text-gray-600" dir="ltr"><?= htmlspecialchars($a['date']) ?></td>
+                  <td class="p-3 font-bold text-tasty-terracotta-dark text-right font-sans" dir="ltr">
+                    €<?= number_format($a['amount'], 2) ?>
+                  </td>
+                  <td class="p-3 whitespace-nowrap">
+                    <span class="px-2 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark text-[10px] font-bold">
+                      <?= $a['payment_method'] === 'cash' ? 'كاش من الصندوق' : 'تحويل بنكي' ?>
+                    </span>
+                  </td>
+                  <td class="p-3 text-gray-500"><?= htmlspecialchars($a['notes'] ?: '—') ?></td>
+                  <td class="p-3 text-center">
+                    <form method="POST" action="" onsubmit="return confirm('حذف سجل هذه السلفة؟');" class="inline">
+                      <input type="hidden" name="action" value="delete_advance">
+                      <input type="hidden" name="id" value="<?= $a['id'] ?>">
+                      <button type="submit" class="p-1.5 text-gray-400 hover:text-red-600 rounded-lg transition-colors">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                      </button>
+                    </form>
+                  </td>
+                </tr>
+              <?php endforeach; ?>
+            <?php endif; ?>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -916,8 +907,15 @@ foreach ($employees as $e) {
       <input type="hidden" name="employee_id" id="advEmpId" value="">
 
       <div>
-        <label class="block text-xs font-bold text-gray-600 mb-1">الموظف</label>
-        <input type="text" id="advEmpName" readonly class="w-full px-3.5 py-2 bg-gray-100 border border-gray-200 rounded-2xl text-sm font-bold text-gray-700">
+        <label class="block text-xs font-bold text-gray-600 mb-1">الموظف *</label>
+        <div id="advEmpNameContainer">
+          <input type="text" id="advEmpName" readonly class="w-full px-3.5 py-2 bg-gray-100 border border-gray-200 rounded-2xl text-sm font-bold text-gray-700">
+        </div>
+        <select id="advEmpSelect" onchange="document.getElementById('advEmpId').value = this.value" class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold focus:border-tasty-terracotta focus:bg-white focus:outline-none hidden">
+          <?php foreach ($employees as $e): ?>
+            <option value="<?= $e['id'] ?>"><?= htmlspecialchars($e['name']) ?></option>
+          <?php endforeach; ?>
+        </select>
       </div>
 
       <div>
@@ -943,6 +941,32 @@ foreach ($employees as $e) {
 </div>
 
 <script>
+// Tab Switching (فريق العمل والحضور / سجل الورديات / سجل السلف)
+function switchMasterTab(tabName) {
+  ['team', 'shifts', 'advances'].forEach(t => {
+    const sec = document.getElementById('viewSection-' + t);
+    const btn = document.getElementById('masterTab-' + t);
+    if (!sec || !btn) return;
+    if (t === tabName) {
+      sec.classList.remove('hidden');
+      btn.className = 'px-3.5 py-1.5 rounded-xl bg-white text-tasty-charcoal shadow-xs transition-all flex items-center gap-1.5';
+    } else {
+      sec.classList.add('hidden');
+      btn.className = 'px-3.5 py-1.5 rounded-xl text-gray-600 hover:text-tasty-charcoal transition-all flex items-center gap-1.5';
+    }
+  });
+  try {
+    history.replaceState(null, null, '#' + tabName);
+  } catch(e) {}
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  const hash = window.location.hash.replace('#', '');
+  if (hash === 'shifts' || hash === 'advances' || hash === 'team') {
+    switchMasterTab(hash);
+  }
+});
+
 // Filter Staff by Schedule Type (All, Fixed, Flexible)
 function filterStaff(type) {
   document.querySelectorAll('.emp-card').forEach(card => {
@@ -956,9 +980,9 @@ function filterStaff(type) {
   ['all', 'fixed', 'flexible'].forEach(t => {
     const btn = document.getElementById('tabBtn-' + t);
     if (t === type) {
-      btn.className = 'px-3 py-1.5 rounded-xl bg-tasty-charcoal text-white transition-all';
+      btn.className = 'px-3 py-1 rounded-lg bg-tasty-charcoal text-white transition-all';
     } else {
-      btn.className = 'px-3 py-1.5 rounded-xl text-gray-600 hover:text-tasty-charcoal transition-all';
+      btn.className = 'px-3 py-1 rounded-lg text-gray-600 hover:text-tasty-charcoal transition-all';
     }
   });
 }
@@ -1019,7 +1043,19 @@ function onShiftEmpSelect(selectElem) {
   }
 }
 
+function openGeneralAdvanceModal() {
+  document.getElementById('advEmpNameContainer').classList.add('hidden');
+  const sel = document.getElementById('advEmpSelect');
+  sel.classList.remove('hidden');
+  if (sel.options.length > 0) {
+    document.getElementById('advEmpId').value = sel.value;
+  }
+  document.getElementById('advanceModal').classList.remove('hidden');
+}
+
 function openAdvanceModalFor(empId, empName) {
+  document.getElementById('advEmpNameContainer').classList.remove('hidden');
+  document.getElementById('advEmpSelect').classList.add('hidden');
   document.getElementById('advEmpId').value = empId;
   document.getElementById('advEmpName').value = empName;
   document.getElementById('advanceModal').classList.remove('hidden');
