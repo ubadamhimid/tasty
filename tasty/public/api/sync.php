@@ -1,7 +1,8 @@
 <?php
 /**
- * TASTY Hilversum - Central SQLite Database & Sync Engine
+ * TASTY Hilversum - Central SQLite Database & Permanent Storage Engine
  * High-performance, transactional SQL storage unifying all devices in real-time.
+ * IMMUNE to git pull and npm run build wipes.
  */
 
 error_reporting(0);
@@ -20,30 +21,32 @@ if ($method === 'OPTIONS') {
 }
 
 // -------------------------------------------------------------
-// Directory & Path Setup
+// Permanent Storage Directory Setup (OUTSIDE dist/ so build never wipes it)
 // -------------------------------------------------------------
-$dataDir = __DIR__ . '/data';
-$backupsDir = $dataDir . '/backups';
+$isInsideDist = (basename(dirname(__DIR__)) === 'dist');
+$projectRoot = $isInsideDist ? dirname(__DIR__, 2) : dirname(__DIR__, 1);
 
+// Permanent storage path in project root
+$storageDir = $projectRoot . '/storage';
+if (!is_dir($storageDir)) {
+    @mkdir($storageDir, 0777, true);
+}
+@chmod($storageDir, 0777);
+
+// Secondary local fallback directory
+$dataDir = __DIR__ . '/data';
 if (!is_dir($dataDir)) {
     @mkdir($dataDir, 0777, true);
 }
-if (!is_dir($backupsDir)) {
-    @mkdir($backupsDir, 0777, true);
-}
 @chmod($dataDir, 0777);
-@chmod($backupsDir, 0777);
 
-// Secure directories from direct browser downloads
-$htaccess = $dataDir . '/.htaccess';
-if (!file_exists($htaccess)) {
-    @file_put_contents($htaccess, "# Deny direct access\n<IfModule mod_authz_core.c>\n    Require all denied\n</IfModule>\n<IfModule !mod_authz_core.c>\n    Order deny,allow\n    Deny from all\n</IfModule>\n");
-}
+// Determine best active storage folder
+$activeStorage = (is_dir($storageDir) && is_writable($storageDir)) ? $storageDir : $dataDir;
+@chmod($activeStorage, 0777);
 
-// Database paths (primary in data/, secondary in __DIR__)
-$sqlitePrimary = $dataDir . '/tasty.sqlite';
+$sqlitePrimary = $activeStorage . '/tasty.sqlite';
 $sqliteSecondary = __DIR__ . '/tasty.sqlite';
-$jsonPrimary = $dataDir . '/tasty_database.json';
+$jsonPrimary = $activeStorage . '/tasty_database.json';
 $jsonSecondary = __DIR__ . '/tasty_database.json';
 
 // Diagnostic mode (?diag=1)
@@ -52,9 +55,12 @@ if (isset($_GET['diag'])) {
     echo json_encode([
         'engine' => $hasSqlite ? 'SQLite PDO' : 'JSON Engine',
         'php_version' => PHP_VERSION,
+        'active_storage' => $activeStorage,
+        'storage_writable' => is_writable($activeStorage),
         'sqlite_primary' => $sqlitePrimary,
         'sqlite_primary_exists' => file_exists($sqlitePrimary),
-        'data_dir_writable' => is_writable($dataDir),
+        'is_inside_dist' => $isInsideDist,
+        'project_root' => $projectRoot,
         'server_time' => date('Y-m-d H:i:s')
     ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     exit;
@@ -64,13 +70,13 @@ if (isset($_GET['diag'])) {
 // SQLite Database Helper
 // -------------------------------------------------------------
 function getDatabaseConnection() {
-    global $sqlitePrimary, $sqliteSecondary, $dataDir;
+    global $sqlitePrimary, $sqliteSecondary, $activeStorage;
 
     if (!extension_loaded('pdo_sqlite')) {
         return null;
     }
 
-    $dbFile = (is_dir($dataDir) && is_writable($dataDir)) ? $sqlitePrimary : $sqliteSecondary;
+    $dbFile = (is_dir($activeStorage) && is_writable($activeStorage)) ? $sqlitePrimary : $sqliteSecondary;
 
     try {
         $pdo = new PDO('sqlite:' . $dbFile);
@@ -87,7 +93,6 @@ function getDatabaseConnection() {
 
         return ['pdo' => $pdo, 'file' => $dbFile];
     } catch (Exception $e) {
-        // Fallback to secondary if primary failed
         if ($dbFile === $sqlitePrimary) {
             try {
                 $pdo = new PDO('sqlite:' . $sqliteSecondary);
@@ -526,22 +531,34 @@ function saveAllToDatabase($pdo, $payload) {
 }
 
 // -------------------------------------------------------------
-// Seed SQLite from JSON database if SQLite is completely empty
+// Seed SQLite from Backup/JSON if SQLite is completely empty
 // -------------------------------------------------------------
 function seedDatabaseIfEmpty($pdo) {
-    global $jsonPrimary, $jsonSecondary;
+    global $activeStorage, $projectRoot;
 
     $stmt = $pdo->query("SELECT COUNT(*) as cnt FROM master_items");
     $cnt = (int)$stmt->fetchColumn();
 
     if ($cnt === 0) {
-        $jsonFile = file_exists($jsonPrimary) ? $jsonPrimary : (file_exists($jsonSecondary) ? $jsonSecondary : null);
-        if ($jsonFile) {
-            $raw = @file_get_contents($jsonFile);
-            if ($raw) {
-                $decoded = json_decode($raw, true);
-                if (is_array($decoded)) {
-                    saveAllToDatabase($pdo, $decoded);
+        // Search candidates: backup files first, then json files
+        $candidates = [
+            $projectRoot . '/api/data/backups/backup-2026-10-06.json',
+            $projectRoot . '/api/data/tasty_database.json',
+            $activeStorage . '/tasty_database.json',
+            __DIR__ . '/data/backups/backup-2026-10-06.json',
+            __DIR__ . '/data/tasty_database.json',
+            __DIR__ . '/tasty_database.json',
+        ];
+
+        foreach ($candidates as $candidate) {
+            if (file_exists($candidate)) {
+                $raw = @file_get_contents($candidate);
+                if ($raw) {
+                    $decoded = json_decode($raw, true);
+                    if (is_array($decoded) && isset($decoded['masterItems']) && count($decoded['masterItems']) > 0) {
+                        saveAllToDatabase($pdo, $decoded);
+                        break;
+                    }
                 }
             }
         }
@@ -563,6 +580,7 @@ if ($dbInfo !== null) {
             'status' => 'success',
             'engine' => 'sqlite',
             'lastUpdated' => date('c'),
+            'storage' => basename(dirname($dbInfo['file'])),
             'data' => $allData
         ], JSON_UNESCAPED_UNICODE);
         exit;
@@ -627,6 +645,7 @@ if ($method === 'POST') {
         $targets = [
             $jsonPrimary,
             $jsonSecondary,
+            $activeStorage . '/tasty_database.json',
             __DIR__ . '/tasty_database.json',
             sys_get_temp_dir() . '/tasty_database.json'
         ];
@@ -647,7 +666,7 @@ if ($method === 'POST') {
             http_response_code(500);
             echo json_encode([
                 'status' => 'error',
-                'message' => 'Permission denied: server cannot write to files. Please run: chmod -R 777 /var/www/tasty'
+                'message' => 'Permission denied: server cannot write to files.'
             ]);
             exit;
         }

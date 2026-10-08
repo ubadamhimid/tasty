@@ -12,6 +12,16 @@ dist
 dist-ssr
 *.local
 
+# Database and persistent storage (CRITICAL: must NEVER be overwritten by git pull!)
+storage/
+*.sqlite
+*.sqlite*
+api/data/tasty.sqlite
+public/api/data/tasty.sqlite
+api/data/tasty_database.json
+public/api/data/tasty_database.json
+public/api/tasty_database.json
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
