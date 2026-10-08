@@ -327,51 +327,40 @@ foreach ($employees as $e) {
     </div>
   <?php endif; ?>
 
-  <!-- 2. Compact Metrics Bar -->
-  <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
-    <!-- Metric 1: Total Earned This Month -->
-    <div class="bg-white p-3.5 rounded-2xl border border-gray-200/80 shadow-2xs flex items-center justify-between">
-      <div>
-        <span class="text-[11px] font-bold text-gray-500 block">أجور شهر <?= date('m / Y') ?></span>
-        <div dir="ltr" class="flex items-baseline gap-1 mt-0.5">
-          <span class="text-xs font-bold text-gray-400">€</span>
-          <span class="text-xl sm:text-2xl font-black font-sans text-tasty-charcoal"><?= number_format($totalEarnedMonth, 2) ?></span>
+  <!-- 2. Compact Metrics Bar (Consolidated 3-Column Strip on Mobile & Desktop) -->
+  <div class="bg-white p-3 sm:p-4 rounded-2xl border border-gray-200/80 shadow-2xs">
+    <div class="grid grid-cols-3 divide-x divide-x-reverse divide-gray-100 text-center">
+      
+      <!-- Metric 1: Total Earned This Month -->
+      <div class="px-1 sm:px-3">
+        <span class="text-[10px] sm:text-xs font-bold text-gray-500 block truncate">أجور الشهر</span>
+        <div dir="ltr" class="flex items-baseline justify-center gap-0.5 sm:gap-1 mt-0.5">
+          <span class="text-[10px] sm:text-xs font-bold text-gray-400">€</span>
+          <span class="text-sm sm:text-2xl font-black font-sans text-tasty-charcoal"><?= number_format($totalEarnedMonth, 2) ?></span>
         </div>
-        <span class="text-[10px] text-gray-400 block mt-0.5"><?= number_format($totalHoursMonth, 1) ?> ساعة مسجلة</span>
+        <span class="text-[10px] text-gray-400 hidden sm:block mt-0.5"><?= number_format($totalHoursMonth, 1) ?> ساعة مسجلة</span>
       </div>
-      <div class="w-10 h-10 rounded-xl bg-tasty-teal-light text-tasty-teal-dark flex items-center justify-center font-bold">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      </div>
-    </div>
 
-    <!-- Metric 2: Pending Wages -->
-    <div class="bg-white p-3.5 rounded-2xl border border-gray-200/80 shadow-2xs flex items-center justify-between">
-      <div>
-        <span class="text-[11px] font-bold text-gray-500 block">مستحقات معلقة (مطلوب صرفها)</span>
-        <div dir="ltr" class="flex items-baseline gap-1 mt-0.5">
-          <span class="text-xs font-bold text-tasty-terracotta-dark">€</span>
-          <span class="text-xl sm:text-2xl font-black font-sans text-tasty-terracotta-dark"><?= number_format($unpaidWagesTotal, 2) ?></span>
+      <!-- Metric 2: Pending Wages -->
+      <div class="px-1 sm:px-3">
+        <span class="text-[10px] sm:text-xs font-bold text-tasty-terracotta-dark block truncate">معلقة للصرف</span>
+        <div dir="ltr" class="flex items-baseline justify-center gap-0.5 sm:gap-1 mt-0.5">
+          <span class="text-[10px] sm:text-xs font-bold text-tasty-terracotta-dark">€</span>
+          <span class="text-sm sm:text-2xl font-black font-sans text-tasty-terracotta-dark"><?= number_format($unpaidWagesTotal, 2) ?></span>
         </div>
-        <span class="text-[10px] text-gray-400 block mt-0.5">ورديات لم تسلم رواتبها بعد</span>
+        <span class="text-[10px] text-gray-400 hidden sm:block mt-0.5">ورديات لم تسلم رواتبها</span>
       </div>
-      <div class="w-10 h-10 rounded-xl bg-tasty-terracotta-light text-tasty-terracotta-dark flex items-center justify-center font-bold">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      </div>
-    </div>
 
-    <!-- Metric 3: Cash Advances -->
-    <div class="bg-white p-3.5 rounded-2xl border border-gray-200/80 shadow-2xs flex items-center justify-between">
-      <div>
-        <span class="text-[11px] font-bold text-gray-500 block">سلف مسحوبة هذا الشهر</span>
-        <div dir="ltr" class="flex items-baseline gap-1 mt-0.5">
-          <span class="text-xs font-bold text-tasty-teal">€</span>
-          <span class="text-xl sm:text-2xl font-black font-sans text-tasty-teal-dark"><?= number_format($totalAdvancesMonth, 2) ?></span>
+      <!-- Metric 3: Cash Advances -->
+      <div class="px-1 sm:px-3">
+        <span class="text-[10px] sm:text-xs font-bold text-tasty-teal-dark block truncate">سلف مسحوبة</span>
+        <div dir="ltr" class="flex items-baseline justify-center gap-0.5 sm:gap-1 mt-0.5">
+          <span class="text-[10px] sm:text-xs font-bold text-tasty-teal">€</span>
+          <span class="text-sm sm:text-2xl font-black font-sans text-tasty-teal-dark"><?= number_format($totalAdvancesMonth, 2) ?></span>
         </div>
-        <span class="text-[10px] text-gray-400 block mt-0.5">مخصومة من رواتب الموظفين</span>
+        <span class="text-[10px] text-gray-400 hidden sm:block mt-0.5">مخصومة من رواتب الموظفين</span>
       </div>
-      <div class="w-10 h-10 rounded-xl bg-tasty-sage-light text-tasty-charcoal flex items-center justify-center font-bold">
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-      </div>
+
     </div>
   </div>
 
@@ -819,19 +808,19 @@ foreach ($employees as $e) {
 </div>
 
 <!-- Modal 2: Log Shift (Manual Modal) -->
-<div id="shiftModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 hidden">
-  <div class="bg-white rounded-3xl p-6 sm:p-7 max-w-md w-full shadow-2xl space-y-4" onclick="event.stopPropagation()">
-    <div class="flex items-center justify-between pb-3 border-b border-gray-100">
-      <h3 class="text-base font-bold text-tasty-charcoal">تسجيل وردية عمل</h3>
+<div id="shiftModal" class="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-4 hidden">
+  <div class="bg-white rounded-3xl p-5 sm:p-6 max-w-md w-full shadow-2xl space-y-3 max-h-[92vh] overflow-y-auto" onclick="event.stopPropagation()">
+    <div class="flex items-center justify-between pb-2.5 border-b border-gray-100">
+      <h3 class="text-sm sm:text-base font-bold text-tasty-charcoal">تسجيل وردية عمل</h3>
       <button onclick="document.getElementById('shiftModal').classList.add('hidden')" class="p-1 text-gray-400 hover:text-gray-900">&times;</button>
     </div>
 
-    <form method="POST" action="" class="space-y-3.5">
+    <form method="POST" action="" class="space-y-3">
       <input type="hidden" name="action" value="save_shift">
 
       <div>
-        <label class="block text-xs font-bold text-gray-600 mb-1">الموظف *</label>
-        <select name="employee_id" id="shiftEmpSelect" onchange="onShiftEmpSelect(this)" required class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-sm font-bold focus:border-tasty-teal focus:bg-white focus:outline-none">
+        <label class="block text-[11px] font-bold text-gray-600 mb-1">الموظف *</label>
+        <select name="employee_id" id="shiftEmpSelect" onchange="onShiftEmpSelect(this)" required class="w-full px-3 py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs sm:text-sm font-bold focus:border-tasty-teal focus:bg-white focus:outline-none">
           <?php foreach ($employees as $e): ?>
             <option value="<?= $e['id'] ?>" data-rate="<?= $e['rate'] ?>" data-wtype="<?= $e['wage_type'] ?>" data-hours="<?= $e['default_hours'] ?>" data-start="<?= $e['default_start_time'] ?>" data-end="<?= $e['default_end_time'] ?>">
               <?= htmlspecialchars($e['name']) ?> (<?= $e['wage_type'] === 'daily' ? '€' . $e['rate'] . '/يوم' : '€' . $e['rate'] . '/س' ?>)
@@ -840,53 +829,53 @@ foreach ($employees as $e) {
         </select>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-2 sm:gap-3">
         <div>
-          <label class="block text-xs font-bold text-gray-600 mb-1">التاريخ *</label>
-          <input type="date" name="shift_date" value="<?= date('Y-m-d') ?>" required class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none">
+          <label class="block text-[11px] font-bold text-gray-600 mb-1">التاريخ *</label>
+          <input type="date" name="shift_date" value="<?= date('Y-m-d') ?>" required class="w-full px-2.5 py-1.5 sm:py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none">
         </div>
         <div>
-          <label class="block text-xs font-bold text-gray-600 mb-1">الساعات الصافية *</label>
-          <input type="number" step="0.5" min="0.5" name="total_hours" id="shiftInputHours" value="8" required class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none dir-ltr text-right">
-        </div>
-      </div>
-
-      <div class="grid grid-cols-2 gap-3">
-        <div>
-          <label class="block text-xs font-bold text-gray-600 mb-1">بداية الدوام</label>
-          <input type="time" name="start_time" id="shiftInputStart" value="10:00" class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-2xl text-xs focus:border-tasty-teal focus:bg-white focus:outline-none">
-        </div>
-        <div>
-          <label class="block text-xs font-bold text-gray-600 mb-1">نهاية الدوام</label>
-          <input type="time" name="end_time" id="shiftInputEnd" value="18:00" class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-2xl text-xs focus:border-tasty-teal focus:bg-white focus:outline-none">
+          <label class="block text-[11px] font-bold text-gray-600 mb-1">الساعات *</label>
+          <input type="number" step="0.5" min="0.5" name="total_hours" id="shiftInputHours" value="8" required class="w-full px-2.5 py-1.5 sm:py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none dir-ltr text-right">
         </div>
       </div>
 
-      <div class="grid grid-cols-2 gap-3">
+      <div class="grid grid-cols-2 gap-2 sm:gap-3">
         <div>
-          <label class="block text-xs font-bold text-gray-600 mb-1">أجر الساعة/اليوم (€)</label>
-          <input type="number" step="0.5" name="hourly_rate" id="shiftInputRate" value="13.5" class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none dir-ltr text-right">
+          <label class="block text-[11px] font-bold text-gray-600 mb-1">بداية الدوام</label>
+          <input type="time" name="start_time" id="shiftInputStart" value="10:00" class="w-full px-2.5 py-1.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:border-tasty-teal focus:bg-white focus:outline-none">
         </div>
         <div>
-          <label class="block text-xs font-bold text-gray-600 mb-1">حالة الدفع</label>
-          <select name="payment_status" class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-2xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none">
-            <option value="unpaid">مستحق معلق (يُحاسب لاحقاً)</option>
-            <option value="paid_cash">تم التسليم كاش فوراً</option>
-            <option value="paid_bank">تم التحويل بنكياً</option>
+          <label class="block text-[11px] font-bold text-gray-600 mb-1">نهاية الدوام</label>
+          <input type="time" name="end_time" id="shiftInputEnd" value="18:00" class="w-full px-2.5 py-1.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:border-tasty-teal focus:bg-white focus:outline-none">
+        </div>
+      </div>
+
+      <div class="grid grid-cols-2 gap-2 sm:gap-3">
+        <div>
+          <label class="block text-[11px] font-bold text-gray-600 mb-1">الأجر (€)</label>
+          <input type="number" step="0.5" name="hourly_rate" id="shiftInputRate" value="13.5" class="w-full px-2.5 py-1.5 sm:py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none dir-ltr text-right">
+        </div>
+        <div>
+          <label class="block text-[11px] font-bold text-gray-600 mb-1">حالة الدفع</label>
+          <select name="payment_status" class="w-full px-2 py-1.5 sm:py-2 bg-gray-50 border border-gray-200 rounded-xl text-xs font-bold focus:border-tasty-teal focus:bg-white focus:outline-none">
+            <option value="unpaid">مستحق معلق</option>
+            <option value="paid_cash">مسدد كاش</option>
+            <option value="paid_bank">مسدد بنك</option>
           </select>
         </div>
       </div>
 
       <div>
-        <label class="block text-xs font-bold text-gray-600 mb-1">ملاحظة</label>
-        <input type="text" name="notes" placeholder="عمل إضافي، دوام عطلة..." class="w-full px-3.5 py-2 bg-gray-50 border border-gray-200 rounded-2xl text-xs focus:border-tasty-teal focus:bg-white focus:outline-none">
+        <label class="block text-[11px] font-bold text-gray-600 mb-1">ملاحظة</label>
+        <input type="text" name="notes" placeholder="ملاحظة سريعة..." class="w-full px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-xl text-xs focus:border-tasty-teal focus:bg-white focus:outline-none">
       </div>
 
-      <div class="pt-3 flex gap-2">
-        <button type="submit" class="flex-1 py-3 bg-tasty-teal hover:bg-tasty-teal-dark text-white font-bold rounded-2xl text-xs transition-all shadow-md">
+      <div class="pt-2 flex gap-2">
+        <button type="submit" class="flex-1 py-2.5 bg-tasty-teal hover:bg-tasty-teal-dark text-white font-bold rounded-xl text-xs transition-all shadow-sm">
           تسجيل الوردية
         </button>
-        <button type="button" onclick="document.getElementById('shiftModal').classList.add('hidden')" class="px-5 py-3 border border-gray-200 text-gray-600 rounded-2xl font-bold text-xs hover:bg-gray-50">
+        <button type="button" onclick="document.getElementById('shiftModal').classList.add('hidden')" class="px-4 py-2.5 border border-gray-200 text-gray-600 rounded-xl font-bold text-xs hover:bg-gray-50">
           إلغاء
         </button>
       </div>
