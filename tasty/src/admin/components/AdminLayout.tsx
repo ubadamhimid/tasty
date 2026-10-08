@@ -15,18 +15,28 @@ import {
   Menu,
   X,
   Sparkles,
-  Crown
+  Crown,
+  RefreshCw
 } from 'lucide-react';
 
 export const AdminLayout: React.FC = () => {
   const { logout, user, isAdmin } = useAdminAuth();
   const [isBackupOpen, setIsBackupOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [syncInfo, setSyncInfo] = useState(StorageService.getSyncInfo());
+  const [isManualSyncing, setIsManualSyncing] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
   useEffect(() => {
     StorageService.initServerSync();
+
+    const updateSyncStatus = () => {
+      setSyncInfo(StorageService.getSyncInfo());
+    };
+
+    const unsubscribe = StorageService.subscribe(updateSyncStatus);
+    updateSyncStatus();
 
     const handleFocus = () => {
       if (document.visibilityState === 'visible') {
@@ -36,18 +46,27 @@ export const AdminLayout: React.FC = () => {
     document.addEventListener('visibilitychange', handleFocus);
     window.addEventListener('focus', handleFocus);
 
+    // Live continuous sync every 8 seconds so phones and laptops see changes instantly
     const interval = setInterval(() => {
       if (document.visibilityState === 'visible') {
         StorageService.initServerSync();
       }
-    }, 30000);
+    }, 8000);
 
     return () => {
+      unsubscribe();
       document.removeEventListener('visibilitychange', handleFocus);
       window.removeEventListener('focus', handleFocus);
       clearInterval(interval);
     };
   }, []);
+
+  const handleManualSync = async () => {
+    setIsManualSyncing(true);
+    await StorageService.initServerSync();
+    setSyncInfo(StorageService.getSyncInfo());
+    setIsManualSyncing(false);
+  };
 
   const handleLogout = () => {
     if (window.confirm('هل تود تسجيل الخروج من لوحة التحكم؟')) {
@@ -131,8 +150,51 @@ export const AdminLayout: React.FC = () => {
             </NavLink>
           </div>
 
-          {/* User Role Badge & Logout Button */}
+          {/* Live Server Sync Badge, Role & Logout */}
           <div className="flex items-center gap-2 shrink-0">
+            {/* Realtime Server Indicator Badge */}
+            <div 
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                syncInfo.status === 'synced'
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-300 shadow-2xs'
+                  : syncInfo.status === 'syncing'
+                  ? 'bg-blue-50 text-blue-700 border-blue-200 animate-pulse'
+                  : 'bg-amber-50 text-amber-800 border-amber-300 shadow-2xs'
+              }`}
+              title={
+                syncInfo.status === 'synced'
+                  ? `متصل ومحدث بالسيرفر المركزي (${syncInfo.lastSyncedTime || 'الآن'})`
+                  : syncInfo.status === 'syncing'
+                  ? 'جاري مزامنة أحدث البيانات من السيرفر...'
+                  : 'جاري محاولة الاتصال بالسيرفر المركزي'
+              }
+            >
+              <span className={`w-2 h-2 rounded-full shrink-0 ${
+                syncInfo.status === 'synced'
+                  ? 'bg-emerald-500 ring-2 ring-emerald-300'
+                  : syncInfo.status === 'syncing'
+                  ? 'bg-blue-500 animate-ping'
+                  : 'bg-amber-500 ring-2 ring-amber-300'
+              }`} />
+              <span className="hidden sm:inline">
+                {syncInfo.status === 'synced'
+                  ? 'سيرفر موحد'
+                  : syncInfo.status === 'syncing'
+                  ? 'مزامنة...'
+                  : 'مزامنة محلية'}
+              </span>
+              <button
+                type="button"
+                onClick={handleManualSync}
+                disabled={isManualSyncing}
+                className="p-1 hover:bg-black/5 rounded-md transition-transform active:scale-90 text-inherit"
+                title="تحديث البيانات فوراً من السيرفر"
+                aria-label="تحديث من السيرفر"
+              >
+                <RefreshCw className={`w-3.5 h-3.5 ${isManualSyncing ? 'animate-spin' : ''}`} />
+              </button>
+            </div>
+
             {isAdmin && (
               <span className="hidden md:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-50 text-amber-900 border border-amber-300 text-xs font-bold shadow-2xs whitespace-nowrap">
                 <Crown className="w-3.5 h-3.5 text-amber-600" />

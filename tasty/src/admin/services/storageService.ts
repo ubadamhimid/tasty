@@ -815,7 +815,15 @@ async function fetchFromServer(): Promise<any | null> {
   ];
   for (const url of endpoints) {
     try {
-      const res = await fetch(url, { method: 'GET' });
+      const fullUrl = `${url}?_t=${Date.now()}`;
+      const res = await fetch(fullUrl, {
+        method: 'GET',
+        cache: 'no-store',
+        headers: {
+          'Cache-Control': 'no-cache, no-store, must-revalidate',
+          'Pragma': 'no-cache',
+        },
+      });
       if (res.ok) {
         const json = await res.json();
         if (json.status === 'success' && json.data) {
@@ -926,6 +934,7 @@ export const StorageService = {
     if (ok) {
       currentSyncStatus = 'synced';
       lastSyncedTime = new Date().toLocaleTimeString('ar-NL', { hour: '2-digit', minute: '2-digit' });
+      lastLocalMutationTime = 0;
     } else {
       currentSyncStatus = 'local_only';
     }
