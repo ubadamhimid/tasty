@@ -22,6 +22,9 @@ api/data/tasty_database.json
 public/api/data/tasty_database.json
 public/api/tasty_database.json
 
+# Local duplicate images directory (public/images is tracked in git)
+images/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json

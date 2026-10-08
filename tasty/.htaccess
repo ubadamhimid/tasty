@@ -1,0 +1,15 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Security: Deny direct web access to sqlite database and storage directory
+    RewriteRule ^storage/.*$ - [F,L]
+    RewriteRule \.sqlite.*$ - [F,L]
+    RewriteRule \.env$ - [F,L]
+
+    # Map /images/* to /public/images/* if not directly found
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^images/(.*)$ public/images/$1 [L]
+</IfModule>
+
+# Security: Prevent directory indexes
+Options -Indexes
