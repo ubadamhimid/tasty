@@ -74,11 +74,18 @@ $dbDriver = strtoupper($db->getAttribute(PDO::ATTR_DRIVER_NAME));
           colors: {
             tasty: {
               teal: '#5E9895',
-              'teal-dark': '#2B3A39',
-              'teal-light': '#EBF3F2',
-              gold: '#D48B38',
+              'teal-dark': '#3D6C6A',
+              'teal-light': '#E9F3F2',
+              sage: '#9DBEBB',
+              'sage-light': '#F0F6F5',
+              terracotta: '#E29578',
+              'terracotta-dark': '#C87455',
+              'terracotta-light': '#FBF0EB',
               charcoal: '#2B3A39',
-              'bg-warm': '#FBF9F5',
+              'charcoal-muted': '#556866',
+              bg: '#FFFDF9',
+              'bg-warm': '#FAF7F2',
+              card: '#FFFFFF',
             }
           },
           fontFamily: {

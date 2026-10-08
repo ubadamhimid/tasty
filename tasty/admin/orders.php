@@ -115,24 +115,25 @@ $masterItems = $db->query("SELECT * FROM master_items WHERE is_active = 1 ORDER 
 <div class="space-y-6">
 
   <!-- Header Banner -->
-  <div class="bg-gradient-to-l from-tasty-teal-dark via-[#354D4B] to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <div>
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-tasty-teal-light text-xs font-bold mb-3 border border-white/15">
+  <div class="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="absolute -left-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-tasty-teal-light text-xs font-bold mb-3 border border-white/20 backdrop-blur-md">
         <span>المشتريات والمخزون</span>
       </div>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">طلبيات الشراء وتجهيز المستودع</h1>
+      <h1 class="font-serif font-black text-2xl sm:text-3xl tracking-tight text-white">طلبيات الشراء وتجهيز المستودع</h1>
       <p class="text-tasty-teal-light/90 text-sm mt-1 max-w-xl leading-relaxed">
         تنسيق قوائم التسوق والمشتريات من ملحمة اللحوم والمخابز وموردي الخضار والزيوت.
       </p>
     </div>
 
     <!-- Quick Action Buttons -->
-    <div class="flex items-center gap-2 shrink-0">
+    <div class="flex items-center gap-2 shrink-0 relative z-10">
       <button onclick="document.getElementById('newOrderModal').classList.remove('hidden')" class="px-4 py-2.5 rounded-2xl bg-white text-tasty-teal-dark font-bold text-xs hover:bg-tasty-teal-light shadow-md transition-all active:scale-95 flex items-center gap-1.5">
         <svg class="w-4 h-4 text-tasty-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         <span>إنشاء طلبية شراء</span>
       </button>
-      <button onclick="document.getElementById('addItemModal').classList.remove('hidden')" class="px-4 py-2.5 rounded-2xl bg-tasty-teal text-white font-bold text-xs hover:brightness-110 shadow-md transition-all active:scale-95 flex items-center gap-1.5 border border-white/20">
+      <button onclick="document.getElementById('addItemModal').classList.remove('hidden')" class="px-4 py-2.5 rounded-2xl bg-tasty-terracotta text-white font-bold text-xs hover:bg-tasty-terracotta-dark shadow-md transition-all active:scale-95 flex items-center gap-1.5">
         <span>+ مادة للمستودع</span>
       </button>
     </div>

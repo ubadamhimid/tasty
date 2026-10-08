@@ -112,23 +112,24 @@ $netBalance = $totalReceivable - $totalPayable;
 <div class="space-y-6">
 
   <!-- Header Banner -->
-  <div class="bg-gradient-to-l from-tasty-teal-dark via-[#354D4B] to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <div>
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-tasty-teal-light text-xs font-bold mb-3 border border-white/15">
+  <div class="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="absolute -left-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-tasty-teal-light text-xs font-bold mb-3 border border-white/20 backdrop-blur-md">
         <span>الذمم والالتزامات المالية</span>
         <span>•</span>
-        <span class="text-amber-300 font-bold">خاص بالإدارة العليا (Admin)</span>
+        <span class="text-tasty-terracotta-light font-bold">خاص بالإدارة العليا (Admin)</span>
       </div>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">سجل الديون والمدفوعات (موردين وزبائن)</h1>
+      <h1 class="font-serif font-black text-2xl sm:text-3xl tracking-tight text-white">سجل الديون والمدفوعات (موردين وزبائن)</h1>
       <p class="text-tasty-teal-light/90 text-sm mt-1 max-w-xl leading-relaxed">
         متابعة الديون المستحقة علينا للموردين، والديون المستحقة لنا على الزبائن وتسجيل الدفعات الجزئية.
       </p>
     </div>
 
     <!-- Quick Button -->
-    <div class="shrink-0">
-      <button onclick="document.getElementById('newDebtModal').classList.remove('hidden')" class="px-5 py-3 rounded-2xl bg-white text-tasty-teal-dark font-bold text-xs hover:bg-tasty-teal-light shadow-md transition-all active:scale-95 flex items-center gap-2">
-        <svg class="w-4 h-4 text-tasty-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+    <div class="shrink-0 relative z-10">
+      <button onclick="document.getElementById('newDebtModal').classList.remove('hidden')" class="px-5 py-3 rounded-2xl bg-tasty-terracotta text-white font-bold text-xs hover:bg-tasty-terracotta-dark shadow-md transition-all active:scale-95 flex items-center gap-2">
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         <span>إضافة قيد دين جديد</span>
       </button>
     </div>
@@ -142,9 +143,9 @@ $netBalance = $totalReceivable - $totalPayable;
     </div>
   <?php endif; ?>
   <?php if (!empty($error)): ?>
-    <div class="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs font-bold flex items-center justify-between">
+    <div class="p-4 rounded-2xl bg-tasty-terracotta-light border border-tasty-terracotta/40 text-tasty-terracotta-dark text-xs font-bold flex items-center justify-between">
       <span><?= htmlspecialchars($error) ?></span>
-      <button onclick="this.parentElement.remove();" class="text-red-600">&times;</button>
+      <button onclick="this.parentElement.remove();" class="text-tasty-terracotta-dark">&times;</button>
     </div>
   <?php endif; ?>
 
@@ -152,42 +153,56 @@ $netBalance = $totalReceivable - $totalPayable;
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     
     <!-- Payable to Suppliers (علينا) -->
-    <div class="bg-white p-5 rounded-3xl border border-red-100 shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-red-600 mb-2">
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between text-xs font-bold text-tasty-charcoal mb-3">
         <span>ديون علينا للموردين (Payable)</span>
-        <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-700 text-[10px]">مطلوب سداده</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 text-[10px] font-bold">مطلوب سداده</span>
       </div>
-      <div class="text-2xl sm:text-3xl font-bold text-red-600 dir-ltr text-right">
-        €<?= number_format($totalPayable, 2) ?>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-tasty-terracotta-dark font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-charcoal tabular-nums">
+          <?= number_format($totalPayable, 2) ?>
+        </span>
       </div>
-      <div class="text-[11px] text-gray-400 mt-2 flex justify-between">
-        <span>تم سداده: €<?= number_format($paidPayable, 2) ?></span>
+      <div class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100 flex justify-between">
+        <span>تم سداده:</span>
+        <span class="font-bold text-tasty-teal-dark font-sans" dir="ltr">€<?= number_format($paidPayable, 2) ?></span>
       </div>
     </div>
 
     <!-- Receivable from Customers (لنا) -->
-    <div class="bg-white p-5 rounded-3xl border border-blue-100 shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-blue-600 mb-2">
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between text-xs font-bold text-tasty-charcoal mb-3">
         <span>ديون لنا على الزبائن (Receivable)</span>
-        <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 text-[10px]">مطلوب تحصيله</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 text-[10px] font-bold">مطلوب تحصيله</span>
       </div>
-      <div class="text-2xl sm:text-3xl font-bold text-blue-600 dir-ltr text-right">
-        €<?= number_format($totalReceivable, 2) ?>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-tasty-teal font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-charcoal tabular-nums">
+          <?= number_format($totalReceivable, 2) ?>
+        </span>
       </div>
-      <div class="text-[11px] text-gray-400 mt-2 flex justify-between">
-        <span>تم تحصيله: €<?= number_format($paidReceivable, 2) ?></span>
+      <div class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100 flex justify-between">
+        <span>تم تحصيله:</span>
+        <span class="font-bold text-tasty-teal-dark font-sans" dir="ltr">€<?= number_format($paidReceivable, 2) ?></span>
       </div>
     </div>
 
     <!-- Net Balance (الصافي) -->
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs font-bold text-gray-500 mb-2">
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between text-xs font-bold text-tasty-charcoal mb-3">
         <span>صافي الميزان (لنا - علينا)</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-tasty-sage-light text-tasty-charcoal border border-tasty-sage/30 text-[10px] font-bold">الرصيد الصافي</span>
       </div>
-      <div class="text-2xl sm:text-3xl font-bold <?= $netBalance >= 0 ? 'text-emerald-700' : 'text-red-700' ?> dir-ltr text-right">
-        <?= $netBalance >= 0 ? '+' : '' ?>€<?= number_format($netBalance, 2) ?>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold font-sans <?= $netBalance < 0 ? 'text-tasty-terracotta-dark' : 'text-tasty-teal' ?>">
+          <?= $netBalance < 0 ? '-€' : ($netBalance > 0 ? '+€' : '€') ?>
+        </span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight tabular-nums <?= $netBalance < 0 ? 'text-tasty-terracotta-dark' : 'text-tasty-teal-dark' ?>">
+          <?= number_format(abs($netBalance), 2) ?>
+        </span>
       </div>
-      <p class="text-[11px] text-gray-400 mt-2">
+      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">
         <?= $netBalance >= 0 ? 'الديون المطلوب تحصيلها تغطي التزامات الموردين' : 'التزامات الموردين تفوق مستحقات الزبائن' ?>
       </p>
     </div>
@@ -232,22 +247,22 @@ $netBalance = $totalReceivable - $totalPayable;
                 </td>
                 <td class="p-4 whitespace-nowrap">
                   <?php if ($d['type'] === 'payable'): ?>
-                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 text-[10px] font-bold">دين علينا</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 text-[10px] font-bold">دين علينا</span>
                   <?php else: ?>
-                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold">دين لنا</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 text-[10px] font-bold">دين لنا</span>
                   <?php endif; ?>
                 </td>
                 <td class="p-4 whitespace-nowrap dir-ltr text-right text-gray-500"><?= htmlspecialchars($d['phone'] ?: '—') ?></td>
                 <td class="p-4 font-bold text-gray-700 dir-ltr text-right whitespace-nowrap">€<?= number_format($d['total_amount'], 2) ?></td>
-                <td class="p-4 text-emerald-700 font-bold dir-ltr text-right whitespace-nowrap">€<?= number_format($d['paid_amount'], 2) ?></td>
-                <td class="p-4 text-red-600 font-bold text-sm dir-ltr text-right whitespace-nowrap">€<?= number_format($d['remaining_amount'], 2) ?></td>
+                <td class="p-4 text-tasty-teal-dark font-bold dir-ltr text-right whitespace-nowrap">€<?= number_format($d['paid_amount'], 2) ?></td>
+                <td class="p-4 text-tasty-terracotta-dark font-bold text-sm dir-ltr text-right whitespace-nowrap">€<?= number_format($d['remaining_amount'], 2) ?></td>
                 <td class="p-4 whitespace-nowrap">
                   <?php if ($d['status'] === 'fully_paid'): ?>
-                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">مسدد بالكامل</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark font-bold text-[10px]">مسدد بالكامل</span>
                   <?php elseif ($d['status'] === 'partially_paid'): ?>
-                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">مسدد جزئياً</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 font-bold text-[10px]">مسدد جزئياً</span>
                   <?php else: ?>
-                    <span class="px-2 py-0.5 rounded-full bg-red-100 text-red-800 font-bold text-[10px]">غير مسدد</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark font-bold text-[10px]">غير مسدد</span>
                   <?php endif; ?>
                 </td>
                 <td class="p-4 text-center whitespace-nowrap">
@@ -255,7 +270,7 @@ $netBalance = $totalReceivable - $totalPayable;
                     <?php if ($d['remaining_amount'] > 0): ?>
                       <button 
                         onclick='openPaymentModal("<?= $d['id'] ?>", "<?= addslashes($d['party_name']) ?>", <?= $d['remaining_amount'] ?>)'
-                        class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl font-bold text-[11px] transition-colors"
+                        class="px-2.5 py-1 bg-tasty-teal hover:bg-tasty-teal-dark text-white rounded-xl font-bold text-[11px] transition-colors shadow-2xs"
                       >
                         تسجيل دفعة
                       </button>

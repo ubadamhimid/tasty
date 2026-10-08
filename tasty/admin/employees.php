@@ -159,24 +159,25 @@ foreach ($advances as $a) {
 <div class="space-y-6">
 
   <!-- Header Banner -->
-  <div class="bg-gradient-to-l from-tasty-teal-dark via-[#354D4B] to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-    <div>
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-tasty-teal-light text-xs font-bold mb-3 border border-white/15">
+  <div class="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div class="absolute -left-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="relative z-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-tasty-teal-light text-xs font-bold mb-3 border border-white/20 backdrop-blur-md">
         <span>كادر العمل والورديات</span>
       </div>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">إدارة الموظفين والورديات والأجور</h1>
+      <h1 class="font-serif font-black text-2xl sm:text-3xl tracking-tight text-white">إدارة الموظفين والورديات والأجور</h1>
       <p class="text-tasty-teal-light/90 text-sm mt-1 max-w-xl leading-relaxed">
         تسجيل ساعات العمل اليومية، حساب مستحقات الكوادر، والسلف المسحوبة من الكاش.
       </p>
     </div>
 
     <!-- Quick Buttons -->
-    <div class="flex items-center gap-2 shrink-0">
+    <div class="flex items-center gap-2 shrink-0 relative z-10">
       <button onclick="document.getElementById('newShiftModal').classList.remove('hidden')" class="px-4 py-2.5 rounded-2xl bg-white text-tasty-teal-dark font-bold text-xs hover:bg-tasty-teal-light shadow-md transition-all active:scale-95 flex items-center gap-1.5">
         <svg class="w-4 h-4 text-tasty-teal" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
         <span>تسجيل وردية</span>
       </button>
-      <button onclick="document.getElementById('newEmpModal').classList.remove('hidden')" class="px-4 py-2.5 rounded-2xl bg-tasty-gold text-white font-bold text-xs hover:brightness-110 shadow-md transition-all active:scale-95 flex items-center gap-1.5">
+      <button onclick="document.getElementById('newEmpModal').classList.remove('hidden')" class="px-4 py-2.5 rounded-2xl bg-tasty-terracotta text-white font-bold text-xs hover:bg-tasty-terracotta-dark shadow-md transition-all active:scale-95 flex items-center gap-1.5">
         <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z"/></svg>
         <span>موظف جديد</span>
       </button>
@@ -191,36 +192,54 @@ foreach ($advances as $a) {
     </div>
   <?php endif; ?>
   <?php if (!empty($error)): ?>
-    <div class="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs font-bold flex items-center justify-between">
+    <div class="p-4 rounded-2xl bg-tasty-terracotta-light border border-tasty-terracotta/40 text-tasty-terracotta-dark text-xs font-bold flex items-center justify-between">
       <span><?= htmlspecialchars($error) ?></span>
-      <button onclick="this.parentElement.remove();" class="text-red-600">&times;</button>
+      <button onclick="this.parentElement.remove();" class="text-tasty-terracotta-dark">&times;</button>
     </div>
   <?php endif; ?>
 
   <!-- Summary KPI Cards -->
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs">
-      <span class="text-xs text-gray-400 font-bold">أجور شهر <?= date('m / Y') ?></span>
-      <div class="text-2xl sm:text-3xl font-bold text-tasty-charcoal mt-1">
-        €<?= number_format($totalEarnedMonth, 2) ?>
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs text-tasty-charcoal font-bold">أجور شهر <?= date('m / Y') ?></span>
+        <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 text-[10px] font-bold">إجمالي الأجور</span>
       </div>
-      <p class="text-[11px] text-gray-400 mt-2">إجمالي (<?= number_format($totalHoursMonth, 1) ?>) ساعة عمل مسجلة</p>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-gray-400 font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-charcoal tabular-nums">
+          <?= number_format($totalEarnedMonth, 2) ?>
+        </span>
+      </div>
+      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">إجمالي (<?= number_format($totalHoursMonth, 1) ?>) ساعة عمل مسجلة</p>
     </div>
 
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs">
-      <span class="text-xs text-amber-700 font-bold">مستحقات معلقة (غير مسددة)</span>
-      <div class="text-2xl sm:text-3xl font-bold text-amber-600 mt-1">
-        €<?= number_format($unpaidWagesTotal, 2) ?>
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs text-tasty-charcoal font-bold">مستحقات معلقة (غير مسددة)</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 text-[10px] font-bold">مطلوب صرفها</span>
       </div>
-      <p class="text-[11px] text-gray-400 mt-2">ورديات مسجلة لم تسلم رواتبها بعد</p>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-tasty-terracotta-dark font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-terracotta-dark tabular-nums">
+          <?= number_format($unpaidWagesTotal, 2) ?>
+        </span>
+      </div>
+      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">ورديات مسجلة لم تسلم رواتبها بعد</p>
     </div>
 
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs">
-      <span class="text-xs text-emerald-700 font-bold">السلف المسحوبة هذا الشهر</span>
-      <div class="text-2xl sm:text-3xl font-bold text-emerald-700 mt-1">
-        €<?= number_format($totalAdvancesMonth, 2) ?>
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between mb-3">
+        <span class="text-xs text-tasty-charcoal font-bold">السلف المسحوبة هذا الشهر</span>
+        <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 text-[10px] font-bold">سلف نقدية</span>
       </div>
-      <p class="text-[11px] text-gray-400 mt-2">مخصومة من رواتب الموظفين القادمة</p>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-tasty-teal font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-teal-dark tabular-nums">
+          <?= number_format($totalAdvancesMonth, 2) ?>
+        </span>
+      </div>
+      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">مخصومة من رواتب الموظفين القادمة</p>
     </div>
   </div>
 
@@ -264,13 +283,13 @@ foreach ($advances as $a) {
           <div class="mt-5 pt-3 border-t border-gray-100 flex items-center justify-between gap-2">
             <button 
               onclick='openShiftModalFor("<?= $emp['id'] ?>", "<?= addslashes($emp['name']) ?>", <?= $emp['rate'] ?>, "<?= $emp['default_start_time'] ?>", "<?= $emp['default_end_time'] ?>", <?= $emp['default_break_minutes'] ?>)'
-              class="flex-1 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-xl font-bold text-xs transition-colors text-center"
+              class="flex-1 py-2 bg-tasty-teal-light hover:bg-tasty-teal hover:text-white text-tasty-teal-dark rounded-xl font-bold text-xs transition-all text-center shadow-2xs"
             >
               + وردية
             </button>
             <button 
               onclick='openAdvanceModalFor("<?= $emp['id'] ?>", "<?= addslashes($emp['name']) ?>")'
-              class="flex-1 py-2 bg-amber-50 hover:bg-amber-100 text-amber-700 rounded-xl font-bold text-xs transition-colors text-center"
+              class="flex-1 py-2 bg-tasty-terracotta-light hover:bg-tasty-terracotta hover:text-white text-tasty-terracotta-dark rounded-xl font-bold text-xs transition-all text-center shadow-2xs"
             >
               سلفة كاش
             </button>
@@ -330,11 +349,11 @@ foreach ($advances as $a) {
                 <td class="p-4 font-bold text-tasty-teal-dark dir-ltr text-right">€<?= number_format($s['total_earned'], 2) ?></td>
                 <td class="p-4 whitespace-nowrap">
                   <?php if ($s['payment_status'] === 'paid_cash'): ?>
-                    <span class="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 font-bold text-[10px]">مسدد كاش</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-teal-light text-tasty-teal-dark border border-tasty-teal/25 font-bold text-[10px]">مسدد كاش</span>
                   <?php elseif ($s['payment_status'] === 'paid_bank'): ?>
-                    <span class="px-2 py-0.5 rounded-full bg-blue-100 text-blue-800 font-bold text-[10px]">مسدد بنك</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-sage-light text-tasty-charcoal border border-tasty-sage/30 font-bold text-[10px]">مسدد بنك</span>
                   <?php else: ?>
-                    <span class="px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 font-bold text-[10px]">مستحق معلق</span>
+                    <span class="px-2.5 py-0.5 rounded-full bg-tasty-terracotta-light text-tasty-terracotta-dark border border-tasty-terracotta/25 font-bold text-[10px]">مستحق معلق</span>
                   <?php endif; ?>
                 </td>
                 <td class="p-4 text-center">
@@ -462,7 +481,7 @@ foreach ($advances as $a) {
       </div>
 
       <div class="pt-3 flex gap-2">
-        <button type="submit" class="flex-1 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-2xl text-xs transition-all shadow-md">
+        <button type="submit" class="flex-1 py-3 bg-tasty-teal hover:bg-tasty-teal-dark text-white font-bold rounded-2xl text-xs transition-all shadow-md">
           تسجيل الوردية
         </button>
         <button type="button" onclick="document.getElementById('newShiftModal').classList.add('hidden')" class="px-5 py-3 border border-gray-200 text-gray-600 rounded-2xl font-bold text-xs hover:bg-gray-50">
@@ -491,8 +510,8 @@ foreach ($advances as $a) {
       </div>
 
       <div>
-        <label class="block text-xs font-bold text-amber-700 mb-1">مبلغ السلفة (€) *</label>
-        <input type="number" step="1" min="1" name="amount" required placeholder="50" class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-base font-bold focus:border-amber-500 focus:bg-white focus:outline-none dir-ltr text-right">
+        <label class="block text-xs font-bold text-tasty-terracotta-dark mb-1">مبلغ السلفة (€) *</label>
+        <input type="number" step="1" min="1" name="amount" required placeholder="50" class="w-full px-3.5 py-2.5 bg-gray-50 border border-gray-200 rounded-2xl text-base font-bold focus:border-tasty-terracotta focus:bg-white focus:outline-none dir-ltr text-right">
       </div>
 
       <div>
@@ -501,7 +520,7 @@ foreach ($advances as $a) {
       </div>
 
       <div class="pt-3 flex gap-2">
-        <button type="submit" class="flex-1 py-3 bg-amber-600 hover:bg-amber-700 text-white font-bold rounded-2xl text-xs transition-all shadow-md">
+        <button type="submit" class="flex-1 py-3 bg-tasty-terracotta hover:bg-tasty-terracotta-dark text-white font-bold rounded-2xl text-xs transition-all shadow-md">
           صرف السلفة
         </button>
         <button type="button" onclick="document.getElementById('advanceModal').classList.add('hidden')" class="px-5 py-3 border border-gray-200 text-gray-600 rounded-2xl font-bold text-xs hover:bg-gray-50">

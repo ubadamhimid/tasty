@@ -86,14 +86,15 @@ foreach ($sales as $s) {
 <div class="space-y-6">
 
   <!-- Header Banner -->
-  <div class="bg-gradient-to-l from-tasty-teal-dark via-[#354D4B] to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-md relative overflow-hidden">
+  <div class="bg-gradient-to-l from-tasty-charcoal via-tasty-teal-dark to-tasty-teal text-white p-6 sm:p-8 rounded-3xl shadow-xl relative overflow-hidden">
+    <div class="absolute -left-12 -bottom-12 w-64 h-64 bg-white/10 rounded-full blur-3xl pointer-events-none"></div>
     <div class="relative z-10">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 text-tasty-teal-light text-xs font-bold mb-3 border border-white/15">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 text-tasty-teal-light text-xs font-bold mb-3 border border-white/20 backdrop-blur-md">
         <span>سجل المبيعات اليومية</span>
         <span>•</span>
         <span><?= date('l، j F Y') ?></span>
       </div>
-      <h1 class="text-2xl sm:text-3xl font-bold tracking-tight">إدارة وتوثيق مبيعات الصندوق والكاش</h1>
+      <h1 class="font-serif font-black text-2xl sm:text-3xl tracking-tight text-white">إدارة وتوثيق مبيعات الصندوق والكاش</h1>
       <p class="text-tasty-teal-light/90 text-sm mt-1 max-w-xl leading-relaxed">
         تسجيل إيرادات الكاش وماكينات الـ PIN بدقة، وتوزيع النسب المئوية ومراقبة حركة دخل المطعم.
       </p>
@@ -108,9 +109,9 @@ foreach ($sales as $s) {
     </div>
   <?php endif; ?>
   <?php if (!empty($error)): ?>
-    <div class="p-4 rounded-2xl bg-red-50 border border-red-200 text-red-800 text-xs font-bold flex items-center justify-between">
+    <div class="p-4 rounded-2xl bg-tasty-terracotta-light border border-tasty-terracotta/40 text-tasty-terracotta-dark text-xs font-bold flex items-center justify-between">
       <span><?= htmlspecialchars($error) ?></span>
-      <button onclick="this.parentElement.remove();" class="text-red-600">&times;</button>
+      <button onclick="this.parentElement.remove();" class="text-tasty-terracotta-dark">&times;</button>
     </div>
   <?php endif; ?>
 
@@ -118,50 +119,59 @@ foreach ($sales as $s) {
   <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
     
     <!-- Total Month -->
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs text-gray-400 font-bold mb-2">
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between text-xs text-tasty-charcoal font-bold mb-3">
         <span>مبيعات شهر <?= date('m / Y') ?></span>
         <span class="p-2 rounded-xl bg-tasty-teal-light text-tasty-teal-dark">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
         </span>
       </div>
-      <div class="text-2xl sm:text-3xl font-bold text-tasty-charcoal">
-        €<?= number_format($monthTotal, 2) ?>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-gray-400 font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-charcoal tabular-nums">
+          <?= number_format($monthTotal, 2) ?>
+        </span>
       </div>
-      <p class="text-[11px] text-gray-400 mt-2">إجمالي الدخل المحقق خلال هذا الشهر</p>
+      <p class="text-[11px] text-gray-400 mt-3 pt-2.5 border-t border-gray-100">إجمالي الدخل المحقق خلال هذا الشهر</p>
     </div>
 
     <!-- Cash Split -->
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs text-emerald-600 font-bold mb-2">
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between text-xs text-tasty-charcoal font-bold mb-3">
         <span>مقبوضات الكاش النقدية</span>
         <span class="p-2 rounded-xl bg-emerald-50 text-emerald-600">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9V7a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2m2 4h10a2 2 0 002-2v-6a2 2 0 00-2-2H9a2 2 0 00-2 2v6a2 2 0 002 2zm7-5a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
         </span>
       </div>
-      <div class="text-2xl sm:text-3xl font-bold text-emerald-700">
-        €<?= number_format($monthCash, 2) ?>
-        <span class="text-xs font-bold text-gray-400 mr-2">(<?= $monthCashPct ?>%)</span>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-emerald-600 font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-emerald-800 tabular-nums">
+          <?= number_format($monthCash, 2) ?>
+        </span>
+        <span class="text-xs font-bold text-gray-400 mr-2 font-sans">(<?= $monthCashPct ?>%)</span>
       </div>
       <div class="w-full bg-gray-100 rounded-full h-1.5 mt-3 overflow-hidden">
-        <div class="bg-emerald-500 h-1.5 rounded-full" style="width: <?= $monthCashPct ?>%"></div>
+        <div class="bg-emerald-500 h-1.5 rounded-full transition-all duration-500" style="width: <?= $monthCashPct ?>%"></div>
       </div>
     </div>
 
     <!-- PIN Card Split -->
-    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between">
-      <div class="flex items-center justify-between text-xs text-blue-600 font-bold mb-2">
+    <div class="bg-white p-5 rounded-3xl border border-gray-100 shadow-xs flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div class="flex items-center justify-between text-xs text-tasty-charcoal font-bold mb-3">
         <span>مدفوعات البطاقة والبنك (PIN)</span>
-        <span class="p-2 rounded-xl bg-blue-50 text-blue-600">
+        <span class="p-2 rounded-xl bg-tasty-teal-light text-tasty-teal-dark">
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z"/></svg>
         </span>
       </div>
-      <div class="text-2xl sm:text-3xl font-bold text-blue-700">
-        €<?= number_format($monthCard, 2) ?>
-        <span class="text-xs font-bold text-gray-400 mr-2">(<?= $monthCardPct ?>%)</span>
+      <div dir="ltr" class="flex items-baseline justify-end gap-1">
+        <span class="text-xs font-bold text-tasty-teal font-sans">€</span>
+        <span class="text-2xl sm:text-3xl font-black font-sans tracking-tight text-tasty-charcoal tabular-nums">
+          <?= number_format($monthCard, 2) ?>
+        </span>
+        <span class="text-xs font-bold text-gray-400 mr-2 font-sans">(<?= $monthCardPct ?>%)</span>
       </div>
       <div class="w-full bg-gray-100 rounded-full h-1.5 mt-3 overflow-hidden">
-        <div class="bg-blue-500 h-1.5 rounded-full" style="width: <?= $monthCardPct ?>%"></div>
+        <div class="bg-tasty-teal h-1.5 rounded-full transition-all duration-500" style="width: <?= $monthCardPct ?>%"></div>
       </div>
     </div>
 
