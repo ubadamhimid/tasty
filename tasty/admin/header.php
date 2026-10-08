@@ -4,7 +4,11 @@ requireAuth();
 
 $currentUser = getCurrentUser();
 $isAdmin = isAdmin();
-$currentPage = basename($_SERVER['PHP_SELF']);
+$reqPath = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+$subRoute = trim(preg_replace('#^.*?/admin/?#', '', $reqPath), '/');
+$cleanRoute = preg_replace('/\.php$/', '', $subRoute);
+$cleanRoute = preg_replace('/[^a-zA-Z0-9_-]/', '', $cleanRoute);
+$currentPage = (empty($cleanRoute) || $cleanRoute === 'index') ? 'index.php' : ($cleanRoute . '.php');
 
 // Define navigation items with permissions
 $navItems = [

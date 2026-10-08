@@ -1,4 +1,18 @@
 <?php
+// Smart Front Controller Router: seamless clean URL routing (e.g., /admin/employees -> employees.php)
+$reqPath = parse_url($_SERVER['REQUEST_URI'] ?? '', PHP_URL_PATH);
+$subRoute = trim(preg_replace('#^.*?/admin/?#', '', $reqPath), '/');
+$cleanRoute = preg_replace('/\.php$/', '', $subRoute);
+$cleanRoute = preg_replace('/[^a-zA-Z0-9_-]/', '', $cleanRoute);
+
+if (!empty($cleanRoute) && $cleanRoute !== 'index') {
+    $targetFile = __DIR__ . '/' . $cleanRoute . '.php';
+    if (file_exists($targetFile)) {
+        require $targetFile;
+        exit;
+    }
+}
+
 $pageTitle = 'لوحة القيادة التنفيذية — TASTY Hilversum';
 require_once __DIR__ . '/header.php';
 
