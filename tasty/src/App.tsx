@@ -45,7 +45,14 @@ export const App: React.FC = () => {
             <Route index element={<AdminDashboardIndex />} />
             <Route path="orders" element={<PurchasingPage />} />
             <Route path="sales" element={<DailySalesPage />} />
-            <Route path="debts" element={<DebtsPage />} />
+            <Route
+              path="debts"
+              element={
+                <ProtectedRoute requireAdmin>
+                  <DebtsPage />
+                </ProtectedRoute>
+              }
+            />
             <Route path="employees" element={<EmployeesPage />} />
             <Route
               path="settings"

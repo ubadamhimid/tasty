@@ -107,6 +107,7 @@ export const AdminLayout: React.FC = () => {
       label: 'سجل الديون والدفعات',
       shortLabel: 'الديون',
       icon: Scale,
+      adminOnly: true,
     },
     {
       to: '/admin/settings',
