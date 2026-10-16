@@ -3,6 +3,7 @@ import { Navbar } from './Navbar';
 import { Hero } from './Hero';
 import { SidewaysMarquee } from './SidewaysMarquee';
 import { BentoGrid } from './BentoGrid';
+import { BowlScrollStory } from './BowlScrollStory';
 import { MenuExplorer } from './MenuExplorer';
 import { BowlCustomizer } from './BowlCustomizer';
 import { OurStory } from './OurStory';
@@ -26,7 +27,7 @@ export const CustomerLandingPage: React.FC = () => {
 
   return (
     <CartProvider>
-    <div className="min-h-screen bg-[#FFFDF9] text-[#2B3A39] relative overflow-hidden">
+    <div className="min-h-screen bg-[#FFFDF9] text-[#2B3A39] relative overflow-x-clip">
       
       {/* Floating Navbar */}
       <Navbar 
@@ -39,6 +40,9 @@ export const CustomerLandingPage: React.FC = () => {
 
         {/* Sideways Text Marquee */}
         <SidewaysMarquee />
+
+        {/* Scroll-driven Shish Taouk story */}
+        <BowlScrollStory />
 
         {/* Best Sellers Bento Grid */}
         <BentoGrid 
