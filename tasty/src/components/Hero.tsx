@@ -13,7 +13,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
   const featuredDishes = [
     {
       id: 'wrap',
-      title: 'Kip Shoarma Durum Wrap',
+      title: 'Chicken Shawarma Durum Wrap',
       subtitle: 'Toasted durum with marinated chicken, homemade garlic toum & crisp pickles',
       price: '€8.00',
       craftNote: 'Hand-rolled • Fire-roasted • House Garlic Toum',
@@ -29,7 +29,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
     },
     {
       id: 'manaqish',
-      title: 'Manaqish Kaas',
+      title: 'Cheese Manaqish',
       subtitle: 'Stone-baked artisan flatbread brushed with extra virgin olive oil & melted cheese',
       price: '€3.00',
       craftNote: 'Stone Oven Baked • Fresh Cheese • EVOO',
@@ -96,7 +96,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
             >
               <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-300/80 text-emerald-900 font-bold text-xs shadow-2xs">
                 <span className="w-2 h-2 rounded-full bg-emerald-500 animate-ping"></span>
-                <span>🛵 Nu ook bezorging in Hilversum! Vers aan huis geleverd</span>
+                <span>🛵 Now delivering in Hilversum! Fresh to your door</span>
               </div>
             </motion.div>
 
@@ -117,7 +117,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
                 className="flex-1 sm:flex-none inline-flex items-center justify-center gap-2 px-5 sm:px-7 py-3.5 sm:py-4 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group"
               >
                 <Icon icon="mdi:whatsapp" className="text-xl sm:text-2xl text-white group-hover:scale-110 transition-transform shrink-0" />
-                <span>Bestel via WhatsApp</span>
+                <span>Order via WhatsApp</span>
               </motion.a>
 
               <motion.a 
@@ -160,7 +160,7 @@ export const Hero: React.FC<HeroProps> = ({ onOpenCustomizer }) => {
               </a>
               <div className="flex items-center gap-1.5">
                 <Icon icon="mdi:silverware-fork-knife" className="text-tasty-terracotta text-sm sm:text-base shrink-0" />
-                <span>Dine-In • Takeaway • Bezorging 🛵</span>
+                <span>Dine-In • Takeaway • Delivery 🛵</span>
               </div>
             </motion.div>
 

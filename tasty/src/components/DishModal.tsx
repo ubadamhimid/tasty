@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import { MenuItem } from '../types';
-import { getWhatsAppOrderUrl, formatDishOrderMessage } from '../utils/whatsapp';
+import { useCart } from '../context/CartContext';
 
 interface DishModalProps {
   item: MenuItem | null;
@@ -10,7 +10,20 @@ interface DishModalProps {
 }
 
 export const DishModal: React.FC<DishModalProps> = ({ item, onClose }) => {
+  const { addItem, isClosed } = useCart();
+  const [quantity, setQuantity] = useState(1);
+
+  // Start every opened dish at quantity 1
+  useEffect(() => {
+    setQuantity(1);
+  }, [item?.id]);
+
   if (!item) return null;
+
+  const handleAdd = () => {
+    addItem({ id: item.id, name: item.name, price: item.price, image: item.image }, quantity);
+    if (!isClosed) onClose();
+  };
 
   return (
     <AnimatePresence>
@@ -71,21 +84,41 @@ export const DishModal: React.FC<DishModalProps> = ({ item, onClose }) => {
               {/* Delivery Now Available Tag */}
               <div className="flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-2xl bg-emerald-50 text-emerald-900 border border-emerald-200/80 text-[11px] font-bold text-center">
                 <span className="inline-block animate-pulse">🛵</span>
-                <span>Nu ook bezorging in Hilversum! Vers aan huis geleverd</span>
+                <span>Now delivering in Hilversum! Fresh to your door</span>
               </div>
 
-              {/* WhatsApp Order Button */}
-              <motion.a 
-                href={getWhatsAppOrderUrl(formatDishOrderMessage(item.name, item.price))}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group"
-              >
-                <Icon icon="mdi:whatsapp" className="text-xl shrink-0 group-hover:scale-110 transition-transform" />
-                <span>Bestel via WhatsApp</span>
-              </motion.a>
+              {/* Quantity + Add to Order */}
+              <div className="flex items-center gap-3">
+                <div className="inline-flex items-center rounded-full border border-tasty-charcoal/15 bg-tasty-bg-warm shrink-0">
+                  <button
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    className="w-10 h-11 flex items-center justify-center rounded-full hover:bg-tasty-terracotta-light transition-colors"
+                    aria-label="Decrease quantity"
+                  >
+                    <Icon icon="mdi:minus" className="text-lg" />
+                  </button>
+                  <span className="w-7 text-center text-base font-bold text-tasty-charcoal">{quantity}</span>
+                  <button
+                    onClick={() => setQuantity((q) => Math.min(20, q + 1))}
+                    className="w-10 h-11 flex items-center justify-center rounded-full hover:bg-tasty-terracotta-light transition-colors"
+                    aria-label="Increase quantity"
+                  >
+                    <Icon icon="mdi:plus" className="text-lg" />
+                  </button>
+                </div>
+
+                <motion.button
+                  onClick={handleAdd}
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className={`flex-1 py-3.5 rounded-full text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 ${
+                    isClosed ? 'bg-gray-400' : 'bg-tasty-terracotta hover:bg-tasty-terracotta-dark hover:shadow-lg'
+                  }`}
+                >
+                  <Icon icon="mdi:shopping-outline" className="text-xl shrink-0" />
+                  <span>{isClosed ? 'Closed today' : `Add to Order • €${(item.price * quantity).toFixed(2)}`}</span>
+                </motion.button>
+              </div>
 
               {/* Direct Phone Order Button */}
               <motion.a 
@@ -95,7 +128,7 @@ export const DishModal: React.FC<DishModalProps> = ({ item, onClose }) => {
                 className="w-full py-2.5 rounded-full bg-tasty-bg-warm border border-tasty-charcoal/15 text-tasty-charcoal hover:bg-tasty-terracotta-light hover:text-tasty-terracotta font-semibold text-xs transition-all flex items-center justify-center gap-2"
               >
                 <Icon icon="mdi:phone" className="text-base text-tasty-terracotta" />
-                <span>Of bel: 035 204 2001</span>
+                <span>Or call: 035 204 2001</span>
               </motion.a>
             </div>
 

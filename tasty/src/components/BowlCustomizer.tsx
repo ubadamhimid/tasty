@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Icon } from '@iconify/react';
-import { getWhatsAppOrderUrl, formatBowlOrderMessage } from '../utils/whatsapp';
+import { useCart } from '../context/CartContext';
 
 export const BowlCustomizer: React.FC = () => {
+  const { addItem, isClosed } = useCart();
   const [selectedBase, setSelectedBase] = useState('Fragrant Spiced Rice');
   const [selectedProtein, setSelectedProtein] = useState('Chicken Shawarma');
   const [selectedToppings, setSelectedToppings] = useState<string[]>(['Pickled Pink Turnips', 'Sumac Onions']);
@@ -51,6 +52,24 @@ export const BowlCustomizer: React.FC = () => {
     } else {
       setSelectedSauces([...selectedSauces, sauce]);
     }
+  };
+
+  const handleAddBowl = () => {
+    const customizations = [
+      `Base: ${selectedBase}`,
+      `Protein: ${selectedProtein}`,
+      `Toppings: ${selectedToppings.length > 0 ? selectedToppings.join(', ') : 'None'}`,
+      `Sauces: ${selectedSauces.length > 0 ? selectedSauces.join(', ') : 'None'}`,
+    ];
+    // Same recipe = same cart line (quantity goes up); different recipe = new line
+    const recipeId = `custom-bowl|${selectedBase}|${selectedProtein}|${[...selectedToppings].sort().join(',')}|${[...selectedSauces].sort().join(',')}`;
+    addItem({
+      id: recipeId,
+      name: 'Custom Levantine Bowl',
+      price: totalPrice,
+      image: '/images/crispy-chicken-bowl.webp',
+      customizations,
+    });
   };
 
   return (
@@ -244,29 +263,21 @@ export const BowlCustomizer: React.FC = () => {
               {/* Delivery Now Available Tag */}
               <div className="flex items-center justify-center gap-1.5 py-1.5 px-3 rounded-2xl bg-emerald-50 text-emerald-900 border border-emerald-200/80 text-[11px] font-bold text-center">
                 <span className="inline-block animate-pulse">🛵</span>
-                <span>Nu ook bezorging in Hilversum! Vers aan huis geleverd</span>
+                <span>Now delivering in Hilversum! Fresh to your door</span>
               </div>
 
-              {/* Primary: WhatsApp Order Button with customized message */}
-              <motion.a 
-                href={getWhatsAppOrderUrl(
-                  formatBowlOrderMessage({
-                    base: selectedBase,
-                    protein: selectedProtein,
-                    toppings: selectedToppings,
-                    sauces: selectedSauces,
-                    price: totalPrice,
-                  })
-                )}
-                target="_blank"
-                rel="noopener noreferrer"
+              {/* Primary: add the customized bowl to the order cart */}
+              <motion.button 
+                onClick={handleAddBowl}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
-                className="w-full py-3.5 rounded-full bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold text-sm shadow-md hover:shadow-lg transition-all flex items-center justify-center gap-2 group"
+                className={`w-full py-3.5 rounded-full text-white font-bold text-sm shadow-md transition-all flex items-center justify-center gap-2 ${
+                  isClosed ? 'bg-gray-400' : 'bg-tasty-terracotta hover:bg-tasty-terracotta-dark hover:shadow-lg'
+                }`}
               >
-                <Icon icon="mdi:whatsapp" className="text-xl shrink-0 group-hover:scale-110 transition-transform" />
-                <span>Bestel via WhatsApp</span>
-              </motion.a>
+                <Icon icon="mdi:shopping-outline" className="text-xl shrink-0" />
+                <span>{isClosed ? 'Closed today' : `Add Bowl to Order • €${totalPrice.toFixed(2)}`}</span>
+              </motion.button>
 
               {/* Secondary: Phone Order */}
               <motion.a 
@@ -276,7 +287,7 @@ export const BowlCustomizer: React.FC = () => {
                 className="w-full py-2.5 rounded-full bg-tasty-bg-warm border border-tasty-charcoal/15 text-tasty-charcoal hover:bg-tasty-terracotta-light hover:text-tasty-terracotta font-semibold text-xs transition-all flex items-center justify-center gap-2"
               >
                 <Icon icon="mdi:phone" className="text-base text-tasty-terracotta" />
-                <span>Of bel: 035 204 2001</span>
+                <span>Or call: 035 204 2001</span>
               </motion.a>
             </div>
           </div>

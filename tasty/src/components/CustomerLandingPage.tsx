@@ -11,6 +11,8 @@ import { DishModal } from './DishModal';
 import { GoogleReviewModal } from './GoogleReviewModal';
 import { FloatingWhatsApp } from './FloatingWhatsApp';
 import { MenuItem } from '../types';
+import { CartProvider } from '../context/CartContext';
+import { CartDrawer, FloatingCartBar } from './CartDrawer';
 
 export const CustomerLandingPage: React.FC = () => {
   const [selectedItem, setSelectedItem] = useState<MenuItem | null>(null);
@@ -23,6 +25,7 @@ export const CustomerLandingPage: React.FC = () => {
   };
 
   return (
+    <CartProvider>
     <div className="min-h-screen bg-[#FFFDF9] text-[#2B3A39] relative overflow-hidden">
       
       {/* Floating Navbar */}
@@ -72,6 +75,11 @@ export const CustomerLandingPage: React.FC = () => {
       {/* Floating 1-Click WhatsApp Quick Order Button */}
       <FloatingWhatsApp />
 
+      {/* Order Cart: slide-in drawer + floating 'View order' bar */}
+      <CartDrawer />
+      <FloatingCartBar />
+
     </div>
+    </CartProvider>
   );
 };

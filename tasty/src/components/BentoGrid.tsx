@@ -58,7 +58,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
           <div className="absolute right-0 bottom-0 w-3/5 h-full opacity-95 group-hover:scale-110 group-hover:rotate-1 transition-transform duration-500 pointer-events-none flex items-center justify-end">
             <img 
               src="/images/shawarma-platter.webp" 
-              alt="Schotel Shawarma Kip & Fries" 
+              alt="Chicken Shawarma Platter & Fries" 
               loading="lazy"
               className="max-h-[110%] w-auto object-contain filter drop-shadow-xl"
             />
@@ -79,7 +79,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
           {/* Card Content */}
           <div className="relative z-10 max-w-sm space-y-3">
             <h3 className="text-2xl sm:text-3xl font-serif font-bold text-tasty-charcoal group-hover:text-tasty-teal transition-colors">
-              Schotel Shawarma Kip & Fries
+              Chicken Shawarma Platter & Fries
             </h3>
             <p className="text-tasty-charcoal-muted text-sm leading-relaxed">
               Juicy spiced chicken shawarma with golden fries, garlic toum, pickles, and crisp coleslaw.
@@ -103,13 +103,13 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
               whileTap={{ scale: 0.95 }}
               onClick={() => onSelectItem({
                 id: 'schotel-arabish-kip-shoarma',
-                name: 'Arabish Kip Shoarma',
+                name: 'Arabic Chicken Shawarma Platter',
                 category: 'kapsalon',
                 price: 14.00,
                 description: 'Generous platter of tender chicken shawarma with golden fries, garlic toum, pickles, and crisp coleslaw.',
                 rating: 5.0,
                 reviewCount: 412,
-                badge: 'Bestseller',
+                badge: 'Best Seller',
                 image: '/images/shawarma-platter.webp',
                 ingredients: ['Chicken Shawarma', 'Golden Fries', 'Garlic Toum', 'Pickles', 'Coleslaw']
               })}
@@ -151,7 +151,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
 
           <div className="relative z-10 space-y-2 my-4">
             <h3 className="text-2xl font-serif font-bold text-tasty-charcoal group-hover:text-tasty-teal transition-colors">
-              Manaqish Kaas
+              Cheese Manaqish
             </h3>
             <p className="text-tasty-charcoal-muted text-xs sm:text-sm leading-relaxed max-w-xs">
               Ovenbaked flatbread with melted cheese & Levantine olive oil.
@@ -165,7 +165,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
               whileTap={{ scale: 0.95 }}
               onClick={() => onSelectItem({
                 id: 'manaqish-kaas',
-                name: 'Manaqish Kaas',
+                name: 'Cheese Manaqish',
                 category: 'manaqish',
                 price: 3.00,
                 description: 'Ovenbaked flatbread with melted cheese.',
@@ -215,7 +215,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
               Tasty Crispy Chicken Rice
             </h3>
             <p className="text-tasty-charcoal-muted text-xs sm:text-sm leading-relaxed max-w-xs">
-              Augurken, saus en rijst met knapperige kip.
+              Pickles, sauce and rice with crispy chicken.
             </p>
           </div>
 
@@ -229,7 +229,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
                 name: 'Tasty Crispy Chicken Rice',
                 category: 'bowls',
                 price: 12.00,
-                description: 'Augurken, saus en rijst',
+                description: 'Pickles, sauce and rice',
                 rating: 4.9,
                 reviewCount: 520,
                 image: '/images/crispy-chicken-bowl.webp',
@@ -276,7 +276,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
               Tasty Combination Platter
             </h3>
             <p className="text-tasty-charcoal-muted text-sm leading-relaxed">
-              Hummus en handgemaakte Falafel met vers brood en olijfolie.
+              Hummus and handmade falafel with fresh bread and olive oil.
             </p>
           </div>
 
@@ -290,7 +290,7 @@ export const BentoGrid: React.FC<BentoGridProps> = ({ onSelectItem }) => {
                 name: 'Tasty Combination Platter',
                 category: 'dips',
                 price: 8.00,
-                description: 'Hummus en handgemaakte Falafel',
+                description: 'Hummus and handmade falafel',
                 rating: 5.0,
                 reviewCount: 412,
                 image: '/images/falafel-hummus-bowl.webp',

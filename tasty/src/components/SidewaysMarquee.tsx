@@ -5,7 +5,7 @@ export const SidewaysMarquee: React.FC = () => {
   const marqueeItems = [
     { text: 'AUTHENTIC LEVANTINE FLAVOURS', icon: 'mdi:star-four-points' },
     { text: 'STONE-BAKED MANAQISH', icon: 'mdi:bread-slice-outline' },
-    { text: 'SIGNATURE KAPSALON KIP & LAMS', icon: 'mdi:food' },
+    { text: 'SIGNATURE CHICKEN & LAMB PLATTERS', icon: 'mdi:food' },
     { text: 'HOMEMADE GARLIC TOUM & MOHAMARA', icon: 'mdi:bowl-mix' },
     { text: 'FRESHLY BAKED DAILY IN HILVERSUM', icon: 'mdi:map-marker-radius' },
     { text: 'CRAFT YOUR LEVANTINE BOWL', icon: 'mdi:magic-staff' },

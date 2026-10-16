@@ -3,12 +3,15 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import { MENU_ITEMS, CATEGORIES } from '../data/menuData';
 import { MenuItem, CategoryType } from '../types';
+import { useCart } from '../context/CartContext';
+import { CLOSED_TITLE, CLOSED_TEXT } from '../utils/openingHours';
 
 interface MenuExplorerProps {
   onSelectItem: (item: MenuItem) => void;
 }
 
 export const MenuExplorer: React.FC<MenuExplorerProps> = ({ onSelectItem }) => {
+  const { addItem, isClosed } = useCart();
   const [activeCategory, setActiveCategory] = useState<CategoryType>('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [filterVeggieOnly, setFilterVeggieOnly] = useState(false);
@@ -39,6 +42,17 @@ export const MenuExplorer: React.FC<MenuExplorerProps> = ({ onSelectItem }) => {
           From freshly baked Manaqish flatbreads to savory Shawarma platters, falafel wraps, and signature bowls. Prepared fresh daily in Hilversum.
         </p>
       </div>
+
+      {/* Closed-today notice */}
+      {isClosed && (
+        <div className="max-w-3xl mx-auto mb-8 flex items-start gap-3 p-4 rounded-2xl bg-red-50 border border-red-200 text-left" role="alert">
+          <Icon icon="mdi:store-clock-outline" className="text-red-600 text-2xl shrink-0 mt-0.5" />
+          <div>
+            <div className="text-sm font-bold text-red-800">{CLOSED_TITLE}</div>
+            <p className="text-xs sm:text-sm text-red-700 leading-relaxed mt-0.5">{CLOSED_TEXT}</p>
+          </div>
+        </div>
+      )}
 
       {/* Controls Bar: Search & Diet Filters */}
       <div className="flex flex-col md:flex-row items-center justify-between gap-4 mb-8">
@@ -194,13 +208,28 @@ export const MenuExplorer: React.FC<MenuExplorerProps> = ({ onSelectItem }) => {
                     </div>
                   </div>
 
-                  <button 
-                    onClick={(e) => { e.stopPropagation(); onSelectItem(item); }}
-                    className="px-4 py-2 rounded-full bg-tasty-teal text-white text-xs font-bold shadow-sm hover:bg-tasty-teal-dark transition-colors flex items-center gap-1.5"
-                  >
-                    <Icon icon="mdi:eye" />
-                    <span>View Dish</span>
-                  </button>
+                  <div className="flex items-center gap-2">
+                    <button 
+                      onClick={(e) => { e.stopPropagation(); onSelectItem(item); }}
+                      className="w-9 h-9 rounded-full bg-tasty-bg-warm border border-tasty-charcoal/15 text-tasty-charcoal hover:bg-tasty-sage-light transition-colors flex items-center justify-center"
+                      aria-label={`View details of ${item.name}`}
+                      title="View details"
+                    >
+                      <Icon icon="mdi:eye-outline" className="text-base" />
+                    </button>
+                    <button 
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        addItem({ id: item.id, name: item.name, price: item.price, image: item.image });
+                      }}
+                      className={`px-4 py-2 rounded-full text-white text-xs font-bold shadow-sm active:scale-95 transition-all flex items-center gap-1.5 ${
+                        isClosed ? 'bg-gray-400 hover:bg-gray-400' : 'bg-tasty-terracotta hover:bg-tasty-terracotta-dark'
+                      }`}
+                    >
+                      <Icon icon="mdi:plus" className="text-base" />
+                      <span>{isClosed ? 'Closed' : 'Add'}</span>
+                    </button>
+                  </div>
                 </div>
               </div>
             </motion.div>

@@ -33,18 +33,18 @@ export const DeliverySection: React.FC = () => {
             <div className="flex flex-wrap items-center gap-2">
               <span className="inline-flex items-center gap-2 bg-white/15 backdrop-blur-md px-3.5 py-1 rounded-full text-xs font-bold tracking-wide text-white">
                 <Icon icon="mdi:store-outline" className="text-base" />
-                Dine-In • Takeaway • Bezorging
+                Dine-In • Takeaway • Delivery
               </span>
               <span className="inline-flex items-center gap-1.5 bg-[#25D366] text-white px-3 py-1 rounded-full text-xs font-bold shadow-xs">
                 <span>🛵</span>
-                <span>Nu ook bezorging in Hilversum!</span>
+                <span>Now delivering in Hilversum!</span>
               </span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif font-bold leading-tight">
-              Bestel via WhatsApp, Bel ons, of Kom Gezellig Langs
+              Order via WhatsApp, Call Us, or Drop By
             </h2>
             <p className="text-white/85 text-sm sm:text-base max-w-2xl font-light leading-relaxed">
-              Proef de authentieke Levantijnse smaken in Hilversum! Bestel gemakkelijk via <strong>WhatsApp</strong> voor snelle bezorging aan huis of kom gezellig afhalen in ons restaurant.
+              Taste authentic Levantine flavors in Hilversum! Order easily via <strong>WhatsApp</strong> for fast home delivery or drop by our restaurant for pickup.
             </p>
             <div className="flex flex-wrap items-center gap-3 pt-2">
               {/* WhatsApp Button */}
@@ -55,7 +55,7 @@ export const DeliverySection: React.FC = () => {
                 className="bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold px-7 py-3.5 rounded-full text-sm shadow-lg transition-all flex items-center gap-2 group"
               >
                 <Icon icon="mdi:whatsapp" className="text-xl text-white group-hover:scale-110 transition-transform" />
-                <span>Bestel via WhatsApp</span>
+                <span>Order via WhatsApp</span>
               </a>
 
               <a 
@@ -67,11 +67,13 @@ export const DeliverySection: React.FC = () => {
               </a>
 
               <a 
-                href="#contact" 
+                href="https://www.google.com/maps/search/?api=1&query=Groest+50,+1211+EC+Hilversum" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="bg-white/15 hover:bg-white/25 text-white font-bold px-5 py-3.5 rounded-full text-sm backdrop-blur-md transition-all flex items-center gap-2"
               >
                 <Icon icon="mdi:map-marker" className="text-lg" />
-                <span>Locatie</span>
+                <span>Get Directions</span>
               </a>
             </div>
           </div>
@@ -146,16 +148,12 @@ export const DeliverySection: React.FC = () => {
                 <Icon icon="mdi:clock-outline" /> Opening Hours
               </div>
               <div className="flex justify-between text-xs py-1 border-b border-tasty-teal/10">
-                <span className="text-tasty-charcoal font-medium">Monday – Thursday</span>
-                <span className="font-bold text-tasty-charcoal">12:00 – 22:00</span>
-              </div>
-              <div className="flex justify-between text-xs py-1 border-b border-tasty-teal/10">
-                <span className="text-tasty-charcoal font-medium">Friday – Saturday</span>
-                <span className="font-bold text-tasty-charcoal">12:00 – 23:00</span>
+                <span className="text-tasty-charcoal font-medium">Monday</span>
+                <span className="font-bold text-tasty-terracotta">Closed</span>
               </div>
               <div className="flex justify-between text-xs py-1">
-                <span className="text-tasty-charcoal font-medium">Sunday</span>
-                <span className="font-bold text-tasty-charcoal">13:00 – 22:00</span>
+                <span className="text-tasty-charcoal font-medium">Tuesday – Sunday</span>
+                <span className="font-bold text-tasty-charcoal">11:00 – 21:00</span>
               </div>
             </div>
           </div>
