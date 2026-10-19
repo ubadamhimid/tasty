@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { SocialShareModal } from './SocialShare';
 import { CartButton } from './CartDrawer';
-import { getWhatsAppOrderUrl, formatGeneralInquiryMessage } from '../utils/whatsapp';
 
 interface NavbarProps {
   onOpenCustomizer: () => void;
@@ -68,20 +67,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCustomizer }) => {
             >
               <Icon icon="mdi:share-variant" className="text-base sm:text-lg" />
             </button>
-
-            {/* Dynamic WhatsApp Button: compact icon circle on mobile, expanded pill on sm+ */}
-            <motion.a 
-              href={getWhatsAppOrderUrl(formatGeneralInquiryMessage())}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.04 }}
-              whileTap={{ scale: 0.96 }}
-              className="hidden sm:inline-flex items-center justify-center gap-1.5 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold p-2 lg:px-3.5 lg:py-2 rounded-full shadow-sm hover:shadow-md transition-all duration-300 whitespace-nowrap group shrink-0"
-              title="Order directly via WhatsApp (+31 6 84632782)"
-            >
-              <Icon icon="mdi:whatsapp" className="text-lg sm:text-base text-white group-hover:scale-110 transition-transform shrink-0" />
-              <span className="hidden lg:inline text-xs font-bold">WhatsApp</span>
-            </motion.a>
 
             {/* Dynamic Tactile Phone Pill Button: compact icon circle on mobile, expanded on sm+ */}
             <motion.a 
@@ -160,15 +145,6 @@ export const Navbar: React.FC<NavbarProps> = ({ onOpenCustomizer }) => {
                   <Icon icon="mdi:share-variant" />
                   <span>Share Website</span>
                 </button>
-                <a 
-                  href={getWhatsAppOrderUrl(formatGeneralInquiryMessage())}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-center gap-2 py-2.5 rounded-full bg-[#25D366] text-white font-bold text-sm shadow-sm whitespace-nowrap"
-                >
-                  <Icon icon="mdi:whatsapp" className="text-lg" />
-                  <span>Order via WhatsApp</span>
-                </a>
                 <a 
                   href="tel:0352042001"
                   className="flex items-center justify-center gap-2 py-2.5 rounded-full bg-tasty-terracotta text-white font-semibold text-sm shadow-sm whitespace-nowrap"

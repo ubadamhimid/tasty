@@ -3,7 +3,6 @@ import { Navbar } from './Navbar';
 import { Hero } from './Hero';
 import { SidewaysMarquee } from './SidewaysMarquee';
 import { BentoGrid } from './BentoGrid';
-import { BowlScrollStory } from './BowlScrollStory';
 import { MenuExplorer } from './MenuExplorer';
 import { BowlCustomizer } from './BowlCustomizer';
 import { OurStory } from './OurStory';
@@ -40,9 +39,6 @@ export const CustomerLandingPage: React.FC = () => {
 
         {/* Sideways Text Marquee */}
         <SidewaysMarquee />
-
-        {/* Scroll-driven Shish Taouk story */}
-        <BowlScrollStory />
 
         {/* Best Sellers Bento Grid */}
         <BentoGrid 

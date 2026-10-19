@@ -1,15 +1,15 @@
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, ProtectedRoute } from './admin/context/AuthContext';
 import { CustomerLandingPage } from './components/CustomerLandingPage';
-import { AdminLoginPage } from './admin/pages/AdminLoginPage';
-import { AdminLayout } from './admin/components/AdminLayout';
-import { AdminDashboardHome } from './admin/pages/AdminDashboardHome';
-import { PurchasingPage } from './admin/pages/PurchasingPage';
-import { DailySalesPage } from './admin/pages/DailySalesPage';
-import { DebtsPage } from './admin/pages/DebtsPage';
-import { EmployeesPage } from './admin/pages/EmployeesPage';
-import { SettingsPage } from './admin/pages/SettingsPage';
+const AdminLoginPage = lazy(() => import('./admin/pages/AdminLoginPage').then(m => ({ default: m.AdminLoginPage })));
+const AdminLayout = lazy(() => import('./admin/components/AdminLayout').then(m => ({ default: m.AdminLayout })));
+const AdminDashboardHome = lazy(() => import('./admin/pages/AdminDashboardHome').then(m => ({ default: m.AdminDashboardHome })));
+const PurchasingPage = lazy(() => import('./admin/pages/PurchasingPage').then(m => ({ default: m.PurchasingPage })));
+const DailySalesPage = lazy(() => import('./admin/pages/DailySalesPage').then(m => ({ default: m.DailySalesPage })));
+const DebtsPage = lazy(() => import('./admin/pages/DebtsPage').then(m => ({ default: m.DebtsPage })));
+const EmployeesPage = lazy(() => import('./admin/pages/EmployeesPage').then(m => ({ default: m.EmployeesPage })));
+const SettingsPage = lazy(() => import('./admin/pages/SettingsPage').then(m => ({ default: m.SettingsPage })));
 
 import { useAdminAuth } from './admin/context/AuthContext';
 
@@ -25,6 +25,7 @@ export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <AuthProvider>
+        <Suspense fallback={null}>
         <Routes>
           {/* Public Customer Restaurant Site */}
           <Route path="/" element={<CustomerLandingPage />} />
@@ -68,6 +69,7 @@ export const App: React.FC = () => {
           {/* Fallback */}
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
+        </Suspense>
       </AuthProvider>
     </BrowserRouter>
   );

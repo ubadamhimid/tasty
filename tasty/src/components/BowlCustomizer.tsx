@@ -5,32 +5,28 @@ import { useCart } from '../context/CartContext';
 
 export const BowlCustomizer: React.FC = () => {
   const { addItem, isClosed } = useCart();
-  const [selectedBase, setSelectedBase] = useState('Fragrant Spiced Rice');
-  const [selectedProtein, setSelectedProtein] = useState('Chicken Shawarma');
-  const [selectedToppings, setSelectedToppings] = useState<string[]>(['Pickled Pink Turnips', 'Sumac Onions']);
-  const [selectedSauces, setSelectedSauces] = useState<string[]>(['Garlic Toum']);
+  const [selectedBase, setSelectedBase] = useState('Yellow Rice');
+  const [selectedProtein, setSelectedProtein] = useState('Crispy Chicken');
+  const [selectedToppings, setSelectedToppings] = useState<string[]>(['Pickles']);
+  const [selectedSauces, setSelectedSauces] = useState<string[]>(['House Sauce']);
 
+  // Options mirror the real TASTY bowls in menuData.ts (all bowls are €12.00)
   const bases = [
-    { name: 'Fragrant Spiced Rice', price: 0, icon: 'mdi:rice' },
-    { name: 'Crispy Steak Fries', price: 0.50, icon: 'mdi:french-fries' },
-    { name: 'Fresh Salad Bed', price: 0, icon: 'mdi:leaf' },
-    { name: 'Half Rice & Half Fries', price: 0.75, icon: 'mdi:food' },
+    { name: 'Yellow Rice', price: 0, icon: 'mdi:rice' },
+    { name: 'Golden Fries', price: 0, icon: 'mdi:french-fries' },
   ];
 
   const proteins = [
-    { name: 'Chicken Shawarma', price: 12.50, icon: 'mdi:food-drumstick' },
-    { name: 'Spiced Lamb Doner', price: 13.50, icon: 'mdi:food-variant' },
-    { name: 'Crispy Chicken Cutlets', price: 13.90, icon: 'mdi:food-steak' },
-    { name: 'Grilled Halloumi & Falafel', price: 11.90, icon: 'mdi:cheese' },
+    { name: 'Crispy Chicken', price: 12.00, icon: 'mdi:food-drumstick', image: '/images/crispy-chicken-bowl.webp' },
+    { name: 'Shish Taouk', price: 12.00, icon: 'game-icons:kebab-spit', image: '/images/chicken-skewers-bowl.webp' },
   ];
 
   const toppings = [
-    'Pickled Pink Turnips', 'Sumac Onions', 'Crispy Cucumbers & Tomatoes', 
-    'Pomegranate Seeds', 'Roasted Eggplant', 'Toasted Sesame'
+    'Pickles', 'Fresh Salad'
   ];
 
   const sauces = [
-    'Garlic Toum', 'Mohamara Red Pepper', 'Creamy Tahini', 'Spicy Shatta Chilli'
+    'House Sauce', 'Syrian Garlic Sauce', 'Tahini Sauce', 'Spicy Mohamara'
   ];
 
   // Calculate Base Price according to protein choice + extra base cost
@@ -67,7 +63,7 @@ export const BowlCustomizer: React.FC = () => {
       id: recipeId,
       name: 'Custom Levantine Bowl',
       price: totalPrice,
-      image: '/images/crispy-chicken-bowl.webp',
+      image: selectedProteinObj.image,
       customizations,
     });
   };
@@ -86,7 +82,7 @@ export const BowlCustomizer: React.FC = () => {
             Build Your Custom Levantine Bowl
           </h2>
           <p className="text-tasty-charcoal-muted text-sm leading-relaxed">
-            Mix and match your choice of base, freshly grilled protein, signature pickled toppings, and house-made toum or mohamara sauces.
+            Pick your protein, choose rice or fries, then add pickles, salad and your favourite sauce. Every Tasty bowl is €12.00.
           </p>
         </div>
 
