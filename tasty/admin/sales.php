@@ -24,22 +24,26 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
         } elseif ($total <= 0) {
             $error = 'يرجى إدخال مبلغ مبيعات صحيح (كاش أو كرت).';
         } else {
-            // Check if record exists for this date
-            $existing = $db->prepare("SELECT id FROM daily_sales WHERE date = ?");
-            $existing->execute([$date]);
-            $existingRecord = $existing->fetch();
+            try {
+                // Check if record exists for this date
+                $existing = $db->prepare("SELECT id FROM daily_sales WHERE date = ?");
+                $existing->execute([$date]);
+                $existingRecord = $existing->fetch();
 
-            if ($existingRecord) {
-                // Update
-                $stmt = $db->prepare("UPDATE daily_sales SET cash_amount = ?, card_amount = ?, total_amount = ?, cash_percentage = ?, card_percentage = ?, notes = ?, recorded_at = ? WHERE date = ?");
-                $stmt->execute([$cash, $card, $total, $cashPct, $cardPct, $notes, date('c'), $date]);
-                $message = 'تم تحديث مبيعات تاريخ ' . $date . ' بنجاح!';
-            } else {
-                // Insert new
-                $newId = !empty($id) ? $id : 'ds-' . time() . '-' . substr(md5(uniqid()), 0, 4);
-                $stmt = $db->prepare("INSERT INTO daily_sales (id, date, cash_amount, card_amount, total_amount, cash_percentage, card_percentage, notes, recorded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
-                $stmt->execute([$newId, $date, $cash, $card, $total, $cashPct, $cardPct, $notes, date('c')]);
-                $message = 'تم تسجيل مبيعات اليوم بنجاح!';
+                if ($existingRecord) {
+                    // Update
+                    $stmt = $db->prepare("UPDATE daily_sales SET cash_amount = ?, card_amount = ?, total_amount = ?, cash_percentage = ?, card_percentage = ?, notes = ?, recorded_at = ? WHERE date = ?");
+                    $stmt->execute([$cash, $card, $total, $cashPct, $cardPct, $notes, date('c'), $date]);
+                    $message = 'تم تحديث مبيعات تاريخ ' . $date . ' بنجاح!';
+                } else {
+                    // Insert new — always a fresh ID (the posted sale_id belongs to another date's record)
+                    $newId = 'ds-' . time() . '-' . substr(md5(uniqid('', true)), 0, 6);
+                    $stmt = $db->prepare("INSERT INTO daily_sales (id, date, cash_amount, card_amount, total_amount, cash_percentage, card_percentage, notes, recorded_at) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+                    $stmt->execute([$newId, $date, $cash, $card, $total, $cashPct, $cardPct, $notes, date('c')]);
+                    $message = 'تم تسجيل مبيعات تاريخ ' . $date . ' بنجاح!';
+                }
+            } catch (PDOException $e) {
+                $error = 'تعذر حفظ السجل: ' . $e->getMessage();
             }
         }
     } elseif ($_POST['action'] === 'delete_sale') {
